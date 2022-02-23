@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<sitemaTF idSistemaTF="TF001">
+    
+    <!-- INFORMACION DE ENTRADA (INPUT) -->
+    <informacionEntrada>
+
+        <!-- TRANSFORMACION 2 FOTO -->
+        <foto>
+            <distancia>
+                18000
+            </distancia>
+            <centro>
+                <longitud>
+                    150
+                </longitud>
+                <latitud>
+                    5
+                </latitud>
+            </centro>
+            <forma>
+                cuadrado
+            </forma>
+        </foto>
+        <!-- END TRANSFORMACION 2 FOTO -->
+
+    </informacionEntrada>
+    <!-- END INFORMACION DE ENTRADA (INPUT) -->
+
+    <!-- INFORMACION DE SALIDA (OUTPUT) -->
+    <informacionSalida>
+        <imagen>
+            <dimensiones>
+                60
+                50
+            </dimensiones>
+            <descripcion>
+
+            </descripcion>
+            <contenido formato="GIF">
+
+            </contenido>
+        </imagen>
+    </informacionSalida>
+    <!-- END INFORMACION DE SALIDA (OUTPUT) -->
+
+</sitemaTF>

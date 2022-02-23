@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<modulo idModulo="MODe0001">
+    
+    <!-- DESCRIPCIÓN DEL MODULO-->
+    <tipoModulo>
+        especifico
+    </tipoModulo>
+    
+    <funcionalidad>
+        Captan la señal del satélite
+    </funcionalidad>
+    <!-- END DESCRIPCIÓN DEL MODULO -->
+
+    <!-- COMPONENTES DEL MODULO-->
+    <componentes>
+        
+        <!-- Captadores -->
+        <captadores>
+            <numeroCaptadores>
+                1
+            </numeroCaptadores>
+            <captador idCaptador="Cap001">
+                <parametro>
+                    radiacion
+                </parametro>
+                <medida>
+                   0.52 kW/h 
+                </medida>
+            </captador>
+        </captadores>
+        <!-- END Captadores -->
+
+    </componentes>
+    <!-- END COMPONENTES DEL MODULO-->
+</modulo>

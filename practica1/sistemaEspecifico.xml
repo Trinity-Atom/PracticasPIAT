@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<sistemaEspecifico idSistemaEspecifico="Sist-01">
+    
+    <!-- DESCRIPCION SISTEMA ESPECIFICO -->
+    <descripcionSistemaEsp>
+        Contiene la los sistemas especificos del satélite    
+    </descripcionSistemaEsp>
+    <dimensionSistemaEsp altura="40" anchura="30" longitud="40" peso="100"/>
+    <!-- END DESCRIPCION SISTEMA ESPECIFICO -->
+
+    <!-- MODULOS ESP INTEGRADOS-->
+    <modulosEspIntegrados>
+
+        <!-- Codificar en fase 2 y 3 -->
+    
+    </modulosEspIntegrados>
+    <!-- END MODULOS ESP INTEGRADOS-->
+</sistemaEspecifico>

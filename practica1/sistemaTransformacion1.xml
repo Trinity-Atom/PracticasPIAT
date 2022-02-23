@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<sitemaTF idSistemaTF="TF001">
+
+    <!-- INFORMACION DE ENTRADA (INPUT) -->
+    <informacionEntrada>
+
+        <!-- TRANSFORMACION 1 VALOR -->
+        <valor>
+            <parametro>
+                radiacion
+            </parametro>
+            <medida>
+                0.52 kW/h 
+            </medida>
+        </valor>
+        <!-- END TRANSFORMACION 1 VALOR -->
+
+    </informacionEntrada>
+    <!-- END INFORMACION DE ENTRADA (INPUT) -->
+    <!-- INFORMACION DE SALIDA (OUTPUT) -->
+    <informacionSalida>
+        <texto>
+            <formato>
+                xml
+            </formato>
+            <longitud>
+                15
+            </longitud>
+        </texto>
+    </informacionSalida>
+    <!-- END INFORMACION DE SALIDA (OUTPUT) -->
+</sitemaTF>

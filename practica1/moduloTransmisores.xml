@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<modulo idModulo="MODe0002">
+    
+    <!-- DESCRIPCIÓN DEL MODULO -->
+    <tipoModulo>
+        transmisor
+    </tipoModulo>
+
+    <funcionalidad>
+        Transmiten la señal del satélite
+    </funcionalidad>
+    <!-- END DESCRIPCIÓN DEL MODULO -->
+
+    <!-- COMPONENTES DEL MODULO-->
+    <componentes>
+
+        <!-- Transmisores -->
+        <transmisores>
+            <numeroTransmisores>
+                2
+            </numeroTransmisores>
+            <transmisor idTransmisor="TR1aaa">
+                <parametrosTransmision>
+                    <tipoModulacion>
+                        BPSK
+                    </tipoModulacion>
+                    <tiempoVida>
+                        2015-08-01
+                        2022-02-12
+                    </tiempoVida>
+                </parametrosTransmision>
+            </transmisor>
+        </transmisores>
+        <!-- END Transmisores-->
+        
+    </componentes>
+    <!-- END COMPONENTES DEL MODULO-->
+</modulo>
