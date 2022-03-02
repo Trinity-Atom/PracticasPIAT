@@ -1,4 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<sistema>
-    <!-- comentario -->
+<sistema idSistemaTX="TF001">
+    <subsistemaTX>
+        <NombreSubsistemaTX>
+            SUBS01
+        </NombreSubsistemaTX>
+        <nubeInformatica>
+            <nombreCompleto>
+                nube satelital Xpro
+            </nombreCompleto>
+            <uri>
+                http://nubecita.com
+            </uri>
+        </nubeInformatica>
+        <modulosTXIntegrados>
+            MODe0001
+            MODe0002
+        </modulosTXIntegrados>
+    </subsistemaTX>
 </sistema>
