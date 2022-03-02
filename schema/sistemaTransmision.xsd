@@ -1,0 +1,42 @@
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            targetNamespace="http://www.piat.upm.es/sistemaTransmision"
+            xmlns:tns="http://www.piat.upm.es/sistemaTransmision"
+            elementFormDefault="qualified">
+        
+        <!-- MODULO -->
+        <xsd:element name="modulo">
+            <xsd:complexType>
+                <xsd:sequence>
+                    <xsd:element name="tipoModulo" type="typeTipoModulo"/>
+                    <xsd:element name="funcionalidad" type="typeFuncionalidad"/>
+                    <xsd:element name="componentes" type="typeComponentes"/>
+                </xsd:sequence>
+            </xsd:complexType>
+        </xsd:element>
+        <!-- END MODULO -->
+
+        <!-- TIPO MODULO -->
+        <xsd:complexType name="typeTipoModulo">
+            <xsd:sequence>
+                <xsd:element name="nombre" type="xsd:string"/>
+            </xsd:sequence>
+        </xsd:complexType>
+        <!-- END TIPO MODULO -->
+
+        <!-- TIPO FUNCIONALIDAD -->
+        <xsd:complexType name="typeFuncionalidad">
+            <xsd:sequence>
+                <xsd:element name="nombre" type="xsd:string"/>
+            </xsd:sequence>
+        </xsd:complexType>
+
+        <!-- END TIPO FUNCIONALIDAD -->
+
+        <!-- TIPO COMPONENTES -->
+        <xsd:complexType name="typeComponentes">
+            <xsd:sequence>
+                <xsd:element name="nombre" type="xsd:string"/>
+            </xsd:sequence>
+        </xsd:complexType>
+        <!-- END TIPO COMPONENTES -->
+</xsd:schema>

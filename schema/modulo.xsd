@@ -1,0 +1,10 @@
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            targetNamespace="http://www.piat.upm.es/modulo"
+            xmlns:tns="http://www.piat.upm.es/modulo"
+            elementFormDefault="qualified">
+            
+        <xsd:element name="modulo" type="tns:tipoModulo"/>
+        <xsd:complexType name="tipoModulo">
+            
+        </xsd:complexType>
+</xsd:schema>
