@@ -1,5 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<sistema idSistemaTX="TF001">
+
+<sistemaTX 
+idSistemaTX="TX001"
+xmlns="https://www.w3schools.com"
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+xsi:schemaLocation="https://www.w3schools.com/xml sistemaTransmision.xsd">>
     <subsistemaTX>
         <NombreSubsistemaTX>
             SUBS01
@@ -17,4 +22,4 @@
             MODe0002
         </modulosTXIntegrados>
     </subsistemaTX>
-</sistema>
+</sistemaTX>
