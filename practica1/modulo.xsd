@@ -1,12 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
-            targetNamespace="http://www.piat.upm.es/modulo"
-            xmlns:tns="http://www.piat.upm.es/modulo"
+<xs:schema  xmlns:xs="http://www.w3.org/2001/XMLSchema" 
+            targetNamespace="http://www.piat.upm.es/modulo" 
+            xmlns:tns="http://www.piat.upm.es/modulo" 
             elementFormDefault="qualified">
-            
-        <xsd:element name="modulo" type="tns:tipoModulo"/>
-        <xsd:complexType name="tipoModulo">
-            
-        </xsd:complexType>
-</xsd:schema>
+
+    <xs:element name="modulo" type="tns:tipoModulo" />
+    <xs:complexType name="tipoModulo">
+        <xs:sequence>
+            <xs:element name="tipoModulo" type="xs:string" />
+            <xs:element name="funcionalidad" type="xs:string" />
+            <xs:element name="componentes" />
+        </xs:sequence>
+        <xs:attribute name="idModulo" type="xs:string" use="required"/>
+    </xs:complexType>
+</xs:schema>
