@@ -1,18 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<modulo idModulo="MODe0001">
+<mod:modulo idModulo="MODe0001"
+        xmlns:mod="http://www.piat.upm.es/modulo"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.piat.upm.es/modulo modulo.xsd">
     
     <!-- DESCRIPCIÓN DEL MODULO-->
-    <tipoModulo>
+    <mod:tipoModulo>
         especifico
-    </tipoModulo>
+    </mod:tipoModulo>
     
-    <funcionalidad>
+    <mod:funcionalidad>
         Captan la señal del satélite
-    </funcionalidad>
+    </mod:funcionalidad>
     <!-- END DESCRIPCIÓN DEL MODULO -->
 
     <!-- COMPONENTES DEL MODULO-->
-    <componentes>
+    <mod:componentes>
         
         <!-- Captadores -->
         <captadores>
@@ -30,6 +33,6 @@
         </captadores>
         <!-- END Captadores -->
 
-    </componentes>
+    </mod:componentes>
     <!-- END COMPONENTES DEL MODULO-->
-</modulo>
+</mod:modulo>

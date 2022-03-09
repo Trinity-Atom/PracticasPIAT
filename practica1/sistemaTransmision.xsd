@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<xs:schema 
+xmlns:xs="http://www.w3.org/2001/XMLSchema"
+targetNamespace="https://www.w3schools.com"
+xmlns="https://www.w3schools.com"
+elementFormDefault="qualified">
+        
+        <!-- MODULO -->
+        <xs:element name="sistemaTX">
+            <xs:complexType>
+                <xs:sequence>
+                    <xs:element name="tipoModulo" type="typeTipoModulo"/>
+                    <xs:element name="funcionalidad" type="typeFuncionalidad"/>
+                    <xs:element name="componentes" type="typeComponentes"/>
+                </xs:sequence>
+            </xs:complexType>
+        </xs:element>
+        <!-- END MODULO -->
+
+        <!-- TIPO MODULO -->
+        <xs:complexType name="typeTipoModulo">
+            <xs:sequence>
+                <xs:element name="nombre" type="xs:string"/>
+            </xs:sequence>
+        </xs:complexType>
+        <!-- END TIPO MODULO -->
+
+        <!-- TIPO FUNCIONALIDAD -->
+        <xs:complexType name="typeFuncionalidad">
+            <xs:sequence>
+                <xs:element name="nombre" type="xs:string"/>
+            </xs:sequence>
+        </xs:complexType>
+
+        <!-- END TIPO FUNCIONALIDAD -->
+
+        <!-- TIPO COMPONENTES -->
+        <xs:complexType name="typeComponentes">
+            <xs:sequence>
+                <xs:element name="nombre" type="xs:string"/>
+            </xs:sequence>
+        </xs:complexType>
+        <!-- END TIPO COMPONENTES -->
+</xs:schema>
