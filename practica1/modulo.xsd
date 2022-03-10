@@ -11,7 +11,7 @@
         <xs:sequence>
             <xs:element name="tipoModulo" type="tns:typeTipoModulo"/>
             <xs:element name="funcionalidad" type="tns:typeFuncionalidad"/>
-            <xs:element name="componentes" type="tns:typeComponentes"/>
+            <xs:element name="componentes" type="tns:typeComponentes" maxOccurs="unbounded"/>
         </xs:sequence>
         <xs:attribute name="idModulo" type="xs:string" use="required"/>
     </xs:complexType>
@@ -28,8 +28,8 @@
 
     <!-- FUNCIONALIDAD -->
     <xs:simpleType name="typeFuncionalidad">
-        <xs:restriction base="xs:token">
-            <!-- codificar -->
+        <xs:restriction base="xs:string">
+            <xs:maxLength value="512"/>
         </xs:restriction>
     </xs:simpleType>
     <!-- END FUNCIONALIDAD-->
@@ -47,8 +47,37 @@
     <xs:complexType name="typeTransmisores">
         <xs:sequence>
             <xs:element name="numeroTransmisores" type="xs:int"/>
+            <xs:element name="transmisor" type="tipoTransmisor" maxOccurs="unbounded"/>
         </xs:sequence>
     </xs:complexType>
+        <!-- ELEMENTO TRANSMISOR-->
+        <xs:complexType name="tipoTranmisor">
+            <xs:sequence>
+                <xs:element name="parametrosTransmision" type="typeParametrosTransmision"/>
+            </xs:sequence>
+            <xs:attribute name="idTransmisor" type="xs:string">
+                <xs:simpleType>
+                    <xs:restriction base="xs:token">
+                        <xs:pattern value="TR[1-9][a-z]{3}"/>
+                    </xs:restriction>
+                </xs:simpleType>
+            </xs:attribute>
+        </xs:complexType>
+        <!-- END ELEMENTO TRANSMISOR-->
+
+        <!-- ELEMENTO PARAMETROSTRANSMISION-->
+        <xs:complexType name="typeParametrosTransmision">
+            <xs:sequence>
+
+            <!-- ultimo codigo aqui-->
+                <xs:element name="tipoModulacion"/>
+
+
+            </xs:sequence>
+        </xs:complexType>
+        <!-- END ELEMENTO PARAMETROSTRANSMISION-->
+
+
     <!-- END IF ELEMENT_CHOICE = TRANSMISORES-->
     
     <!-- IF ELEMENT_CHOICE = CAPTADORES-->
