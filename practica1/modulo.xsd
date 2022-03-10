@@ -5,13 +5,55 @@
             xmlns:tns="http://www.piat.upm.es/modulo" 
             elementFormDefault="qualified">
 
-    <xs:element name="modulo" type="tns:tipoModulo" />
-    <xs:complexType name="tipoModulo">
+    <!-- ELEMENTO RAIZ -->
+    <xs:element name="modulo" type="tns:typeModulo" />
+    <xs:complexType name="typeModulo">
         <xs:sequence>
-            <xs:element name="tipoModulo" type="xs:string" />
-            <xs:element name="funcionalidad" type="xs:string" />
-            <xs:element name="componentes" />
+            <xs:element name="tipoModulo" type="tns:typeTipoModulo"/>
+            <xs:element name="funcionalidad" type="tns:typeFuncionalidad"/>
+            <xs:element name="componentes" type="tns:typeComponentes"/>
         </xs:sequence>
         <xs:attribute name="idModulo" type="xs:string" use="required"/>
     </xs:complexType>
+    <!-- ELEMENTO RAIZ -->
+
+    <!-- TIPO MODULO -->
+    <xs:simpleType name="typeTipoModulo">
+        <xs:restriction base="xs:token">
+            <xs:enumeration value="especifico"></xs:enumeration>
+            <xs:enumeration value="transmisor"></xs:enumeration>
+        </xs:restriction>
+    </xs:simpleType>
+    <!-- END TIPO MODULO -->
+
+    <!-- FUNCIONALIDAD -->
+    <xs:simpleType name="typeFuncionalidad">
+        <xs:restriction base="xs:token">
+            <!-- codificar -->
+        </xs:restriction>
+    </xs:simpleType>
+    <!-- END FUNCIONALIDAD-->
+
+    <!-- ELEMENTO COMPONENTES -->
+    <xs:complexType name="typeComponentes">
+        <xs:choice>
+            <xs:element name="transmisores" type="tns:typeTransmisores"/>
+            <xs:element name="captadores" type="tns:typeCaptadores"/>
+        </xs:choice>
+    </xs:complexType>
+    <!-- END ELEMENTO COMPONENTES -->
+
+    <!-- IF ELEMENT_CHOICE = TRANSMISORES-->
+    <xs:complexType name="typeTransmisores">
+        <xs:sequence>
+            <xs:element name="numeroTransmisores" type="xs:int"/>
+        </xs:sequence>
+    </xs:complexType>
+    <!-- END IF ELEMENT_CHOICE = TRANSMISORES-->
+    
+    <!-- IF ELEMENT_CHOICE = CAPTADORES-->
+    <xs:complexType name="typeCaptadores">
+
+    </xs:complexType>
+    <!-- END IF ELEMENT_CHOICE = CAPTADORES-->
 </xs:schema>
