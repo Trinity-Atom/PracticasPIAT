@@ -48,16 +48,18 @@
         <xs:sequence>
             <xs:element name="numeroTransmisores" type="xs:int">
                 <xs:key name="idTransmisor">
-                <xs:selector xpath=""></xs:selector>
+                    <xs:selector xpath="modulo/componentes/transmisores/transmisor"/>
+                    <xs:field xpath="@idTransmisor"></xs:field>
                 </xs:key>
             </xs:element>
-            <xs:element name="transmisor" type="tipoTransmisor" maxOccurs="unbounded"/>
+            <xs:element name="transmisor" type="tns:typeTransmisor" maxOccurs="unbounded"/>
         </xs:sequence>
     </xs:complexType>
+
         <!-- ELEMENTO TRANSMISOR-->
-        <xs:complexType name="tipoTranmisor">
+        <xs:complexType name="typeTransmisor">
             <xs:sequence>
-                <xs:element name="parametrosTransmision" type="typeParametrosTransmision"/>
+                <xs:element name="parametrosTransmision" type="tns:typeParametrosTransmision"/>
             </xs:sequence>
             <xs:attribute name="idTransmisor" use="required">
                 <xs:simpleType>
@@ -72,21 +74,49 @@
         <!-- ELEMENTO PARAMETROSTRANSMISION-->
         <xs:complexType name="typeParametrosTransmision">
             <xs:sequence>
-
-            <!-- ultimo codigo aqui-->
-                <xs:element name="tipoModulacion"/>
-
-
+                <xs:element name="tipoModulacion" type="tns:typeTipoModulacion"/>
+                <xs:element name="tiempoVida" type="tns:typeTiempoVida"/>
             </xs:sequence>
         </xs:complexType>
         <!-- END ELEMENTO PARAMETROSTRANSMISION-->
 
+        <!-- ELEMENTO TIPOMODULACION -->
+        <xs:simpleType name="typeTipoModulacion">
+            <xs:restriction base="xs:string">
+                <xs:enumeration value="BPSK"/>
+                <xs:enumeration value="QPSK"/>
+                <xs:enumeration value="16QAM"/>
+            </xs:restriction>
+        </xs:simpleType>
+        <!-- END ELEMENTO TIPOMODULACION-->
+
+        <!-- ELEMENTO TIEMPOVIDA-->
+        <xs:simpleType name="typeTiempoVida">
+            <xs:list itemType="xs:date"></xs:list>
+        </xs:simpleType>
+        <!-- END ELEMENTO TIEMPOVIDA-->
 
     <!-- END IF ELEMENT_CHOICE = TRANSMISORES-->
     
     <!-- IF ELEMENT_CHOICE = CAPTADORES-->
     <xs:complexType name="typeCaptadores">
-
+        <xs:sequence>
+            <xs:element name="numeroCaptadores" type="xs:int"/>
+            <xs:element name="captador" type="tns:typeCaptador"/>
+        </xs:sequence>
     </xs:complexType>
     <!-- END IF ELEMENT_CHOICE = CAPTADORES-->
+
+        <!-- ELEMENT CAPTADOR -->
+        <xs:complexType name="typeCaptador">
+            <xs:sequence maxOccurs="unbounded">
+                <xs:element name="parametro" type="xs:string"/>
+                <xs:element name="medida" type="xs:typeMedida"></xs:element>
+            </xs:sequence>
+            <xs:attribute name="idCaptador" use="required">
+
+            </xs:attribute>
+        </xs:complexType>
+        <!-- END ELEMENT CAPTADOR -->
+
 </xs:schema>
