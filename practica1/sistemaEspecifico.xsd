@@ -1,9 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+<xs:schema  xmlns:xs="http://www.w3.org/2001/XMLSchema"
             targetNamespace="http://www.piat.upm.es/sistemaEspecifico"
             xmlns:tns="http://www.piat.upm.es/sistemaEspecifico"
             xmlns:mod="http://www.piat.upm.es/modulo"
             elementFormDefault="qualified">
+
+<xs:import  namespace="http://www.piat.upm.es/modulo"
+            schemaLocation=".//modulo.xsd"/>
+
+    <!-- GRUPO DE ATRIBUTOS -->
+   <xs:attributeGroup name="atrib">
+    <xs:attribute name="altura" type="xs:float" use="required"/>
+        <xs:attribute name="anchura" type="xs:float" use="required"/>
+        <xs:attribute name="longitud" type="xs:float" use="required"/>
+    <xs:attribute name="peso" type="xs:nonNegativeInteger" use="required"/>
+    </xs:attributeGroup>
+    <!-- END GRUPO DE ATRIBUTOS -->
 
     <!-- ELEMENTO RAIZ -->
     <xs:element name="sistemaEspecifico" type="tns:typeSistemaEspecifico">
@@ -32,23 +44,14 @@
     <!-- END ELEMENTO DIMENSIONSISTEMAESP-->
 
     <!-- ELEMENTO MODULOSESPINTEGRADOS -->
-    <xs:simpleType name="typeModulosEspIntegrados">
-        <xs:list itemType="mod:idModulo"/>
+    <xs:simpleType name="listModulosEspIntegrados">
+        <xs:list itemType="mod:typeIdModulo"/>
     </xs:simpleType>
-    <mod:simpleType name="idModulo">
-        <xs:restriction base="tns:typeModulosEspIntegrados">
+    <xs:simpleType name="typeModulosEspIntegrados">
+        <xs:restriction base="tns:listModulosEspIntegrados">
             <xs:minLength value="1"/>
         </xs:restriction>
-    </mod:simpleType>
+    </xs:simpleType>
     <!-- END ELEMENTO MODULOSESPINTEGRADOS -->
-    
-    <!-- GRUPO DE ATRIBUTOS -->
-   <xs:attributeGroup name="atrib">
-    <xs:attribute name="altura" type="xs:float" use="required"/>
-        <xs:attribute name="anchura" type="xs:float" use="required"/>
-        <xs:attribute name="longitud" type="xs:float" use="required"/>
-    <xs:attribute name="peso" type="xs:nonNegativeInteger" use="required"/>
-</xs:attributeGroup>
-<!-- END GRUPO DE ATRIBUTOS -->
 
 </xs:schema>
