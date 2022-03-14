@@ -14,9 +14,8 @@ xsi:schemaLocation="http://www.piat.upm.es/sistemaEspecifico sistemaEspecifico.x
 
     <!-- MODULOS ESP INTEGRADOS-->
     <sie:modulosEspIntegrados>
-
-        <!-- Codificar en fase 2 y 3 -->
-    
+        MODe0001
+        MODe0002
     </sie:modulosEspIntegrados>
     <!-- END MODULOS ESP INTEGRADOS-->
 </sie:sistemaEspecifico>

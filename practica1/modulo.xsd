@@ -13,8 +13,13 @@
             <xs:element name="funcionalidad" type="tns:typeFuncionalidad"/>
             <xs:element name="componentes" type="tns:typeComponentes" maxOccurs="unbounded"/>
         </xs:sequence>
-        <xs:attribute name="idModulo" type="xs:string" use="required"/>
+        <xs:attribute name="idModulo" type="tns:typeIdModulo" use="required"/>
     </xs:complexType>
+    <xs:simpleType name="typeIdModulo">
+        <xs:restriction base="xs:token">
+            <xs:pattern value="[A-Z]{3}[a-z][0-9]{4}"/>
+        </xs:restriction>
+    </xs:simpleType>
     <!-- ELEMENTO RAIZ -->
 
     <!-- TIPO MODULO -->
