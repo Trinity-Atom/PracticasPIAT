@@ -1,8 +1,54 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
             targetNamespace="http://www.piat.upm.es/sistemaEspecifico"
             xmlns:tns="http://www.piat.upm.es/sistemaEspecifico"
+            xmlns:mod="http://www.piat.upm.es/modulo"
             elementFormDefault="qualified">
-            
+
+    <!-- ELEMENTO RAIZ -->
+    <xs:element name="sistemaEspecifico" type="tns:typeSistemaEspecifico">
         
-</xsd:schema>
+    </xs:element>
+    <xs:complexType name="typeSistemaEspecifico">
+        <xs:sequence>
+            <xs:element name="descripcionSistemaEsp" type="tns:typeDescripcionSistemaEsp"/>
+            <xs:element name="dimensionSistemaEsp" type="tns:typeDimensionSistemaEsp"/>
+            <xs:element name="modulosEspIntegrados" type="tns:typeModulosEspIntegrados"/>
+        </xs:sequence>
+        <xs:attribute name="idSistemaEspecifico" type="xs:token" use="required"/>
+    </xs:complexType>
+    <!-- ELEMENTO RAIZ -->
+
+    <!-- ELEMENTO DESCRIPCIONSISTEMAESP -->
+    <xs:simpleType name="typeDescripcionSistemaEsp">
+        <xs:restriction base="xs:string"/>
+    </xs:simpleType>
+    <!-- ELEMENTO DESCRIPCIONSISTEMAESP -->
+   
+    <!-- ELEMENTO DIMENSIONSISTEMAESP-->
+    <xs:complexType name="typeDimensionSistemaEsp">
+        <xs:attributeGroup ref="tns:atrib"/>
+    </xs:complexType>
+    <!-- END ELEMENTO DIMENSIONSISTEMAESP-->
+
+    <!-- ELEMENTO MODULOSESPINTEGRADOS -->
+    <xs:simpleType name="typeModulosEspIntegrados">
+        <xs:list itemType="mod:idModulo"/>
+    </xs:simpleType>
+    <mod:simpleType name="idModulo">
+        <xs:restriction base="tns:typeModulosEspIntegrados">
+            <xs:minLength value="1"/>
+        </xs:restriction>
+    </mod:simpleType>
+    <!-- END ELEMENTO MODULOSESPINTEGRADOS -->
+    
+    <!-- GRUPO DE ATRIBUTOS -->
+   <xs:attributeGroup name="atrib">
+    <xs:attribute name="altura" type="xs:float" use="required"/>
+        <xs:attribute name="anchura" type="xs:float" use="required"/>
+        <xs:attribute name="longitud" type="xs:float" use="required"/>
+    <xs:attribute name="peso" type="xs:nonNegativeInteger" use="required"/>
+</xs:attributeGroup>
+<!-- END GRUPO DE ATRIBUTOS -->
+
+</xs:schema>
