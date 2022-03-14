@@ -11,6 +11,7 @@
     
     <mod:funcionalidad>
         Captan la señal del satélite
+        
     </mod:funcionalidad>
     <!-- END DESCRIPCIÓN DEL MODULO -->
 
@@ -18,19 +19,19 @@
     <mod:componentes>
         
         <!-- Captadores -->
-        <captadores>
-            <numeroCaptadores>
+        <mod:captadores>
+            <mod:numeroCaptadores>
                 1
-            </numeroCaptadores>
-            <captador idCaptador="Cap001">
-                <parametro>
+            </mod:numeroCaptadores>
+            <mod:captador idCaptador="Cap001">
+                <mod:parametro>
                     radiacion
-                </parametro>
-                <medida>
+                </mod:parametro>
+                <mod:medida>
                    0.52 kW/h 
-                </medida>
-            </captador>
-        </captadores>
+                </mod:medida>
+            </mod:captador>
+        </mod:captadores>
         <!-- END Captadores -->
 
     </mod:componentes>

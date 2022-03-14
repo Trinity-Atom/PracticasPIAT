@@ -46,10 +46,10 @@
     <!-- IF ELEMENT_CHOICE = TRANSMISORES-->
     <xs:complexType name="typeTransmisores">
         <xs:sequence>
-            <xs:element name="numeroTransmisores" type="xs:int">
+            <xs:element name="numeroTransmisores" type="xs:nonNegativeInteger">
                 <xs:key name="idTransmisor">
-                    <xs:selector xpath="modulo/componentes/transmisores/transmisor"/>
-                    <xs:field xpath="@idTransmisor"></xs:field>
+                    <xs:selector xpath="modulo/componentes/transmisores"/>
+                    <xs:field xpath="@idtransmisor"/>
                 </xs:key>
             </xs:element>
             <xs:element name="transmisor" type="tns:typeTransmisor" maxOccurs="unbounded"/>
@@ -82,7 +82,7 @@
 
         <!-- ELEMENTO TIPOMODULACION -->
         <xs:simpleType name="typeTipoModulacion">
-            <xs:restriction base="xs:string">
+            <xs:restriction base="xs:token">
                 <xs:enumeration value="BPSK"/>
                 <xs:enumeration value="QPSK"/>
                 <xs:enumeration value="16QAM"/>
@@ -101,22 +101,39 @@
     <!-- IF ELEMENT_CHOICE = CAPTADORES-->
     <xs:complexType name="typeCaptadores">
         <xs:sequence>
-            <xs:element name="numeroCaptadores" type="xs:int"/>
+            <xs:element name="numeroCaptadores" type="xs:nonNegativeInteger"/>
             <xs:element name="captador" type="tns:typeCaptador"/>
         </xs:sequence>
     </xs:complexType>
     <!-- END IF ELEMENT_CHOICE = CAPTADORES-->
 
-        <!-- ELEMENT CAPTADOR -->
+        <!-- ELEMENTO CAPTADOR -->
         <xs:complexType name="typeCaptador">
             <xs:sequence maxOccurs="unbounded">
-                <xs:element name="parametro" type="xs:string"/>
-                <xs:element name="medida" type="xs:typeMedida"></xs:element>
+                <xs:element name="parametro" type="tns:typeParametro"/>
+                <xs:element name="medida" type="tns:typeMedida"/>
             </xs:sequence>
-            <xs:attribute name="idCaptador" use="required">
-
-            </xs:attribute>
+            <xs:attribute name="idCaptador" use="required"/>
         </xs:complexType>
-        <!-- END ELEMENT CAPTADOR -->
+        <!-- END ELEMENTO CAPTADOR -->
+
+        <!-- ELEMENTO PARAMETRO -->
+        <xs:simpleType name="typeParametro">
+            <xs:restriction base="xs:token">
+                <xs:minLength value="5"/>
+                <xs:maxLength value="25"/>
+            </xs:restriction>
+        </xs:simpleType>
+        <!-- END ELEMENTO PARAMETRO-->
+
+        <!-- ELEMENTO MEDIDA-->
+        <xs:simpleType name="typeMedida">
+            <xs:list>
+                <xs:simpleType>
+                    <xs:union memberTypes="xs:decimal xs:string"/>
+                </xs:simpleType>
+            </xs:list>
+        </xs:simpleType>
+        <!-- END ELEMENTO MEDIDA-->
 
 </xs:schema>
