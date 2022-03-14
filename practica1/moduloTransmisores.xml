@@ -1,38 +1,53 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<modulo idModulo="MODe0002">
+<mod:modulo idModulo="MODe0002" 
+xmlns:mod="http://www.piat.upm.es/modulo"
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+xsi:schemaLocation="http://www.piat.upm.es/modulo modulo.xsd">
     
     <!-- DESCRIPCIÓN DEL MODULO -->
-    <tipoModulo>
+    <mod:tipoModulo>
         transmisor
-    </tipoModulo>
+    </mod:tipoModulo>
 
-    <funcionalidad>
+    <mod:funcionalidad>
         Transmiten la señal del satélite
-    </funcionalidad>
+    </mod:funcionalidad>
     <!-- END DESCRIPCIÓN DEL MODULO -->
 
     <!-- COMPONENTES DEL MODULO-->
-    <componentes>
+    <mod:componentes>
 
         <!-- Transmisores -->
-        <transmisores>
-            <numeroTransmisores>
-                2
-            </numeroTransmisores>
-            <transmisor idTransmisor="TR1aaa">
-                <parametrosTransmision>
-                    <tipoModulacion>
-                        BPSK
-                    </tipoModulacion>
-                    <tiempoVida>
+        <mod:transmisores>
+            <mod:numeroTransmisores>
+                1
+            </mod:numeroTransmisores>
+            <mod:transmisor idTransmisor="TR1aaa">
+                <mod:parametrosTransmision>
+                    <mod:tipoModulacion>
+                        QPSK
+                    </mod:tipoModulacion>
+                    <mod:tiempoVida>
                         2015-08-01
                         2022-02-12
-                    </tiempoVida>
-                </parametrosTransmision>
-            </transmisor>
-        </transmisores>
+                    </mod:tiempoVida>
+                </mod:parametrosTransmision>
+            </mod:transmisor>
+            
+            <mod:transmisor idTransmisor="TR1aaa">
+                <mod:parametrosTransmision>
+                    <mod:tipoModulacion>
+                        QPSK
+                    </mod:tipoModulacion>
+                    <mod:tiempoVida>
+                        2015-08-01
+                        2022-02-12
+                    </mod:tiempoVida>
+                </mod:parametrosTransmision>
+            </mod:transmisor>
+        </mod:transmisores>
         <!-- END Transmisores-->
         
-    </componentes>
+    </mod:componentes>
     <!-- END COMPONENTES DEL MODULO-->
-</modulo>
+</mod:modulo>
