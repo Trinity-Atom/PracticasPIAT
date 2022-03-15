@@ -1,47 +1,50 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<sitemaTF idSistemaTF="TF001">
+<stf:sitemaTF idSistemaTF="TF001"
+          xmlns:stf="http://www.piat.upm.es/sistemaTransformacion"
+          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+          xsi:schemaLocation="http://www.piat.upm.es/sistemaTransformacion sistemaTransformacion.xsd">
     
     <!-- INFORMACION DE ENTRADA (INPUT) -->
-    <informacionEntrada>
+    <stf:informacionEntrada>
 
         <!-- TRANSFORMACION 2 FOTO -->
-        <foto>
-            <distancia>
+        <stf:foto>
+            <stf:distancia>
                 18000
-            </distancia>
-            <centro>
-                <longitud>
+            </stf:distancia>
+            <stf:centro>
+                <stf:longitud>
                     150
-                </longitud>
-                <latitud>
+                </stf:longitud>
+                <stf:latitud>
                     5
-                </latitud>
-            </centro>
-            <forma>
+                </stf:latitud>
+            </stf:centro>
+            <stf:forma>
                 cuadrado
-            </forma>
-        </foto>
+            </stf:forma>
+        </stf:foto>
         <!-- END TRANSFORMACION 2 FOTO -->
 
-    </informacionEntrada>
+    </stf:informacionEntrada>
     <!-- END INFORMACION DE ENTRADA (INPUT) -->
 
     <!-- INFORMACION DE SALIDA (OUTPUT) -->
-    <informacionSalida>
-        <imagen>
-            <dimensiones>
+    <stf:informacionSalida>
+        <stf:imagen>
+            <stf:dimensiones>
                 60
                 50
-            </dimensiones>
-            <descripcion>
+            </stf:dimensiones>
+            <stf:descripcion>
 
-            </descripcion>
-            <contenido formato="GIF">
+            </stf:descripcion>
+            <stf:contenido formato="GIF">
 
-            </contenido>
-        </imagen>
-    </informacionSalida>
+            </stf:contenido>
+        </stf:imagen>
+    </stf:informacionSalida>
     <!-- END INFORMACION DE SALIDA (OUTPUT) -->
 
-</sitemaTF>
+</stf:sitemaTF>
