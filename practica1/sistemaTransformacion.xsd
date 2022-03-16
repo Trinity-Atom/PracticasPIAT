@@ -5,8 +5,12 @@
             xmlns:mod="http://www.piat.upm.es/modulo"
             elementFormDefault="qualified">
 
-<xs:import namespace="http://www.piat.upm.es/modulo"
-           schemaLocation=".//modulo.xsd"></xs:import>
+    <xs:import namespace="http://www.piat.upm.es/modulo"
+               schemaLocation=".//modulo.xsd"/>
+
+    <xs:notation name="gif" public="image/gif" system="view.png"/>
+    <xs:notation name="jpeg" public="image/jpeg" system="view.png"/>
+    <xs:notation name="png" public="image/png" system="view.png"/>
 
     <!-- ELEMENTO RAIZ -->
     <xs:element name="sistemaTF" type="tns:typeSistemaTF"/>   
@@ -46,11 +50,12 @@
             </xs:simpleType>
             <!-- END ELEMENT PARAMETRO-->
 
-            <!-- ELEMENT PARAMETRO-->
+            <!-- ELEMENT MEDIDA-->
             <xs:simpleType name="typeMedida">
                 <xs:restriction base="mod:typeMedida"/>
             </xs:simpleType>
-            <!-- END ELEMENT PARAMETRO-->
+            <!-- END ELEMENT MEDIDA-->
+
         <!-- END IF ELEMENT_CHOICE = VALOR -->
 
         <!-- IF ELEMENT_CHOICE = FOTO -->
@@ -100,21 +105,69 @@
         <!-- END IF ELEMENT_CHOICE = FOTO -->
     <!-- END ELEMENTO INFORMACIONENTRADA-->
 
-    <!-- ELEMENTO INFORMACION SALIDA -->
+    <!-- ELEMENTO INFORMACIONSALIDA -->
     <xs:complexType name="typeInformacionSalida">
         <xs:choice>
             <xs:element name="texto" type="tns:typeTexto"/>
-            <xs:element name="foto" type="tns:typeFotoSalida"/>
+            <xs:element name="imagen" type="tns:typeImagen"/>
         </xs:choice>
     </xs:complexType>
 
-        <!-- ELEMENTO FOTOSALIDA -->
+        <!-- ELEMENTO TEXTO -->
         <xs:complexType name="typeTexto">
-            
-            <xs:attribute name="formato"/>
-            <xs:attribute name="longitud" type="xs:nonNegativeInteger"/>
+            <xs:simpleContent>
+                <xs:extension base="xs:string">
+                    <xs:attribute name="formato" type="xs:token"/>
+                    <xs:attribute name="longitud" type="xs:nonNegativeInteger"/>
+                </xs:extension>
+            </xs:simpleContent>
         </xs:complexType>
-        <!-- END ELEMENTO FOTOSALIDA -->
+        <!-- END ELEMENTO TEXTO -->
+
+        <!-- ELEMENTO IMAGEN -->
+        <xs:complexType name="typeImagen">
+            <xs:sequence>
+                <xs:element name="dimensiones" type="tns:typeDimensiones"/>
+                <xs:element name="descripcion" type="tns:typeDescripcion" minOccurs="0"/>
+                <xs:element name="contenido" type="tns:typeContenido"/>
+            </xs:sequence>
+            <xs:attribute name="idImagen" type="tns:typeIdImagen" use="required"/>
+        </xs:complexType>
+        <xs:simpleType name="typeIdImagen">
+            <xs:restriction base="xs:token">
+                <xs:pattern value="IMAG[0-9]{3}"/>
+            </xs:restriction>
+        </xs:simpleType>
+
+            <!-- ELEMENTO DIMENSIONES -->
+            <xs:simpleType name="typeDimensiones">
+               <xs:restriction base="tns:listaEnteros">
+                    <xs:minLength value="2"/>
+                    <xs:maxLength value="2"/>
+               </xs:restriction>
+            </xs:simpleType>
+
+            <xs:simpleType name="listaEnteros">
+                <xs:list itemType="xs:int"/>
+            </xs:simpleType>
+            <!-- END ELEMENTO DIMENSIONES -->
+
+            <!-- ELEMENTO DESCRIPCION-->
+            <xs:simpleType name="typeDescripcion">
+                <xs:restriction base="xs:string"/>
+            </xs:simpleType>
+            <!-- END ELEMENTO DESCRIPCION-->
+
+            <!-- ELEMENTO CONTENIDO -->
+            <xs:simpleType name="typeContenido">
+                <xs:restriction base="xs:NOTATION">
+                    <xs:enumeration value="tns:gif"/>
+                    <xs:enumeration value="tns:jpeg"/>
+                    <xs:enumeration value="tns:png"/>
+                </xs:restriction>
+            </xs:simpleType>
+            <!-- END ELEMENTO CONTENIDO -->
+        <!-- ELEMENTO IMAGEN -->
 
     <!-- END ELEMENTO INFORMACION SALIDA -->
 </xs:schema>

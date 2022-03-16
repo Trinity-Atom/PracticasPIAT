@@ -22,14 +22,7 @@ xsi:schemaLocation="http://www.piat.upm.es/sistemaTransformacion sistemaTransfor
     <!-- END INFORMACION DE ENTRADA (INPUT) -->
     <!-- INFORMACION DE SALIDA (OUTPUT) -->
     <stf:informacionSalida>
-        <stf:texto>
-            <stf:formato>
-                xml
-            </stf:formato>
-            <stf:longitud>
-                15
-            </stf:longitud>
-        </stf:texto>
+        <stf:texto formato="jpeg"/>
     </stf:informacionSalida>
     <!-- END INFORMACION DE SALIDA (OUTPUT) -->
 </stf:sistemaTF>

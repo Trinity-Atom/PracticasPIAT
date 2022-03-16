@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<stf:sitemaTF idSistemaTF="TF001"
+<stf:sistemaTF idSistemaTF="TF001"
           xmlns:stf="http://www.piat.upm.es/sistemaTransformacion"
           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
           xsi:schemaLocation="http://www.piat.upm.es/sistemaTransformacion sistemaTransformacion.xsd">
@@ -32,19 +32,19 @@
 
     <!-- INFORMACION DE SALIDA (OUTPUT) -->
     <stf:informacionSalida>
-        <stf:imagen>
+        <stf:imagen idImagen="IMAG001">
             <stf:dimensiones>
-                60
                 50
+                60
             </stf:dimensiones>
             <stf:descripcion>
-
+                Esto es una descripcion
             </stf:descripcion>
-            <stf:contenido formato="GIF" longitud="-1">
-
+            <stf:contenido>
+            tn
             </stf:contenido>
         </stf:imagen>
     </stf:informacionSalida>
     <!-- END INFORMACION DE SALIDA (OUTPUT) -->
 
-</stf:sitemaTF>
+</stf:sistemaTF>
