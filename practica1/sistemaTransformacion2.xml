@@ -40,7 +40,7 @@
             <stf:descripcion>
 
             </stf:descripcion>
-            <stf:contenido formato="GIF">
+            <stf:contenido formato="GIF" longitud="-1">
 
             </stf:contenido>
         </stf:imagen>

@@ -13,7 +13,7 @@
     <xs:complexType name="typeSistemaTF">
         <xs:sequence>
             <xs:element name="informacionEntrada" type="tns:typeInformacionEntrada"/>
-            <xs:element name="informacionSalida" type="tns:typeinformacionSalida"/>
+            <xs:element name="informacionSalida" type="tns:typeInformacionSalida"/>
         </xs:sequence>
         <xs:attribute name="idSistemaTF" type="tns:typeIdSistemaTF" use="required"/>
     </xs:complexType>
@@ -28,70 +28,93 @@
     <xs:complexType name="typeInformacionEntrada">
         <xs:choice>
             <xs:element name="valor" type="tns:typeValor"/>
-            <xs:element name="foto" type="tns:typeFoto"/>
+            <xs:element name="foto" type="tns:typeFotoEntrada"/>
         </xs:choice>
     </xs:complexType>
-    <!-- END ELEMENTO INFORMACIONENTRADA-->
 
-    <!-- IF ELEMENT_CHOICE = VALOR -->
-    <xs:complexType name="typeValor">
-        <xs:sequence>
-            <xs:element name="parametro" type="tns:typeParametro"/>
-            <xs:element name="medida" type="tns:typeMedida"/>
-        </xs:sequence>
-    </xs:complexType>
-
-        <!-- ELEMENT PARAMETRO-->
-        <xs:simpleType name="typeParametro">
-            <xs:restriction base="mod:typeParametro"/>
-        </xs:simpleType>
-        <!-- END ELEMENT PARAMETRO-->
-
-        <!-- ELEMENT PARAMETRO-->
-        <xs:simpleType name="typeMedida">
-            <xs:restriction base="mod:typeMedida"/>
-        </xs:simpleType>
-        <!-- END ELEMENT PARAMETRO-->
-    <!-- END IF ELEMENT_CHOICE = VALOR -->
-
-    <!-- IF ELEMENT_CHOICE = FOTO -->
-    <xs:complexType name="typeFoto">
-        <xs:all>
-            <xs:element name="distancia" type="xs:float"/>
-            <xs:element name="centro" type="tns:typeCentro"/>
-            <xs:element name="forma" type="tns:typeForma"/>
-        </xs:all>
-    </xs:complexType>
-
-        <!-- ELEMENT CENTRO -->
-        <xs:complexType name="typeCentro">
+        <!-- IF ELEMENT_CHOICE = VALOR -->
+        <xs:complexType name="typeValor">
             <xs:sequence>
-                <xs:element name="longitud" type="tns:typeLongitud"/>
-                <xs:element name="latitud" type="tns:typeLatitud"></xs:element>
+                <xs:element name="parametro" type="tns:typeParametro"/>
+                <xs:element name="medida" type="tns:typeMedida"/>
             </xs:sequence>
         </xs:complexType>
-            
-            <!-- ELEMENT LONGITUD -->
-            <xs:simpleType name="typeLongitud">
-                <xs:restriction base="xs:float">
-                    <xs:minInclusive value="0"/>
-                    <xs:maxInclusive value="180"/>
+
+            <!-- ELEMENT PARAMETRO-->
+            <xs:simpleType name="typeParametro">
+                <xs:restriction base="mod:typeParametro"/>
+            </xs:simpleType>
+            <!-- END ELEMENT PARAMETRO-->
+
+            <!-- ELEMENT PARAMETRO-->
+            <xs:simpleType name="typeMedida">
+                <xs:restriction base="mod:typeMedida"/>
+            </xs:simpleType>
+            <!-- END ELEMENT PARAMETRO-->
+        <!-- END IF ELEMENT_CHOICE = VALOR -->
+
+        <!-- IF ELEMENT_CHOICE = FOTO -->
+        <xs:complexType name="typeFotoEntrada">
+            <xs:all>
+                <xs:element name="distancia" type="xs:float"/>
+                <xs:element name="centro" type="tns:typeCentro"/>
+                <xs:element name="forma" type="tns:typeForma"/>
+            </xs:all>
+        </xs:complexType>
+
+            <!-- ELEMENT CENTRO -->
+            <xs:complexType name="typeCentro">
+                <xs:sequence>
+                    <xs:element name="longitud" type="tns:typeLongitud"/>
+                    <xs:element name="latitud" type="tns:typeLatitud"/>
+                </xs:sequence>
+            </xs:complexType>
+                
+                <!-- ELEMENT LONGITUD -->
+                <xs:simpleType name="typeLongitud">
+                    <xs:restriction base="xs:float">
+                        <xs:minInclusive value="0"/>
+                        <xs:maxInclusive value="180"/>
+                    </xs:restriction>
+                </xs:simpleType>
+                <!-- END ELEMENT LONGITUD -->
+                
+                <!-- ELEMENT LATITUD -->
+                <xs:simpleType name="typeLatitud">
+                    <xs:restriction base="xs:float">
+                        <xs:minInclusive value="-90"/>
+                        <xs:maxInclusive value="90"/>
+                    </xs:restriction>
+                </xs:simpleType>
+                <!-- END ELEMENT LATITUD -->
+            <!-- END ELEMENT CENTRO -->
+
+            <!-- ELEMENT FORMA -->
+            <xs:simpleType name="typeForma">
+                <xs:restriction base="xs:token">
+                    <xs:pattern value="cuadrado"/>
+                    <xs:pattern value="rectangulo"/>
                 </xs:restriction>
             </xs:simpleType>
-            <!-- END ELEMENT LONGITUD -->
+            <!-- END ELEMENT FORMA -->
+        <!-- END IF ELEMENT_CHOICE = FOTO -->
+    <!-- END ELEMENTO INFORMACIONENTRADA-->
+
+    <!-- ELEMENTO INFORMACION SALIDA -->
+    <xs:complexType name="typeInformacionSalida">
+        <xs:choice>
+            <xs:element name="texto" type="tns:typeTexto"/>
+            <xs:element name="foto" type="tns:typeFotoSalida"/>
+        </xs:choice>
+    </xs:complexType>
+
+        <!-- ELEMENTO FOTOSALIDA -->
+        <xs:complexType name="typeTexto">
             
-            <!-- ELEMENT LATITUD -->
-            <xs:simpleType name="typeLatitud">
-                <xs:restriction base="xs:float">
-                    <xs:minInclusive value="-90"/>
-                    <xs:maxInclusive value="90"/>
-                </xs:restriction>
-            </xs:simpleType>
-            <!-- END ELEMENT LATITUD -->
-        <!-- END ELEMENT CENTRO -->
+            <xs:attribute name="formato"/>
+            <xs:attribute name="longitud" type="xs:nonNegativeInteger"/>
+        </xs:complexType>
+        <!-- END ELEMENTO FOTOSALIDA -->
 
-        <!-- ELEMENT-->
-
-    <!-- END IF ELEMENT_CHOICE = FOTO -->
-
+    <!-- END ELEMENTO INFORMACION SALIDA -->
 </xs:schema>
