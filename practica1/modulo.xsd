@@ -6,7 +6,12 @@
             elementFormDefault="qualified">
 
     <!-- ELEMENTO RAIZ -->
-    <xs:element name="modulo" type="tns:typeModulo" />
+    <xs:element name="modulo" type="tns:typeModulo">
+        <xs:key name="idTransmisor">
+            <xs:selector xpath="modulo/componentes/transmisores/transmisor"/>
+            <xs:field xpath="@idTransmisor"/>
+        </xs:key>
+    </xs:element>
     <xs:complexType name="typeModulo">
         <xs:sequence>
             <xs:element name="tipoModulo" type="tns:typeTipoModulo"/>
@@ -52,12 +57,13 @@
     <xs:complexType name="typeTransmisores">
         <xs:sequence>
             <xs:element name="numeroTransmisores" type="xs:nonNegativeInteger">
-                <xs:key name="idTransmisor">
-                    <xs:selector xpath="modulo/componentes/transmisores"/>
-                    <xs:field xpath="@idtransmisor"/>
+            </xs:element>
+            <xs:element name="transmisor" type="tns:typeTransmisor" maxOccurs="unbounded">
+                <xs:key name="keyIdTransmisor">
+                    <xs:selector xpath="modulo/componentes/transmisores/transmisor"/>
+                    <xs:field xpath="@idTransmisor"/>
                 </xs:key>
             </xs:element>
-            <xs:element name="transmisor" type="tns:typeTransmisor" maxOccurs="unbounded"/>
         </xs:sequence>
     </xs:complexType>
 
