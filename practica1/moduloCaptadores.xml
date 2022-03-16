@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <mod:modulo idModulo="MODe0001"
-        xmlns:mod="http://www.piat.upm.es/modulo"
-        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-        xsi:schemaLocation="http://www.piat.upm.es/modulo modulo.xsd">
+            xmlns:mod="http://www.piat.upm.es/modulo"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://www.piat.upm.es/modulo modulo.xsd">
     
     <!-- DESCRIPCIÓN DEL MODULO-->
     <mod:tipoModulo>

@@ -18,9 +18,7 @@
     <!-- END GRUPO DE ATRIBUTOS -->
 
     <!-- ELEMENTO RAIZ -->
-    <xs:element name="sistemaEspecifico" type="tns:typeSistemaEspecifico">
-        
-    </xs:element>
+    <xs:element name="sistemaEspecifico" type="tns:typeSistemaEspecifico"/>
     <xs:complexType name="typeSistemaEspecifico">
         <xs:sequence>
             <xs:element name="descripcionSistemaEsp" type="tns:typeDescripcionSistemaEsp"/>

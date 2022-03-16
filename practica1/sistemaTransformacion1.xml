@@ -1,32 +1,35 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<sitemaTF idSistemaTF="TF001">
+<stf:sistemaTF idSistemaTF="TF001"
+xmlns:stf="http://www.piat.upm.es/sistemaTransformacion"
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+xsi:schemaLocation="http://www.piat.upm.es/sistemaTransformacion sistemaTransformacion.xsd">
 
     <!-- INFORMACION DE ENTRADA (INPUT) -->
-    <informacionEntrada>
+    <stf:informacionEntrada>
 
         <!-- TRANSFORMACION 1 VALOR -->
-        <valor>
-            <parametro>
+        <stf:valor>
+            <stf:parametro>
                 radiacion
-            </parametro>
-            <medida>
+            </stf:parametro>
+            <stf:medida>
                 0.52 kW/h 
-            </medida>
-        </valor>
+            </stf:medida>
+        </stf:valor>
         <!-- END TRANSFORMACION 1 VALOR -->
 
-    </informacionEntrada>
+    </stf:informacionEntrada>
     <!-- END INFORMACION DE ENTRADA (INPUT) -->
     <!-- INFORMACION DE SALIDA (OUTPUT) -->
-    <informacionSalida>
-        <texto>
-            <formato>
+    <stf:informacionSalida>
+        <stf:texto>
+            <stf:formato>
                 xml
-            </formato>
-            <longitud>
+            </stf:formato>
+            <stf:longitud>
                 15
-            </longitud>
-        </texto>
-    </informacionSalida>
+            </stf:longitud>
+        </stf:texto>
+    </stf:informacionSalida>
     <!-- END INFORMACION DE SALIDA (OUTPUT) -->
-</sitemaTF>
+</stf:sistemaTF>
