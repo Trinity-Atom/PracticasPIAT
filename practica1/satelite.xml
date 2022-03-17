@@ -23,10 +23,43 @@
     <sat:modulos idModulo="MODe0001">
         <mod:tipoModulo>especifico</mod:tipoModulo>
         <mod:funcionalidad>Camara de alta resolución</mod:funcionalidad>
+        <mod:componentes>
+            <mod:captadores>
+                <mod:numeroCaptadores>
+                1
+            </mod:numeroCaptadores>
+            <mod:captador idCaptador="Cap001">
+                <mod:parametro>
+                    radiacion
+                </mod:parametro>
+                <mod:medida>
+                   0.52 kW/h 
+                </mod:medida>
+            </mod:captador>
+            </mod:captadores>
+        </mod:componentes>
+    </sat:modulos>
+
+    <sat:modulos idModulo="MODe0003">
     </sat:modulos>
     <sat:modulos idModulo="MODe0002">
         <mod:tipoModulo>especifico</mod:tipoModulo>
         <mod:funcionalidad>Sistema de telemetría</mod:funcionalidad>
+        <mod:componentes>
+            <mod:captadores>
+                <mod:numeroCaptadores>
+                1
+            </mod:numeroCaptadores>
+            <mod:captador idCaptador="Cap002">
+                <mod:parametro>
+                    radiacion
+                </mod:parametro>
+                <mod:medida>
+                   0.81 kW/h 
+                </mod:medida>
+            </mod:captador>
+            </mod:captadores>
+        </mod:componentes>
     </sat:modulos>
     <!-- END MODULOS ESPECIFICOS -->
 
@@ -34,6 +67,38 @@
     <sat:modulos idModulo="MODe0002">
         <mod:tipoModulo>transmisor</mod:tipoModulo>
         <mod:funcionalidad>Sistema tranforma el texto</mod:funcionalidad>
+        <mod:componentes>
+
+        <!-- Transmisores -->
+        <mod:transmisores>
+            <mod:numeroTransmisores>
+                1
+            </mod:numeroTransmisores>
+            <mod:transmisor idTransmisor="TR1aaa">
+                <mod:parametrosTransmision>
+                    <mod:tipoModulacion>
+                        QPSK
+                    </mod:tipoModulacion>
+                    <mod:tiempoVida>
+                        2015-08-01
+                        2022-02-12
+                    </mod:tiempoVida>
+                </mod:parametrosTransmision>
+            </mod:transmisor>
+            
+            <mod:transmisor idTransmisor="TR1aaa">
+                <mod:parametrosTransmision>
+                    <mod:tipoModulacion>
+                        QPSK
+                    </mod:tipoModulacion>
+                    <mod:tiempoVida>
+                        2015-08-01
+                        2022-02-12
+                    </mod:tiempoVida>
+                </mod:parametrosTransmision>
+            </mod:transmisor>
+        </mod:transmisores>
+    </mod:componentes>
     </sat:modulos>
     <sat:modulos idModulo="MODe0002">
         <mod:tipoModulo>transmisor</mod:tipoModulo>

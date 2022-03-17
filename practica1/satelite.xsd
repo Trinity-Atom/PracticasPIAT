@@ -24,7 +24,7 @@ schemaLocation=".//sistemaTransmision.xsd"/>
         <xs:element name="fechaLanzamiento" type="xs:dateTime"/>
         <xs:element name="orbita" type="tns:typeOrbita"/>
         <xs:element name="descripcionFuncionalidades" type="tns:typedescripcionFuncionalidades"/>
-        <xs:element name="modulos" type="mod:typeModulo" maxOccurs="unbounded"/>
+        <xs:element name="modulos" type="mod:typeModulos"/>
         <xs:element name="sistemaEsp" type="ses:typeSistemaEspecifico" maxOccurs="unbounded"/>
         <xs:element name="SistemaTF" type="stf:typeSistemaTF"/>
         <xs:element name="SistemaTx" type="stx:typeSistemaTX"/>
@@ -52,7 +52,9 @@ schemaLocation=".//sistemaTransmision.xsd"/>
     <!-- ELEMENTO DESCRIPCIONFUNCIONALIDADES -->
 
     <!-- ELEMENTO MODULOS -->
-    
+    <xs:complexType name="typeModulos">
+        
+    </xs:complexType>
     <!-- ELEMENTO MODULOS -->
 
     <!-- ELEMENTO SISTEMAESP -->
