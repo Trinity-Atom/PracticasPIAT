@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+targetNamespace="http://www.piat.upm.es/satelite"
+xmlns:tns="http://www.piat.upm.es/satelite"
+xmlns:mod="http://www.piat.upm.es/modulo"
+xmlns:ses="http://www.piat.upm.es/sistemaEspecifico"
+xmlns:stf="http://www.piat.upm.es/sistemaTransformacion"
+xmlns:stx="https://piat.upm.es/SistemaTransmision"
+elementFormDefault="qualified">
+
+<xs:import namespace="http://www.piat.upm.es/modulo"
+schemaLocation=".//modulo.xsd"/>
+<xs:import namespace="http://www.piat.upm.es/sistemaEspecifico"
+schemaLocation=".//sistemaEspecifico.xsd"/>
+<xs:import namespace="http://www.piat.upm.es/sistemaTransformacion"
+schemaLocation=".//sistemaTransformacion.xsd"/>
+<xs:import namespace="https://piat.upm.es/SistemaTransmision"
+schemaLocation=".//sistemaTransmision.xsd"/>
+
+    <!-- ELEMENTO RAIZ -->
+    <xs:element name="satelite" type="tns:typeSatelite"/>
+    <xs:complexType name="typeSatelite">
+    <xs:sequence>
+        <xs:element name="fechaLanzamiento" type="xs:dateTime"/>
+        <xs:element name="orbita" type="tns:typeOrbita"/>
+        <xs:element name="descripcionFuncionalidades" type="tns:typedescripcionFuncionalidades"/>
+        <xs:element name="modulos" type="mod:typeModulo" maxOccurs="unbounded"/>
+        <xs:element name="sistemaEsp" type="ses:typeSistemaEspecifico" maxOccurs="unbounded"/>
+        <xs:element name="SistemaTF" type="stf:typeSistemaTF"/>
+        <xs:element name="SistemaTx" type="stx:typeSistemaTX"/>
+    </xs:sequence>
+    <xs:attribute name="idSatelite" type="xs:token" use="required"/>
+    </xs:complexType>
+  
+    <!-- ELEMENTO RAIZ -->
+
+    <!-- ELEMENTO ORBITA -->
+    <xs:simpleType name="typeOrbita">
+        <xs:restriction base="xs:float">
+            <xs:minInclusive value="200"/>
+            <xs:maxExclusive value="36000"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <!-- ELEMENTO ORBITA -->
+
+    <!-- ELEMENTO DESCRIPCIONFUNCIONALIDADES -->
+    <xs:complexType name="typedescripcionFuncionalidades" mixed="true">
+        <xs:sequence>
+            <xs:any/>
+        </xs:sequence>
+    </xs:complexType>
+    <!-- ELEMENTO DESCRIPCIONFUNCIONALIDADES -->
+
+    <!-- ELEMENTO MODULOS -->
+    
+    <!-- ELEMENTO MODULOS -->
+
+    <!-- ELEMENTO SISTEMAESP -->
+    
+    <!-- ELEMENTO SISTEMAESP -->
+
+    <!-- ELEMENTO SISTEMATF -->
+    
+    <!-- ELEMENTO SISTEMATF -->
+
+    <!-- ELEMENTO SISTEMATX -->
+    
+    <!-- ELEMENTO SISTEMATX -->
+</xs:schema>

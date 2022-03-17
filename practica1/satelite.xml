@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<sat:satelite idSatelite="GALILEO_001"
+              xmlns:sat="http://www.piat.upm.es/satelite"
+              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+              xmlns:mod="http://www.piat.upm.es/modulo"
+              xmlns:ses="http://www.piat.upm.es/sistemaEspecifico"
+              xmlns:stf="http://www.piat.upm.es/sistemaTransformacion"
+              xmlns:stx="https://piat.upm.es/SistemaTransmision"
+              xsi:schemaLocation="http://www.piat.upm.es/satelite satelite.xsd">
+
+    <sat:fechaLanzamiento>
+        2020-12-01T20:15:35
+    </sat:fechaLanzamiento>
+    <sat:orbita>
+        200
+    </sat:orbita>
+    <sat:descripcionFuncionalidades>
+        Insertar descripcion
+    </sat:descripcionFuncionalidades>
+    
+    <!-- MODULOS ESPECIFICOS -->
+    <sat:modulos idModulo="MODe0001">
+        <mod:tipoModulo>especifico</mod:tipoModulo>
+        <mod:funcionalidad>Camara de alta resolución</mod:funcionalidad>
+    </sat:modulos>
+    <sat:modulos idModulo="MODe0002">
+        <mod:tipoModulo>especifico</mod:tipoModulo>
+        <mod:funcionalidad>Sistema de telemetría</mod:funcionalidad>
+    </sat:modulos>
+    <!-- END MODULOS ESPECIFICOS -->
+
+    <!-- MODULOS DE TRANSMISION -->
+    <sat:modulos idModulo="MODe0002">
+        <mod:tipoModulo>transmisor</mod:tipoModulo>
+        <mod:funcionalidad>Sistema tranforma el texto</mod:funcionalidad>
+    </sat:modulos>
+    <sat:modulos idModulo="MODe0002">
+        <mod:tipoModulo>transmisor</mod:tipoModulo>
+        <mod:funcionalidad>Sistema tranforma la imagen</mod:funcionalidad>
+    </sat:modulos>
+    <!-- MODULOS DE TRANSMISION -->
+    <sat:SistemaTx idSistemaTX="TX001"></sat:SistemaTx>
+
+    </sat:satelite>
