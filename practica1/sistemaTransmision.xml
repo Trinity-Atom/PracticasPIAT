@@ -1,25 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<sistemaTX 
-idSistemaTX="TX001"
-xmlns="https://www.w3schools.com"
-xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-xsi:schemaLocation="https://www.w3schools.com/xml sistemaTransmision.xsd">>
-    <subsistemaTX>
-        <NombreSubsistemaTX>
-            SUBS01
-        </NombreSubsistemaTX>
-        <nubeInformatica>
-            <nombreCompleto>
+<stx:sistemaTX idSistemaTX="TX001"
+    xmlns:stx="https://piat.upm.es/SistemaTransmision"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="https://piat.upm.es/SistemaTransmision sistemaTransmision.xsd">
+    <stx:subsistemaTX>
+        <stx:nombreSubsistemaTX>
+            STX001
+        </stx:nombreSubsistemaTX>
+        <stx:nubeInformatica>
+            <stx:nombreCompleto>
                 nube satelital Xpro
-            </nombreCompleto>
-            <uri>
-                http://nubecita.com
-            </uri>
-        </nubeInformatica>
-        <modulosTXIntegrados>
-            MODe0001
-            MODe0002
-        </modulosTXIntegrados>
-    </subsistemaTX>
-</sistemaTX>
+            </stx:nombreCompleto>
+            <stx:uri>
+                http://www.nubecita.com
+            </stx:uri>
+        </stx:nubeInformatica>
+        <stx:modulosTXIntegrados>
+            
+        </stx:modulosTXIntegrados>
+    </stx:subsistemaTX>
+</stx:sistemaTX>

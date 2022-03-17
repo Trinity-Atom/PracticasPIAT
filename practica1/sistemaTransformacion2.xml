@@ -40,9 +40,7 @@
             <stf:descripcion>
                 Esto es una descripcion
             </stf:descripcion>
-            <stf:contenido>
-            tn
-            </stf:contenido>
+            <stf:contenido formato="stf:png"/>
         </stf:imagen>
     </stf:informacionSalida>
     <!-- END INFORMACION DE SALIDA (OUTPUT) -->
