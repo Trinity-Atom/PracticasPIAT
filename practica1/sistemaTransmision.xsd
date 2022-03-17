@@ -2,44 +2,93 @@
 
 <xs:schema 
 xmlns:xs="http://www.w3.org/2001/XMLSchema"
-targetNamespace="https://www.w3schools.com"
-xmlns="https://www.w3schools.com"
+targetNamespace="https://piat.upm.es/SistemaTransmision"
+xmlns:tns="https://piat.upm.es/SistemaTransmision"
+xmlns:mod="http://www.piat.upm.es/modulo"
 elementFormDefault="qualified">
+
+<xs:import namespace="http://www.piat.upm.es/modulo"
+schemaLocation=".//modulo.xsd"></xs:import>
+
         
-        <!-- MODULO -->
-        <xs:element name="sistemaTX">
-            <xs:complexType>
-                <xs:sequence>
-                    <xs:element name="tipoModulo" type="typeTipoModulo"/>
-                    <xs:element name="funcionalidad" type="typeFuncionalidad"/>
-                    <xs:element name="componentes" type="typeComponentes"/>
-                </xs:sequence>
-            </xs:complexType>
-        </xs:element>
-        <!-- END MODULO -->
+    <!-- ELEMENTO RAIZ -->
+    <xs:element name="sistemaTX" type="tns:typeSistemaTX"/>
+    <xs:complexType name="typeSistemaTX">
+        <xs:sequence>
+            <xs:element name="subsistemaTX" type="tns:typeSubsistemaTX" maxOccurs="unbounded"></xs:element>
+        </xs:sequence>
+        <xs:attribute name="idSistemaTX" type="tns:typeIdSistemaTX" use="required"></xs:attribute>
+    </xs:complexType>
+    <xs:simpleType name="typeIdSistemaTX">
+        <xs:restriction base="xs:token">
+            <xs:pattern value="TX[0-9]{3}"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <!-- END ELEMENTO RAIZ -->
 
-        <!-- TIPO MODULO -->
-        <xs:complexType name="typeTipoModulo">
-            <xs:sequence>
-                <xs:element name="nombre" type="xs:string"/>
-            </xs:sequence>
-        </xs:complexType>
-        <!-- END TIPO MODULO -->
+    <!-- ELEMENTO SUBSISTEMATX -->
+    <xs:complexType name="typeSubsistemaTX">
+        <xs:sequence>
+            <xs:element name="nombreSubsistemaTX" type="tns:typeNombreSubsistemaTX"/>
+            <xs:element name="nubeInformatica" type="tns:typeNubeInformatica"/>
+            <xs:element name="modulosTXIntegrados" type="tns:typeModulosTXIntegrados"/>
+        </xs:sequence>
+    </xs:complexType>
+    <!-- END ELEMENTO SUBSISTEMATX -->
 
-        <!-- TIPO FUNCIONALIDAD -->
-        <xs:complexType name="typeFuncionalidad">
-            <xs:sequence>
-                <xs:element name="nombre" type="xs:string"/>
-            </xs:sequence>
-        </xs:complexType>
+    <!-- ELEMENTO NOMBRESUBSISTEMATX -->
+    <xs:simpleType name="typeNombreSubsistemaTX">
+        <xs:union memberTypes="tns:typeCaracter xs:int"/>
+    </xs:simpleType>
+    <xs:simpleType name="typeCaracter">
+        <xs:restriction base="xs:token">
+            <xs:minLength value="1"/>
+            <xs:maxLength value="6"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <!-- END ELEMENTO TYPENUBEINFORMATICA -->
+    <xs:complexType name="typeNubeInformatica">
+        <xs:sequence>
+            <xs:group ref="tns:groupNombreAcronimo"/>
+            <xs:element name="uri" type="tns:typeUri"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:group name="groupNombreAcronimo">
+        <xs:choice>
+            <xs:element name="nombreCompleto" type="tns:typeNombreCompleto" minOccurs="0" maxOccurs="unbounded"/>
+            <xs:element name="acronimo" type="xs:token" minOccurs="0" maxOccurs="unbounded"/>
+        </xs:choice>
+    </xs:group>
 
-        <!-- END TIPO FUNCIONALIDAD -->
+        <!-- IF ELEMENT_CHOICE = NOMBRECOMPLETO -->
+            <xs:simpleType name="typeNombreCompleto">
+                <xs:restriction base="xs:string"/>
+            </xs:simpleType>
+        <!-- END IF ELEMENT_CHOICE = NOMBRECOMPLETO -->
 
-        <!-- TIPO COMPONENTES -->
-        <xs:complexType name="typeComponentes">
-            <xs:sequence>
-                <xs:element name="nombre" type="xs:string"/>
-            </xs:sequence>
-        </xs:complexType>
-        <!-- END TIPO COMPONENTES -->
+        <!-- IF ELEMENT_CHOICE = ACRONIMO -->
+        <xs:simpleType name="typeAcronimo">
+            <xs:restriction base="xs:token"/>
+        </xs:simpleType>
+        <!-- IF ELEMENT_CHOICE = ACRONIMO -->
+
+        <!-- IF ELEMENTO URI -->
+        <xs:simpleType name="typeUri">
+            <xs:restriction base="xs:token">
+                <xs:pattern value="(http|https):\/\/www.*.[a-z][a-z]*"/>
+            </xs:restriction>
+        </xs:simpleType>
+        <!-- END IF ELEMENTO URI -->
+
+    <!-- ELEMENTO TYPEMODULOSTXINTEGRADOS -->
+    <xs:simpleType name="typeModulosTXIntegrados">
+        <xs:list itemType="tns:listaModulosTX">
+        </xs:list>
+    </xs:simpleType>
+    <xs:simpleType name="listaModulosTX">
+        <xs:restriction base="mod:typeIdModulo">
+            <xs:minLength value="2"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <!-- END ELEMENTO TYPEMODULOSTXINTEGRADOS -->
 </xs:schema>

@@ -159,7 +159,10 @@
             <!-- END ELEMENTO DESCRIPCION-->
 
             <!-- ELEMENTO CONTENIDO -->
-            <xs:simpleType name="typeContenido">
+            <xs:complexType name="typeContenido">
+                <xs:attribute name="formato" type="tns:typeFormato" use="required"/>
+            </xs:complexType>
+            <xs:simpleType name="typeFormato">
                 <xs:restriction base="xs:NOTATION">
                     <xs:enumeration value="tns:gif"/>
                     <xs:enumeration value="tns:jpeg"/>
