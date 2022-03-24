@@ -24,8 +24,8 @@ schemaLocation=".//sistemaTransmision.xsd"/>
         <xs:element name="fechaLanzamiento" type="xs:dateTime"/>
         <xs:element name="orbita" type="tns:typeOrbita"/>
         <xs:element name="descripcionFuncionalidades" type="tns:typedescripcionFuncionalidades"/>
-        <xs:element name="modulos" type="mod:typeModulos"/>
-        <xs:element name="sistemaEsp" type="ses:typeSistemaEspecifico" maxOccurs="unbounded"/>
+        <xs:element name="modulos" type="tns:typeModulos"/>
+        <xs:element name="sistemaEsp" type="tns:typeSistemaEspecifico"/>
         <xs:element name="SistemaTF" type="stf:typeSistemaTF"/>
         <xs:element name="SistemaTx" type="stx:typeSistemaTX"/>
     </xs:sequence>
@@ -38,7 +38,7 @@ schemaLocation=".//sistemaTransmision.xsd"/>
     <xs:simpleType name="typeOrbita">
         <xs:restriction base="xs:float">
             <xs:minInclusive value="200"/>
-            <xs:maxExclusive value="36000"/>
+            <xs:maxInclusive value="36000"/>
         </xs:restriction>
     </xs:simpleType>
     <!-- ELEMENTO ORBITA -->
@@ -46,26 +46,33 @@ schemaLocation=".//sistemaTransmision.xsd"/>
     <!-- ELEMENTO DESCRIPCIONFUNCIONALIDADES -->
     <xs:complexType name="typedescripcionFuncionalidades" mixed="true">
         <xs:sequence>
-            <xs:any/>
+            <xs:element name="key" type="xs:string" maxOccurs="unbounded"/>
         </xs:sequence>
     </xs:complexType>
     <!-- ELEMENTO DESCRIPCIONFUNCIONALIDADES -->
 
     <!-- ELEMENTO MODULOS -->
     <xs:complexType name="typeModulos">
-        
+        <xs:sequence>
+            <xs:element name="modulo" type="mod:typeModulo" maxOccurs="unbounded">
+                <xs:keyref name="keyModuloSatelite" refer="mod:keyIdModulo">
+
+                </xs:keyref>
+            </xs:element>
+        </xs:sequence>
     </xs:complexType>
     <!-- ELEMENTO MODULOS -->
 
     <!-- ELEMENTO SISTEMAESP -->
-    
+    <xs:complexType name="typeSistemaEspecifico">
+        <xs:sequence>
+            <xs:element name="sistemaEspecifico" type="ses:typeSistemaEspecifico" maxOccurs="unbounded">
+                <xs:keyref name="keySistemaEspSatelite" refer="ses:keySistemaEsp">
+
+                </xs:keyref>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
     <!-- ELEMENTO SISTEMAESP -->
 
-    <!-- ELEMENTO SISTEMATF -->
-    
-    <!-- ELEMENTO SISTEMATF -->
-
-    <!-- ELEMENTO SISTEMATX -->
-    
-    <!-- ELEMENTO SISTEMATX -->
 </xs:schema>
