@@ -13,33 +13,195 @@
         2020-12-01T20:15:35
     </sat:fechaLanzamiento>
     <sat:orbita>
-        200
+        36000
     </sat:orbita>
     <sat:descripcionFuncionalidades>
-        Insertar descripcion
+        Satélite: <sat:key>fotografía</sat:key> parte de la <sat:key>superficie terrestre</sat:key> y mide la <sat:key>radiación solar</sat:key> para transmitirlas a la tierra y almacenarlas en la <sat:key>nube de datos</sat:key>
     </sat:descripcionFuncionalidades>
     
-    <!-- MODULOS ESPECIFICOS -->
-    <sat:modulos idModulo="MODe0001">
-        <mod:tipoModulo>especifico</mod:tipoModulo>
-        <mod:funcionalidad>Camara de alta resolución</mod:funcionalidad>
-    </sat:modulos>
-    <sat:modulos idModulo="MODe0002">
+    <sat:modulos>
+        <!-- MODULOS ESPECIFICOS -->
+        <!-- Modulo 1 -->
+        <sat:modulo idModulo="MODe0001">
+            <mod:tipoModulo>especifico</mod:tipoModulo>
+            <mod:funcionalidad>Camara de alta resolución</mod:funcionalidad>
+            <mod:componentes>
+                <mod:captadores>
+                    <mod:numeroCaptadores>
+                    1
+                </mod:numeroCaptadores>
+                <mod:captador idCaptador="Cap001">
+                    <mod:parametro>
+                        radiacion
+                    </mod:parametro>
+                    <mod:medida>
+                    0.52 kW/h 
+                    </mod:medida>
+                </mod:captador>
+                </mod:captadores>
+            </mod:componentes>
+        </sat:modulo>
+        <!-- Modulo 2 -->
+        <sat:modulo idModulo="MODe0002">
         <mod:tipoModulo>especifico</mod:tipoModulo>
         <mod:funcionalidad>Sistema de telemetría</mod:funcionalidad>
-    </sat:modulos>
-    <!-- END MODULOS ESPECIFICOS -->
+        <mod:componentes>
+            <mod:captadores>
+                <mod:numeroCaptadores>
+                1
+            </mod:numeroCaptadores>
+            <mod:captador idCaptador="Cap002">
+                <mod:parametro>
+                    radiacion
+                </mod:parametro>
+                <mod:medida>
+                   0.81 kW/h 
+                </mod:medida>
+            </mod:captador>
+            </mod:captadores>
+        </mod:componentes>
+        </sat:modulo>
+        <!-- END MODULOS ESPECIFICOS -->
 
-    <!-- MODULOS DE TRANSMISION -->
-    <sat:modulos idModulo="MODe0002">
-        <mod:tipoModulo>transmisor</mod:tipoModulo>
-        <mod:funcionalidad>Sistema tranforma el texto</mod:funcionalidad>
+        <!-- MODULOS TRANMISION -->
+        <!-- ModuloTX 1 -->
+        <sat:modulo idModulo="MODe0002">
+            <mod:tipoModulo>transmisor</mod:tipoModulo>
+            <mod:funcionalidad>Sistema tranforma el texto</mod:funcionalidad>
+            <mod:componentes>
+            <mod:transmisores>
+                <mod:numeroTransmisores>
+                    1
+                </mod:numeroTransmisores>
+                <mod:transmisor idTransmisor="TR1aaa">
+                    <mod:parametrosTransmision>
+                        <mod:tipoModulacion>
+                            QPSK
+                        </mod:tipoModulacion>
+                        <mod:tiempoVida>
+                            2015-08-01
+                            2022-02-12
+                        </mod:tiempoVida>
+                    </mod:parametrosTransmision>
+                </mod:transmisor>
+                
+                <mod:transmisor idTransmisor="TR1aab">
+                    <mod:parametrosTransmision>
+                        <mod:tipoModulacion>
+                            QPSK
+                        </mod:tipoModulacion>
+                        <mod:tiempoVida>
+                            2015-08-01
+                            2022-02-12
+                        </mod:tiempoVida>
+                    </mod:parametrosTransmision>
+                </mod:transmisor>
+            </mod:transmisores>
+        </mod:componentes>
+        </sat:modulo>
+        <!-- ModuloTX 2 -->
+        <sat:modulo idModulo="MODe0002">
+            <mod:tipoModulo>transmisor</mod:tipoModulo>
+            <mod:funcionalidad>Sistema tranforma la imagen</mod:funcionalidad>
+            <mod:componentes>
+                <mod:transmisores>
+                    <mod:numeroTransmisores>
+                        1
+                    </mod:numeroTransmisores>
+                    <mod:transmisor idTransmisor="TR1aaa">
+                        <mod:parametrosTransmision>
+                            <mod:tipoModulacion>
+                                QPSK
+                            </mod:tipoModulacion>
+                            <mod:tiempoVida>
+                                2015-08-01
+                                2022-02-12
+                            </mod:tiempoVida>
+                        </mod:parametrosTransmision>
+                    </mod:transmisor>
+                    <mod:transmisor idTransmisor="TR1aab">
+                        <mod:parametrosTransmision>
+                            <mod:tipoModulacion>
+                                QPSK
+                            </mod:tipoModulacion>
+                            <mod:tiempoVida>
+                                2015-08-01
+                                2022-02-12
+                            </mod:tiempoVida>
+                        </mod:parametrosTransmision>
+                    </mod:transmisor>
+                </mod:transmisores>
+            </mod:componentes>
+            </sat:modulo>
+        <!-- END MODULOS TRANMISION -->
     </sat:modulos>
-    <sat:modulos idModulo="MODe0002">
-        <mod:tipoModulo>transmisor</mod:tipoModulo>
-        <mod:funcionalidad>Sistema tranforma la imagen</mod:funcionalidad>
-    </sat:modulos>
-    <!-- MODULOS DE TRANSMISION -->
-    <sat:SistemaTx idSistemaTX="TX001"></sat:SistemaTx>
 
-    </sat:satelite>
+    <!-- SISTEMAS ESPECIFICOS -->
+    <sat:sistemaEsp>
+
+        <!-- Sistema 1 -->        
+        <sat:sistemaEspecifico idSistemaEspecifico="Sist-01">
+            <ses:descripcionSistemaEsp>
+                Contiene la los sistemas especificos del satélite    
+            </ses:descripcionSistemaEsp>
+            <ses:dimensionSistemaEsp altura="40" anchura="30" longitud="40" peso="100"/>
+            <ses:modulosEspIntegrados>
+                MODe0001
+                MODe0002
+            </ses:modulosEspIntegrados>
+        </sat:sistemaEspecifico>
+
+        <!-- Sistema 2 -->        
+        <sat:sistemaEspecifico idSistemaEspecifico="Sist-02">
+            <ses:descripcionSistemaEsp>
+                Descripcion del sistema 2   
+            </ses:descripcionSistemaEsp>
+            <ses:dimensionSistemaEsp altura="40" anchura="30" longitud="40" peso="100"/>
+            <ses:modulosEspIntegrados>
+                MODe0001
+                MODe0002
+            </ses:modulosEspIntegrados>
+        </sat:sistemaEspecifico>
+
+    </sat:sistemaEsp>
+    <!-- END SISTEMAS ESPECIFICOS -->
+
+    <!-- SISTEMA DE TRANSFORMACION-->
+    <sat:SistemaTF idSistemaTF="TF001">
+        <stf:informacionEntrada>
+            <stf:valor>
+                <stf:parametro>
+                    radiacion
+                </stf:parametro>
+                <stf:medida>
+                    0.52 kW/h 
+                </stf:medida>
+            </stf:valor>
+        </stf:informacionEntrada>
+        <stf:informacionSalida>
+            <stf:texto formato="jpeg"/>
+        </stf:informacionSalida>
+    </sat:SistemaTF>
+    <!-- END SISTEMAS DE TRANSFORMACION-->
+
+    <!-- SISTEMA DE TRANSMISION -->
+    <sat:SistemaTx idSistemaTX="TX001">
+        <stx:subsistemaTX>
+        <stx:nombreSubsistemaTX>
+            STX001
+        </stx:nombreSubsistemaTX>
+        <stx:nubeInformatica>
+            <stx:nombreCompleto>
+                nube satelital Xpro
+            </stx:nombreCompleto>
+            <stx:uri>
+                http://www.nubecita.com
+            </stx:uri>
+        </stx:nubeInformatica>
+        <stx:modulosTXIntegrados>
+            
+        </stx:modulosTXIntegrados>
+        </stx:subsistemaTX>
+    </sat:SistemaTx>
+    <!-- END SISTEMA DE TRANSMISION -->
+</sat:satelite>

@@ -1,21 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<sie:sistemaEspecifico idSistemaEspecifico="Sist-01"
-xmlns:sie="http://www.piat.upm.es/sistemaEspecifico"
+<ses:sistemaEspecifico idSistemaEspecifico="Sist-01"
+xmlns:ses="http://www.piat.upm.es/sistemaEspecifico"
 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 xsi:schemaLocation="http://www.piat.upm.es/sistemaEspecifico sistemaEspecifico.xsd">
     
     <!-- DESCRIPCION SISTEMA ESPECIFICO -->
-    <sie:descripcionSistemaEsp>
+    <ses:descripcionSistemaEsp>
         Contiene la los sistemas especificos del satélite    
-    </sie:descripcionSistemaEsp>
-    <sie:dimensionSistemaEsp altura="40" anchura="30" longitud="40" peso="100"/>
+    </ses:descripcionSistemaEsp>
+    <ses:dimensionSistemaEsp altura="40" anchura="30" longitud="40" peso="100"/>
     <!-- END DESCRIPCION SISTEMA ESPECIFICO -->
 
     <!-- MODULOS ESP INTEGRADOS-->
-    <sie:modulosEspIntegrados>
+    <ses:modulosEspIntegrados>
         MODe0001
         MODe0002
-    </sie:modulosEspIntegrados>
+    </ses:modulosEspIntegrados>
     <!-- END MODULOS ESP INTEGRADOS-->
-</sie:sistemaEspecifico>
+</ses:sistemaEspecifico>

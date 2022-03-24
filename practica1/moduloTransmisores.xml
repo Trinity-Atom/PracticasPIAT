@@ -34,7 +34,7 @@ xsi:schemaLocation="http://www.piat.upm.es/modulo modulo.xsd">
                 </mod:parametrosTransmision>
             </mod:transmisor>
             
-            <mod:transmisor idTransmisor="TR1aaa">
+            <mod:transmisor idTransmisor="TR1aab">
                 <mod:parametrosTransmision>
                     <mod:tipoModulacion>
                         QPSK
