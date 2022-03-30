@@ -12,9 +12,11 @@
     <sat:fechaLanzamiento>
         2020-12-01T20:15:35
     </sat:fechaLanzamiento>
+
     <sat:orbita>
         36000
     </sat:orbita>
+    
     <sat:descripcionFuncionalidades>
         Satélite: <sat:key>fotografía</sat:key> parte de la <sat:key>superficie terrestre</sat:key> y mide la <sat:key>radiación solar</sat:key> para transmitirlas a la tierra y almacenarlas en la <sat:key>nube de datos</sat:key>
     </sat:descripcionFuncionalidades>
