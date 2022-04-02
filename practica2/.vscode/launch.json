@@ -9,9 +9,9 @@
             "name": "Launch with Arguments Prompt",
             "request": "launch",
             "mainClass": "",
-            "args": "files",
+            "args": "pathEntrada",
             "console": "externalTerminal"
-        }
+        },
         {
             "type": "java",
             "name": "Launch Current File",

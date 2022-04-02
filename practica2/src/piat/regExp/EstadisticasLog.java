@@ -13,7 +13,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 import java.util.regex.Pattern;
 
 /**
- * @author Ponga aquí su nombre, apellidos y DNI
+ * @SalvadorFernandezGarcia-Morales 53823973V
  *
  */
 public class EstadisticasLog {
@@ -28,8 +28,8 @@ public class EstadisticasLog {
 	private final static String NUMERO_SERVIDOR = "[0-9]+";
 	
 	// Patrón de una traza cualquiera correcta de la que podemos extraer, en el grupo 1, el nombre del servidor
-	//TODO: Modificar este patrón para que tenga más grupos y así se pueda extraer más información y no solo el nombre del servidor
-	private final static String patronTraza = "^"+FECHA+"\\s+" + HORA + "\\s+(" + TIPO_SERVIDOR  + NUMERO_SERVIDOR+")+\\s+\\[\\w+\\]:.*";	
+	//DONE: Modificar este patrón para que tenga más grupos y así se pueda extraer más información y no solo el nombre del servidor
+	private final static String patronTraza = "^("+FECHA+")\\s+(" + HORA + ")\\s+(" + TIPO_SERVIDOR  + NUMERO_SERVIDOR+")+\\s+(\\[\\w+\\]):(.*)";	
 	
 	/* Patrones que se usan en las estadísticas agregadas
 
@@ -37,8 +37,8 @@ public class EstadisticasLog {
 		msgOUT: Mensajes en la bandeja de salida
 		msgINFECTED: Mensajes clasificados como infectados
 		msgSPAM: Mensajes clasificados como spam
-		code432: Mensajes 
-		code511:
+		code432: Mensajes con información de intentos de entrega con codigo 4.3.2 (overload)
+		code511: Mensajes con información de intentos de entrega con código 5.1.1 (bad destination mailbox address)
 
 	*/
 	private final static String msgIn = FECHA+"\\s"+HORA+"\\ssmtp-in\\d\\s\\[[A-Z0-9]{8}\\]\\:\\smessage\\sfrom.*"; 	
@@ -47,7 +47,7 @@ public class EstadisticasLog {
 	private final static String msgSPAM = ".*security-antispam: SPAM.*";
 	private final static String code432 = ".*4\\.3\\.2\\s\\(overload\\).*";
 	private final static String code511 = ".*5\\.1\\.1\\s\\(bad\\sdestination\\smailbox\\saddress\\).*";
-	//TODO: Cambiar estos patrones por los que se piden en la práctica
+	//DONE: Cambiar estos patrones por los que se piden en la práctica
 	
 
 	public static void main(String[] args) throws InterruptedException {
@@ -65,7 +65,7 @@ public class EstadisticasLog {
 							{"code432",code432},	
 							{"code511",code511}					
 						};
-		//TODO: Cambiar estos patrones por los que se piden en la práctica
+		//DONE: Cambiar estos patrones por los que se piden en la práctica
 		
 		// Mapa donde se guarda como clave el nombre de la estadística agregada, y como valor, el patrón para detectar el String de la traza que contiene ese estadístico
 		final ConcurrentHashMap <String,Pattern> hmPatronesEstadisticasAgregadas = new ConcurrentHashMap <String,Pattern> ();
