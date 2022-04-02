@@ -147,6 +147,8 @@ public class EstadisticasLog {
 			// Se intenta meter la clave de hmServidores en numServidores:
 			// 		si no existe se añade con el contador 1
 			// 		si ya existe se incrementa el contador en 1
+			if(hmServidores.contains(entrada.getKey()))
+				numServidores.entrySet();
 			String nombreServidor = entrada.getValue();
 			numServidores.put (nombreServidor, numServidores.get(nombreServidor) == null ? 1 : Integer.valueOf(numServidores.get(nombreServidor)+1));
 		}
