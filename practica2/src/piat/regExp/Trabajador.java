@@ -89,6 +89,7 @@ public class Trabajador implements Runnable {
 				estadisticasServidor(matcher);
 				estadisticasAgregadas(matcher);
 				estadisticasUsuarios(matcher);
+				
 			} else {
 				//System.out.println("La línea "+sLinea+" no tiene el formato correcto");
 				lineasIncorrectas.incrementAndGet();
