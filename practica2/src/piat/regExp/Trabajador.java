@@ -81,8 +81,7 @@ public class Trabajador implements Runnable {
 	 * @param	sLinea	Línea a analizar
 	 */
 	public void procesarLinea(String sLinea){		
-		Matcher matcher;
-				
+		Matcher matcher;		
 		if (sLinea.trim().length()>0){
 			matcher = pTraza.matcher(sLinea);	// Realizar la casación de la línea con el patrón genérico de una traza
 			if (matcher.matches()) {	// Verificar que la línea es correcta
@@ -90,6 +89,7 @@ public class Trabajador implements Runnable {
 				estadisticasServidor(matcher);
 				estadisticasAgregadas(matcher);
 				estadisticasUsuarios(matcher);
+				
 			} else {
 				//System.out.println("La línea "+sLinea+" no tiene el formato correcto");
 				lineasIncorrectas.incrementAndGet();
@@ -107,7 +107,8 @@ public class Trabajador implements Runnable {
 	private void estadisticasServidor(Matcher matcherLinea) {
 		// Extraer de matcherLinea el nombre del servidor y el tipo
 		// TODO
-		//hmServidores.put (nombreServidor, tipoServidor);	// Meter los valores obtenidos en el mapa
+		String nombreServidor = matcher.group(4);
+		hmServidores.put (nombreServidor, tipoServidor);	// Meter los valores obtenidos en el mapa
 	}
 	
 	/**
