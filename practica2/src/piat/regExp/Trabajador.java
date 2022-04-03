@@ -88,8 +88,7 @@ public class Trabajador implements Runnable {
 				lineasCorrectas.incrementAndGet();
 				estadisticasServidor(matcher);
 				estadisticasAgregadas(matcher);
-				estadisticasUsuarios(matcher);
-				
+				estadisticasUsuarios(matcher);				
 			} else {
 				//System.out.println("La línea "+sLinea+" no tiene el formato correcto");
 				lineasIncorrectas.incrementAndGet();
@@ -107,7 +106,8 @@ public class Trabajador implements Runnable {
 	private void estadisticasServidor(Matcher matcherLinea) {
 		// Extraer de matcherLinea el nombre del servidor y el tipo
 		// TODO
-		String nombreServidor = matcher.group(4);
+		String tipoServidor = matcherLinea.group(3);
+		String nombreServidor = tipoServidor + matcherLinea.group(4);
 		hmServidores.put (nombreServidor, tipoServidor);	// Meter los valores obtenidos en el mapa
 	}
 	
@@ -121,7 +121,7 @@ public class Trabajador implements Runnable {
 	private void estadisticasAgregadas(Matcher matcherLinea) {
 		// Extraer de matcherLinea los valores que se necesitan a partir de los grupos disponibles
 		final String traza=matcherLinea.group(0);				// Traza completa
-		final String tipoServidor =   matcherLinea.group(1);	// Tipo de servidor
+		final String tipoServidor =   matcherLinea.group(3);	// Tipo de servidor
 		
 		Matcher comparador;
 		String clave, estadistico;
