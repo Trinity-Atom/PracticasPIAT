@@ -16,3 +16,47 @@ Meanwhile, the compiled output files will be generated in the `bin` folder by de
 ## Dependency Management
 
 The `JAVA PROJECTS` view allows you to manage your dependencies. More details can be found [here](https://github.com/microsoft/vscode-java-dependency#manage-dependencies).
+
+/*************** REGEX ***************/
+GROUP 0 
+^([0-9]{4}-[0-9]{2}-[0-9]{2})\s+([0-9]{2}:[0-9]{2}:[0-9]{2})\s+([^0-9]+)([0-9]+)\s+(\[\w+\]):(.*)
+
+GROUP 1 == FECHA
+[0-9]{4}-[0-9]{2}-[0-9]{2}
+
+GROUP 2 == HORA
+[0-9]{2}:[0-9]{2}:[0-9]{2}
+
+GROUP 3 == TIPO_SERVIDOR
+[^0-9]+
+
+GROUP 4 == NUMERO_SERVIDOR
+[0-9]+
+
+GROUP 5 == ID_MENSAJE
+\[\w+\]
+
+GROUP 6 == MENSAJE
+.*
+
+/*************** JAVA ***************/
+GROUP 0 
+^([0-9]{4}-[0-9]{2}-[0-9]{2})\\s+([0-9]{2}:[0-9]{2}:[0-9]{2})\\s+([^0-9]+)([0-9]+)\\s+(\\[\\w+\\]):(.*)
+
+GROUP 1 == FECHA
+[0-9]{4}-[0-9]{2}-[0-9]{2}
+
+GROUP 2 == HORA
+[0-9]{2}:[0-9]{2}:[0-9]{2}
+
+GROUP 3 == TIPO_SERVIDOR
+[^0-9]+
+
+GROUP 4 == NUMERO_SERVIDOR
+[0-9]+
+
+GROUP 5 == ID_MENSAJE
+\\[\\w+\\]
+
+GROUP 6 == MENSAJE
+.*
