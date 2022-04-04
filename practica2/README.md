@@ -60,3 +60,6 @@ GROUP 5 == ID_MENSAJE
 
 GROUP 6 == MENSAJE
 .*
+
+/*************** MESSAGE REGEX & JAVA ***************/
+^message from: (.+)to: (.+) message-id: (.+) size:.*

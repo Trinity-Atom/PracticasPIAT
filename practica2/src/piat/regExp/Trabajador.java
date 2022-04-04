@@ -106,7 +106,7 @@ public class Trabajador implements Runnable {
 	 */
 	private void estadisticasServidor(Matcher matcherLinea) {
 		// Extraer de matcherLinea el nombre del servidor y el tipo
-		// DONE: Codificar el método estadisticasServidor
+		// TODO: Codificar el método estadisticasServidor
 		String tipoServidor = matcherLinea.group(3);
 		String nombreServidor = tipoServidor + matcherLinea.group(4);
 		hmServidores.put (nombreServidor, tipoServidor);	// Meter los valores obtenidos en el mapa
@@ -160,8 +160,11 @@ public class Trabajador implements Runnable {
 		// TODO: Codificar el método estadisticasUsuarios
 		//	Ver si la traza se corresponde a una traza que indica que se ha enviado un mensaje
 		//	En ese caso, guardar en el mapa hmUsuarios el nombre del usuario como clave y como valor el nº 1 si no existía esa clave, pues en el caso de que existiera hay que incrementar el valor
-		final String traza=matcherLinea.group(0);				// Traza completa
-		hmUsuarios.values()
+		final String traza=matcherLinea.group(0);		// Traza completa
+		final String mensaje=matcherLinea.group(6);		// Mensaje 
+		Pattern pMensaje = Pattern.compile("^message from: (.+)to: (.+) message-id: (.+) size:.*");
+		Matcher comparador;
+		hmUsuarios.values();
 	}	
 	
 }
