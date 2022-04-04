@@ -123,7 +123,7 @@ public class Trabajador implements Runnable {
 		// Extraer de matcherLinea los valores que se necesitan a partir de los grupos disponibles
 		final String traza=matcherLinea.group(0);				// Traza completa
 		final String tipoServidor =   matcherLinea.group(3);	// Tipo de servidor
-		final String date = matcherLinea.group(1);
+		final String date = matcherLinea.group(1);				// Fecha de traza
 		
 		Matcher comparador;
 		String clave, estadistico;
@@ -163,7 +163,24 @@ public class Trabajador implements Runnable {
 		final String traza=matcherLinea.group(0);		// Traza completa
 		final String mensaje=matcherLinea.group(6);		// Mensaje 
 		Pattern pMensaje = Pattern.compile("^message from: (.+)to: (.+) message-id: (.+) size:.*");
-		Matcher comparador;
+		Matcher comparador = pMensaje.matcher(mensaje);
+		String idMensaje;
+		String usuarioMensaje;
+		
+		// Si el mensaje coincide con el patron pMensaje
+		if (comparador.matches()){
+			// Coge el idMensaje
+			idMensaje = comparador.group(3);
+			// Coge el usuario que envia el mensaje
+			usuarioMensaje = comparador.group(1);
+			// Si hmUsuarios contiene al usuario que envia el mensaje
+			if (hmUsuarios.containsKey(usuarioMensaje)){
+				// Añadir el usuarioMensaje como clave y el valor incrementado al ConcurrentHashMap hmUsuarios
+				hmUsuarios.get(usuarioMensaje).incrementAndGet();
+				hmUsuarios.put(usuarioMensaje, hmUsuarios.get(usuarioMensaje));
+			} else
+
+		}
 		hmUsuarios.values();
 	}	
 	
