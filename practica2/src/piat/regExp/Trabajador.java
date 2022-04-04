@@ -7,6 +7,7 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -164,18 +165,23 @@ public class Trabajador implements Runnable {
 		final String traza=matcherLinea.group(0);		// Traza completa
 		final String mensaje=matcherLinea.group(6);		// Mensaje 
 		Pattern pMensaje = Pattern.compile("^message from: (.+)to: (.+) message-id: (.+) size:.*");
-		final Matcher comparador = pMensaje.matcher(mensaje);
-			
-		};
+		Matcher comparador = pMensaje.matcher(mensaje);
+		String idMensaje;
+		String usuarioMensaje;
+		
 		// Si el mensaje coincide con el patron pMensaje
 		if (comparador.matches()){
 			// Coge el idMensaje
-			String idMensaje = comparador.group(3);
+			idMensaje = comparador.group(3);
 			// Coge el usuario que envia el mensaje
 			usuarioMensaje = comparador.group(1);
-			if (usuarioMensaje == hmUsuarios.containsKey()){
+			// Si hmUsuarios contiene al usuario que envia el mensaje
+			if (hmUsuarios.containsKey(usuarioMensaje)){
+				// Añadir el usuarioMensaje como clave y el valor incrementado al ConcurrentHashMap hmUsuarios
+				hmUsuarios.get(usuarioMensaje).incrementAndGet();
+				hmUsuarios.put(usuarioMensaje, hmUsuarios.get(usuarioMensaje));
+			} else
 
-			}
 		}
 		hmUsuarios.values();
 	}	
