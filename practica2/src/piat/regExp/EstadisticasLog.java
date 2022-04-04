@@ -27,7 +27,7 @@ public class EstadisticasLog {
 	private final static String TIPO_SERVIDOR = "[^0-9]+";
 	private final static String NUMERO_SERVIDOR = "[0-9]+";
 	
-	// Patrón de una traza cualquiera correcta de la que podemos extraer, en el grupo 1, el nombre del servidor
+	// Patrón de una traza cualquiera correcta de la que podemos extraer
 	//DONE: Modificar este patrón para que tenga más grupos y así se pueda extraer más información y no solo el nombre del servidor
 	private final static String patronTraza = "^("+FECHA+")\\s+("+HORA+")\\s+("+TIPO_SERVIDOR+")("+NUMERO_SERVIDOR+")+\\s+(\\[\\w+\\]):(.*)";	
 	
@@ -147,8 +147,6 @@ public class EstadisticasLog {
 			// Se intenta meter la clave de hmServidores en numServidores:
 			// 		si no existe se añade con el contador 1
 			// 		si ya existe se incrementa el contador en 1
-			if(hmServidores.contains(entrada.getKey()))
-				numServidores.entrySet();
 			String nombreServidor = entrada.getValue();
 			numServidores.put (nombreServidor, numServidores.get(nombreServidor) == null ? 1 : Integer.valueOf(numServidores.get(nombreServidor)+1));
 		}
@@ -169,7 +167,7 @@ public class EstadisticasLog {
 		Map <String, AtomicInteger> mapaOrdenado = new TreeMap<String ,AtomicInteger>(hmEstadisticasAgregadas);
 		for (Map.Entry<String, AtomicInteger> entrada : mapaOrdenado.entrySet()) {
 			//TODO: La siguiente instrucción es correcta, pero se puede cambiar para que salga mejor formateada
-			System.out.println("\t"+entrada.getKey()+"aa = " +entrada.getValue().get());
+			System.out.println("\t"+numServidores.get(key)+entrada.getKey()+"aa = " +entrada.getValue().get());
 	        }
 
 		/* Estadísticas de usuarios */

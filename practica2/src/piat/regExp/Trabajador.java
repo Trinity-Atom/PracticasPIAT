@@ -47,6 +47,7 @@ public class Trabajador implements Runnable {
 
 		// Abrir el fichero y si no hay errores, procesar cada línea invocando al método procesarLinea()
 	    try {
+			//TODO: Mirar si hay que hacer la codificacion UTF-8
 	    	BufferedReader brInput = new BufferedReader(new FileReader(fichero));
 			try{
 				String linea;
@@ -105,7 +106,7 @@ public class Trabajador implements Runnable {
 	 */
 	private void estadisticasServidor(Matcher matcherLinea) {
 		// Extraer de matcherLinea el nombre del servidor y el tipo
-		// TODO
+		// TODO: Codificar el método estadisticasServidor
 		String tipoServidor = matcherLinea.group(3);
 		String nombreServidor = tipoServidor + matcherLinea.group(4);
 		hmServidores.put (nombreServidor, tipoServidor);	// Meter los valores obtenidos en el mapa
@@ -122,6 +123,7 @@ public class Trabajador implements Runnable {
 		// Extraer de matcherLinea los valores que se necesitan a partir de los grupos disponibles
 		final String traza=matcherLinea.group(0);				// Traza completa
 		final String tipoServidor =   matcherLinea.group(3);	// Tipo de servidor
+		final String date = matcherLinea.group(1);
 		
 		Matcher comparador;
 		String clave, estadistico;
@@ -134,8 +136,12 @@ public class Trabajador implements Runnable {
 			patron=entrada.getValue();		// Patrón asociado al estadístico
 			comparador=patron.matcher(traza);	// Aplicar el patrón a la traza a analizar
 			if (comparador.matches()) {			// Si casa, entonces actualizar el mapa hmEstadisticasAgregadas
-				clave = tipoServidor + " " + estadistico;	// La clave del mapa hmEstadisticasAgregadas está formada por el tipo del servidor y el nombre del estadístico
-				// TODO En la aplicación de la práctica la clave del mapa hmEstadisticasAgregadas estará formada por el tipo del servidor, la fecha de la traza y el nombre del estadístico. Por ejemplo "security-in 2020-02-21 - msgBLOCKED" 
+				clave = tipoServidor + " " + date + " - " + estadistico;	// La clave del mapa hmEstadisticasAgregadas está formada por el tipo del servidor y el nombre del estadístico
+				// TODO: Clave del mapa hmEstadisticasAgregadas
+				// En la aplicación de la práctica la clave del mapa hmEstadisticasAgregadas estará formada 
+				// por el tipo del servidor, la fecha de la traza y el nombre del estadístico. Por ejemplo 
+				//"security-in 2020-02-21 - msgBLOCKED"
+
 				// Añadir el estadístico al mapa. Si no existe el valor del contador es 1, pero si existe, se recupera el valor y se incrementa
 				contadorAnterior=hmEstadisticasAgregadas.putIfAbsent(clave, new AtomicInteger(1));
 				if (contadorAnterior!=null) contadorAnterior.incrementAndGet();
@@ -151,10 +157,14 @@ public class Trabajador implements Runnable {
 	 * @param	matcherLinea	Objeto Matcher al que ya se le ha realizado una casación y por tanto se puede extraer información de sus grupos
 	 */	
 	private void estadisticasUsuarios(Matcher matcherLinea) {
-		// TODO:
+		// TODO: Codificar el método estadisticasUsuarios
 		//	Ver si la traza se corresponde a una traza que indica que se ha enviado un mensaje
 		//	En ese caso, guardar en el mapa hmUsuarios el nombre del usuario como clave y como valor el nº 1 si no existía esa clave, pues en el caso de que existiera hay que incrementar el valor
-
+		final String traza=matcherLinea.group(0);		// Traza completa
+		final String mensaje=matcherLinea.group(6);		// Mensaje 
+		Pattern pMensaje = Pattern.compile("^message from: (.+)to: (.+) message-id: (.+) size:.*");
+		Matcher comparador;
+		hmUsuarios.values();
 	}	
 	
 }
