@@ -29,7 +29,7 @@ public class EstadisticasLog {
 	
 	// Patrón de una traza cualquiera correcta de la que podemos extraer
 	//DONE: Modificar este patrón para que tenga más grupos y así se pueda extraer más información y no solo el nombre del servidor
-	private final static String patronTraza = "^("+FECHA+")\\s+("+HORA+")\\s+("+TIPO_SERVIDOR+")("+NUMERO_SERVIDOR+")+\\s+(\\[\\w+\\]):(.*)";	
+	private final static String patronTraza = "^("+FECHA+")\\s+("+HORA+")\\s+("+TIPO_SERVIDOR+")("+NUMERO_SERVIDOR+")+\\s+(\\[\\w+\\]): (.*)";	
 	
 	/* Patrones que se usan en las estadísticas agregadas
 
@@ -167,7 +167,8 @@ public class EstadisticasLog {
 		Map <String, AtomicInteger> mapaOrdenado = new TreeMap<String ,AtomicInteger>(hmEstadisticasAgregadas);
 		for (Map.Entry<String, AtomicInteger> entrada : mapaOrdenado.entrySet()) {
 			//TODO: La siguiente instrucción es correcta, pero se puede cambiar para que salga mejor formateada
-			System.out.println("\t"+numServidores.get(key)+entrada.getKey()+"aa = " +entrada.getValue().get());
+			String arr[] = entrada.getKey().split(" ",2);
+			System.out.println("\t"+arr[0]+":\n\t\t"+arr[1]+" = " +entrada.getValue().get());
 	        }
 
 		/* Estadísticas de usuarios */
