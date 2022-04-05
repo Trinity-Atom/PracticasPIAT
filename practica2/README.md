@@ -63,3 +63,6 @@ GROUP 6 == MENSAJE
 
 /*************** MESSAGE REGEX & JAVA ***************/
 ^message from: (.+)to: (.+) message-id: (.+) size:.*
+
+// Regex de inicio de palabra con digitos hasta el primer whitespace
+^[^\s]+

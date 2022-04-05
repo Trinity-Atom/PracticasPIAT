@@ -121,8 +121,8 @@ public class Trabajador implements Runnable {
 	 */	
 	private void estadisticasAgregadas(Matcher matcherLinea) {
 		// Extraer de matcherLinea los valores que se necesitan a partir de los grupos disponibles
-		final String traza=matcherLinea.group(0);				// Traza completa
-		final String tipoServidor =   matcherLinea.group(3);	// Tipo de servidor
+		final String traza= matcherLinea.group(0);				// Traza completa
+		final String tipoServidor = matcherLinea.group(3);		// Tipo de servidor
 		final String date = matcherLinea.group(1);				// Fecha de traza
 		
 		Matcher comparador;
@@ -136,11 +136,12 @@ public class Trabajador implements Runnable {
 			patron=entrada.getValue();		// Patrón asociado al estadístico
 			comparador=patron.matcher(traza);	// Aplicar el patrón a la traza a analizar
 			if (comparador.matches()) {			// Si casa, entonces actualizar el mapa hmEstadisticasAgregadas
-				clave = tipoServidor + " " + date + " - " + estadistico;	// La clave del mapa hmEstadisticasAgregadas está formada por el tipo del servidor y el nombre del estadístico
-				// TODO: Clave del mapa hmEstadisticasAgregadas
+				
+				// DONE: Clave del mapa hmEstadisticasAgregadas
 				// En la aplicación de la práctica la clave del mapa hmEstadisticasAgregadas estará formada 
 				// por el tipo del servidor, la fecha de la traza y el nombre del estadístico. Por ejemplo 
 				//"security-in 2020-02-21 - msgBLOCKED"
+				clave = tipoServidor + " " + date + " - " + estadistico;
 
 				// Añadir el estadístico al mapa. Si no existe el valor del contador es 1, pero si existe, se recupera el valor y se incrementa
 				contadorAnterior=hmEstadisticasAgregadas.putIfAbsent(clave, new AtomicInteger(1));
@@ -158,30 +159,28 @@ public class Trabajador implements Runnable {
 	 */	
 	private void estadisticasUsuarios(Matcher matcherLinea) {
 		// TODO: Codificar el método estadisticasUsuarios
-		//	Ver si la traza se corresponde a una traza que indica que se ha enviado un mensaje
-		//	En ese caso, guardar en el mapa hmUsuarios el nombre del usuario como clave y como valor el nº 1 si no existía esa clave, pues en el caso de que existiera hay que incrementar el valor
-		final String traza=matcherLinea.group(0);		// Traza completa
-		final String mensaje=matcherLinea.group(6);		// Mensaje 
+		//	Ver si la traza se corresponde a una traza que indica que se ha enviado un mensaje.
+		//	En ese caso, guardar en el mapa hmUsuarios el nombre del usuario como clave y como valor el nº 1 si no existía esa clave,
+		//  pues en el caso de que existiera hay que incrementar el valor
+		
+		// Mensaje obtenido de la línea
+		final String mensaje=matcherLinea.group(6);
+		// Patron del mensaje que identifica un mensaje enviado
 		Pattern pMensaje = Pattern.compile("^message from: (.+)to: (.+) message-id: (.+) size:.*");
+		// Comparador que sirve para ver si el mensaje contiene el patron del mensaje 
 		Matcher comparador = pMensaje.matcher(mensaje);
-		String idMensaje;
-		String usuarioMensaje;
 		
 		// Si el mensaje coincide con el patron pMensaje
 		if (comparador.matches()){
-			// Coge el idMensaje
-			idMensaje = comparador.group(3);
 			// Coge el usuario que envia el mensaje
-			usuarioMensaje = comparador.group(1);
+			String usuarioMensaje = comparador.group(1);
 			// Si hmUsuarios contiene al usuario que envia el mensaje
 			if (hmUsuarios.containsKey(usuarioMensaje)){
 				// Añadir el usuarioMensaje como clave y el valor incrementado al ConcurrentHashMap hmUsuarios
-				hmUsuarios.get(usuarioMensaje).incrementAndGet();
-				hmUsuarios.put(usuarioMensaje, hmUsuarios.get(usuarioMensaje));
-			} else
-
+				hmUsuarios.put(usuarioMensaje, new AtomicInteger(hmUsuarios.get(usuarioMensaje).incrementAndGet()));
+			} else{
+				hmUsuarios.put(usuarioMensaje, new AtomicInteger(1));
+			}
 		}
-		hmUsuarios.values();
 	}	
-	
 }
