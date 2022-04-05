@@ -6,6 +6,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -169,17 +170,25 @@ public class Trabajador implements Runnable {
 		Pattern pMensaje = Pattern.compile("^message from: (.+)to: (.+) message-id: (.+) size:.*");
 		// Comparador que sirve para ver si el mensaje contiene el patron del mensaje 
 		Matcher comparador = pMensaje.matcher(mensaje);
-		
+		ConcurrentHashMap <String,AtomicInteger> hmMensajeID = new ConcurrentHashMap <String,AtomicInteger> ();
 		// Si el mensaje coincide con el patron pMensaje
 		if (comparador.matches()){
-			// Coge el usuario que envia el mensaje
+			// Coge el usuario que envia el mensaje y el ID del mensaje
 			String usuarioMensaje = comparador.group(1);
-			// Si hmUsuarios contiene al usuario que envia el mensaje
-			if (hmUsuarios.containsKey(usuarioMensaje)){
-				// Añadir el usuarioMensaje como clave y el valor incrementado al ConcurrentHashMap hmUsuarios
-				hmUsuarios.put(usuarioMensaje, new AtomicInteger(hmUsuarios.get(usuarioMensaje).incrementAndGet()));
-			} else{
+			String mensajeID = comparador.group(3);
+			
+			// Si el mensajeID no ha sido registrado en hmMensajeID
+			if (hmMensajeID.isEmpty() || !hmMensajeID.containsKey(mensajeID)) {
 				hmUsuarios.put(usuarioMensaje, new AtomicInteger(1));
+				hmMensajeID.put(mensajeID,new AtomicInteger(1));
+			} 
+			// Si no, el mensajeID ya está registrado en hmMensajeID
+			else {
+				// Si hmUsuarios contiene al usuario que envia el mensaje
+				if (hmUsuarios.containsKey(usuarioMensaje)){
+					// Añadiremos el usuarioMensaje como clave y el valor incrementado al ConcurrentHashMap hmUsuarios
+					hmUsuarios.put(usuarioMensaje, new AtomicInteger(hmUsuarios.get(usuarioMensaje).incrementAndGet()));
+				}
 			}
 		}
 	}	
