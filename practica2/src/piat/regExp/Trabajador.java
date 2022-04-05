@@ -157,31 +157,30 @@ public class Trabajador implements Runnable {
 	 * @param	matcherLinea	Objeto Matcher al que ya se le ha realizado una casación y por tanto se puede extraer información de sus grupos
 	 */	
 	private void estadisticasUsuarios(Matcher matcherLinea) {
-		// TODO: Codificar el método estadisticasUsuarios
-		//	Ver si la traza se corresponde a una traza que indica que se ha enviado un mensaje
-		//	En ese caso, guardar en el mapa hmUsuarios el nombre del usuario como clave y como valor el nº 1 si no existía esa clave, pues en el caso de que existiera hay que incrementar el valor
-		final String traza=matcherLinea.group(0);		// Traza completa
-		final String mensaje=matcherLinea.group(6);		// Mensaje 
+		// DONE: Codificar el método estadisticasUsuarios
+		//	Ver si la traza se corresponde a una traza que indica que se ha enviado un mensaje.
+		//	En ese caso, guardar en el mapa hmUsuarios el nombre del usuario como clave y como valor el nº 1 si no existía esa clave,
+		//  pues en el caso de que existiera hay que incrementar el valor
+		
+		// Mensaje obtenido de la línea
+		final String mensaje=matcherLinea.group(6);
+		// Patron del mensaje que identifica un mensaje enviado
 		Pattern pMensaje = Pattern.compile("^message from: (.+)to: (.+) message-id: (.+) size:.*");
+		// Comparador que sirve para ver si el mensaje contiene el patron del mensaje 
 		Matcher comparador = pMensaje.matcher(mensaje);
-		String idMensaje;
-		String usuarioMensaje;
 		
 		// Si el mensaje coincide con el patron pMensaje
 		if (comparador.matches()){
-			// Coge el idMensaje
-			idMensaje = comparador.group(3);
 			// Coge el usuario que envia el mensaje
-			usuarioMensaje = comparador.group(1);
+			String usuarioMensaje = comparador.group(1);
 			// Si hmUsuarios contiene al usuario que envia el mensaje
 			if (hmUsuarios.containsKey(usuarioMensaje)){
 				// Añadir el usuarioMensaje como clave y el valor incrementado al ConcurrentHashMap hmUsuarios
-				hmUsuarios.get(usuarioMensaje).incrementAndGet();
-				hmUsuarios.put(usuarioMensaje, hmUsuarios.get(usuarioMensaje));
-			} else
+				hmUsuarios.put(usuarioMensaje, new AtomicInteger(hmUsuarios.get(usuarioMensaje).incrementAndGet()));
+			} else{
+				hmUsuarios.put(usuarioMensaje, new AtomicInteger(1));
+			}
 
 		}
-		hmUsuarios.values();
 	}	
-	
 }
