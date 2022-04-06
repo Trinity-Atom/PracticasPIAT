@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.FilenameFilter;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Set;
 import java.util.TreeMap;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ExecutorService;
@@ -160,23 +161,24 @@ public class EstadisticasLog {
 		
 		/* Estadísticas agregadas */
 		System.out.println("\n\n  Estadísticas agregadas:");
-		
+
 		// Para mostrar el contenido del mapa hmEstadisticasAgregadas de forma ordenado, se copia a un TreeMap y se muestra el contenido de este, pues un TreeMap almacena la información ordenada por la clave
 		Map <String, AtomicInteger> mapaOrdenado = new TreeMap<String ,AtomicInteger>(hmEstadisticasAgregadas);
-		String arrayAnterior=null;
+		String servidorAnterior="";
 		for (Map.Entry<String, AtomicInteger> entrada : mapaOrdenado.entrySet()) {
 			//TODO: La siguiente instrucción es correcta, pero se puede cambiar para que salga mejor formateada
+			// 1) Separamos obtenemos el tipo de servidor y el estadístico
 			String arr[] = entrada.getKey().split(" ",2);
-			if (arrayAnterior==null){
-				arrayAnterior= arr[0];
+			String typeServidor=arr[0];
+			String estadisticaAgregada=arr[1];
+
+			// 2) Mostramos el tipo de servidor si no es igual que el anterior o si el servidorAnterior está vacío
+			if(!typeServidor.equals(servidorAnterior) || servidorAnterior.isEmpty()){
+				System.out.println("\t"+typeServidor+":\n");
 			}
-			if (arrayAnterior.equals(arr[0])){
-				System.out.println("\t"+arr[0]+":\n");
-				System.out.println("\t\t"+arr[1]+" = " +entrada.getValue().get());
-				arrayAnterior=arr[0];
-			} else{
-				System.out.println("\t\t"+arr[1]+" = " +entrada.getValue().get());
-			}
+			// 3) Mostramos el estadístico asociado y registramos el servidorAnterior para el siguiente
+			System.out.println("\t\t"+estadisticaAgregada+" = " +entrada.getValue().get());
+			servidorAnterior=arr[0];	
 	    }
 
 		/* Estadísticas de usuarios */
