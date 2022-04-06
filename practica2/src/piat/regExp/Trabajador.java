@@ -6,7 +6,6 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
-import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -27,7 +26,7 @@ public class Trabajador implements Runnable {
 	private final ConcurrentHashMap <String,Pattern> hmPatronesEstadisticasAgregadas;
 	private final ConcurrentHashMap <String,AtomicInteger> hmUsuarios;	
 	private final AtomicInteger numTrabajadoresTerminados;
-	
+		
 	public Trabajador(	File fichero, Pattern pTraza, AtomicInteger lineasCorrectas, AtomicInteger lineasIncorrectas, 
 						ConcurrentHashMap<String, String> hmServidores,ConcurrentHashMap<String, AtomicInteger> hmEstadisticasAgregadas, 
 						ConcurrentHashMap <String,Pattern> hmPatronesEstadisticasAgregadas,ConcurrentHashMap <String,AtomicInteger> hmUsuarios, AtomicInteger numTrabajadoresTerminados) {
@@ -166,30 +165,37 @@ public class Trabajador implements Runnable {
 		
 		// Mensaje obtenido de la línea
 		final String mensaje=matcherLinea.group(6);
+		// ID de la cola de mensajes
+		final String queueID=matcherLinea.group(5);
+		// Tipo de servidor
+		final String tipoServidor=matcherLinea.group(3);
 		// Patron del mensaje que identifica un mensaje enviado
 		Pattern pMensaje = Pattern.compile("^message from: (.+)to: (.+) message-id: (.+) size:.*");
 		// Comparador que sirve para ver si el mensaje contiene el patron del mensaje 
 		Matcher comparador = pMensaje.matcher(mensaje);
-		ConcurrentHashMap <String,AtomicInteger> hmMensajeID = new ConcurrentHashMap <String,AtomicInteger> ();
-		// Si el mensaje coincide con el patron pMensaje
-		if (comparador.matches()){
-			// Coge el usuario que envia el mensaje y el ID del mensaje
-			String usuarioMensaje = comparador.group(1);
-			String mensajeID = comparador.group(3);
-			
-			// Si el mensajeID no ha sido registrado en hmMensajeID
-			if (hmMensajeID.isEmpty() || !hmMensajeID.containsKey(mensajeID)) {
-				hmUsuarios.put(usuarioMensaje, new AtomicInteger(1));
-				hmMensajeID.put(mensajeID,new AtomicInteger(1));
-			} 
-			// Si no, el mensajeID ya está registrado en hmMensajeID
-			else {
-				// Si hmUsuarios contiene al usuario que envia el mensaje
-				if (hmUsuarios.containsKey(usuarioMensaje)){
-					// Añadiremos el usuarioMensaje como clave y el valor incrementado al ConcurrentHashMap hmUsuarios
-					hmUsuarios.put(usuarioMensaje, new AtomicInteger(hmUsuarios.get(usuarioMensaje).incrementAndGet()));
+
+		// Si se trata de un servidor smtp-in
+		if (tipoServidor=="smtp-in"){
+			// Si el mensaje coincide con el patron pMensaje
+			if (comparador.matches()){
+				// Coge el usuario que envia el mensaje
+				final String usuarioMensaje = comparador.group(1);
+				// Si el usuario no ha sido registrado en hmUsuarios	
+				if (!hmUsuarios.containsKey(usuarioMensaje)) {
+					// Hace un registro del usuario
+					hmUsuarios.put(usuarioMensaje, new AtomicInteger(1));
+				} 
+				// Si el usuario ya está registrado en hmUsuarios
+				else {
+					// Si hmUsuarios contiene al usuario que envia el mensaje
+					if (hmUsuarios.containsKey(usuarioMensaje)){
+						// Añadiremos el usuarioMensaje como clave y el valor incrementado al ConcurrentHashMap hmUsuarios
+						AtomicInteger i = new AtomicInteger(hmUsuarios.get(usuarioMensaje).incrementAndGet());
+						hmUsuarios.put(usuarioMensaje, i);
+					}
 				}
 			}
 		}
+		if ()
 	}	
 }
