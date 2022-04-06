@@ -165,8 +165,7 @@ public class Trabajador implements Runnable {
 		
 		// Mensaje obtenido de la línea
 		final String mensaje=matcherLinea.group(6);
-		// ID de la cola de mensajes
-		final String queueID=matcherLinea.group(5);
+
 		// Tipo de servidor
 		final String tipoServidor=matcherLinea.group(3);
 		// Patron del mensaje que identifica un mensaje enviado
@@ -175,7 +174,7 @@ public class Trabajador implements Runnable {
 		Matcher comparador = pMensaje.matcher(mensaje);
 
 		// Si se trata de un servidor smtp-in
-		if (tipoServidor=="smtp-in"){
+		if (tipoServidor.equals("smtp-out")){
 			// Si el mensaje coincide con el patron pMensaje
 			if (comparador.matches()){
 				// Coge el usuario que envia el mensaje
@@ -187,15 +186,10 @@ public class Trabajador implements Runnable {
 				} 
 				// Si el usuario ya está registrado en hmUsuarios
 				else {
-					// Si hmUsuarios contiene al usuario que envia el mensaje
-					if (hmUsuarios.containsKey(usuarioMensaje)){
-						// Añadiremos el usuarioMensaje como clave y el valor incrementado al ConcurrentHashMap hmUsuarios
-						AtomicInteger i = new AtomicInteger(hmUsuarios.get(usuarioMensaje).incrementAndGet());
-						hmUsuarios.put(usuarioMensaje, i);
-					}
+					// Añadiremos el usuarioMensaje como clave y el valor incrementado al ConcurrentHashMap hmUsuarios
+					hmUsuarios.get(usuarioMensaje).incrementAndGet();
 				}
 			}
 		}
-		if ()
 	}	
 }

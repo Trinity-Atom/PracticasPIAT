@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.FilenameFilter;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Set;
 import java.util.TreeMap;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ExecutorService;
@@ -32,14 +33,12 @@ public class EstadisticasLog {
 	private final static String patronTraza = "^("+FECHA+")\\s+("+HORA+")\\s+("+TIPO_SERVIDOR+")("+NUMERO_SERVIDOR+")+\\s+(\\[\\w+\\]): (.*)";	
 	
 	/* Patrones que se usan en las estadísticas agregadas
-
 		msgIn: Mensajes en la bandeja de entrada
 		msgOUT: Mensajes en la bandeja de salida
 		msgINFECTED: Mensajes clasificados como infectados
 		msgSPAM: Mensajes clasificados como spam
 		code432: Mensajes con información de intentos de entrega con codigo 4.3.2 (overload)
 		code511: Mensajes con información de intentos de entrega con código 5.1.1 (bad destination mailbox address)
-
 	*/
 	private final static String msgIn = FECHA+"\\s"+HORA+"\\ssmtp-in\\d\\s\\[[A-Z0-9]{8}\\]\\:\\smessage\\sfrom.*"; 	
 	private final static String msgOUT = FECHA+"\\s"+HORA+"\\ssmtp-out\\d\\s\\[[A-Z0-9]{8}\\]\\:\\smessage\\sfrom.*";
@@ -162,14 +161,25 @@ public class EstadisticasLog {
 		
 		/* Estadísticas agregadas */
 		System.out.println("\n\n  Estadísticas agregadas:");
-		
+
 		// Para mostrar el contenido del mapa hmEstadisticasAgregadas de forma ordenado, se copia a un TreeMap y se muestra el contenido de este, pues un TreeMap almacena la información ordenada por la clave
 		Map <String, AtomicInteger> mapaOrdenado = new TreeMap<String ,AtomicInteger>(hmEstadisticasAgregadas);
+		String servidorAnterior="";
 		for (Map.Entry<String, AtomicInteger> entrada : mapaOrdenado.entrySet()) {
 			//TODO: La siguiente instrucción es correcta, pero se puede cambiar para que salga mejor formateada
+			// 1) Separamos obtenemos el tipo de servidor y el estadístico
 			String arr[] = entrada.getKey().split(" ",2);
-			System.out.println("\t"+arr[0]+":\n\t\t"+arr[1]+" = " +entrada.getValue().get());
-	        }
+			String typeServidor=arr[0];
+			String estadisticaAgregada=arr[1];
+
+			// 2) Mostramos el tipo de servidor si no es igual que el anterior o si el servidorAnterior está vacío
+			if(!typeServidor.equals(servidorAnterior) || servidorAnterior.isEmpty()){
+				System.out.println("\t"+typeServidor+":\n");
+			}
+			// 3) Mostramos el estadístico asociado y registramos el servidorAnterior para el siguiente
+			System.out.println("\t\t"+estadisticaAgregada+" = " +entrada.getValue().get());
+			servidorAnterior=arr[0];	
+	    }
 
 		/* Estadísticas de usuarios */
 		System.out.println("\n  Estadísticas de usuarios que han enviado más de "+numMaxMsg+" mensajes:");
