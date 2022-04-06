@@ -47,7 +47,6 @@ public class Trabajador implements Runnable {
 
 		// Abrir el fichero y si no hay errores, procesar cada línea invocando al método procesarLinea()
 	    try {
-			//TODO: Mirar si hay que hacer la codificacion UTF-8
 	    	BufferedReader brInput = new BufferedReader(new FileReader(fichero));
 			try{
 				String linea;
@@ -106,7 +105,7 @@ public class Trabajador implements Runnable {
 	 */
 	private void estadisticasServidor(Matcher matcherLinea) {
 		// Extraer de matcherLinea el nombre del servidor y el tipo
-		// TODO: Codificar el método estadisticasServidor
+		// DONE: Codificar el método estadisticasServidor
 		String tipoServidor = matcherLinea.group(3);
 		String nombreServidor = tipoServidor + matcherLinea.group(4);
 		hmServidores.put (nombreServidor, tipoServidor);	// Meter los valores obtenidos en el mapa
@@ -158,20 +157,19 @@ public class Trabajador implements Runnable {
 	 * @param	matcherLinea	Objeto Matcher al que ya se le ha realizado una casación y por tanto se puede extraer información de sus grupos
 	 */	
 	private void estadisticasUsuarios(Matcher matcherLinea) {
-		// TODO: Codificar el método estadisticasUsuarios
+		// DONE: Codificar el método estadisticasUsuarios
 		//	Ver si la traza se corresponde a una traza que indica que se ha enviado un mensaje.
 		//	En ese caso, guardar en el mapa hmUsuarios el nombre del usuario como clave y como valor el nº 1 si no existía esa clave,
 		//  pues en el caso de que existiera hay que incrementar el valor
 		
 		// Mensaje obtenido de la línea
 		final String mensaje=matcherLinea.group(6);
-
 		// Tipo de servidor
 		final String tipoServidor=matcherLinea.group(3);
 		// Patron del mensaje que identifica un mensaje enviado
-		Pattern pMensaje = Pattern.compile("^message from: (.+)to: (.+) message-id: (.+) size:.*");
+		final Pattern pMensaje = Pattern.compile("^message from: <(.+)\\@etsist.upm.es> to: (.+) message-id: (.+) size:.*");
 		// Comparador que sirve para ver si el mensaje contiene el patron del mensaje 
-		Matcher comparador = pMensaje.matcher(mensaje);
+		final Matcher comparador = pMensaje.matcher(mensaje);
 
 		// Si se trata de un servidor smtp-in
 		if (tipoServidor.equals("smtp-out")){
