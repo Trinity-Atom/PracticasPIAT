@@ -32,14 +32,12 @@ public class EstadisticasLog {
 	private final static String patronTraza = "^("+FECHA+")\\s+("+HORA+")\\s+("+TIPO_SERVIDOR+")("+NUMERO_SERVIDOR+")+\\s+(\\[\\w+\\]): (.*)";	
 	
 	/* Patrones que se usan en las estadísticas agregadas
-
 		msgIn: Mensajes en la bandeja de entrada
 		msgOUT: Mensajes en la bandeja de salida
 		msgINFECTED: Mensajes clasificados como infectados
 		msgSPAM: Mensajes clasificados como spam
 		code432: Mensajes con información de intentos de entrega con codigo 4.3.2 (overload)
 		code511: Mensajes con información de intentos de entrega con código 5.1.1 (bad destination mailbox address)
-
 	*/
 	private final static String msgIn = FECHA+"\\s"+HORA+"\\ssmtp-in\\d\\s\\[[A-Z0-9]{8}\\]\\:\\smessage\\sfrom.*"; 	
 	private final static String msgOUT = FECHA+"\\s"+HORA+"\\ssmtp-out\\d\\s\\[[A-Z0-9]{8}\\]\\:\\smessage\\sfrom.*";
@@ -165,11 +163,21 @@ public class EstadisticasLog {
 		
 		// Para mostrar el contenido del mapa hmEstadisticasAgregadas de forma ordenado, se copia a un TreeMap y se muestra el contenido de este, pues un TreeMap almacena la información ordenada por la clave
 		Map <String, AtomicInteger> mapaOrdenado = new TreeMap<String ,AtomicInteger>(hmEstadisticasAgregadas);
+		String arrayAnterior=null;
 		for (Map.Entry<String, AtomicInteger> entrada : mapaOrdenado.entrySet()) {
 			//TODO: La siguiente instrucción es correcta, pero se puede cambiar para que salga mejor formateada
 			String arr[] = entrada.getKey().split(" ",2);
-			System.out.println("\t"+arr[0]+":\n\t\t"+arr[1]+" = " +entrada.getValue().get());
-	        }
+			if (arrayAnterior==null){
+				arrayAnterior= arr[0];
+			}
+			if (arrayAnterior.equals(arr[0])){
+				System.out.println("\t"+arr[0]+":\n");
+				System.out.println("\t\t"+arr[1]+" = " +entrada.getValue().get());
+				arrayAnterior=arr[0];
+			} else{
+				System.out.println("\t\t"+arr[1]+" = " +entrada.getValue().get());
+			}
+	    }
 
 		/* Estadísticas de usuarios */
 		System.out.println("\n  Estadísticas de usuarios que han enviado más de "+numMaxMsg+" mensajes:");
