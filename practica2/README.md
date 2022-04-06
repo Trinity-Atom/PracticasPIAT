@@ -61,8 +61,11 @@ GROUP 5 == QUEUE_ID
 GROUP 6 == MENSAJE
 .*
 
-/*************** MESSAGE REGEX & JAVA ***************/
-^message from: (.+)to: (.+) message-id: (.+) size:.*
+/*************** MESSAGE REGEX ***************/
+^message from: <(.+\@etsist.upm.es)> to: (.+) message-id: (.+) size:.*
+
+/*************** MESSAGE JAVA ***************/
+^message from: <(.+\\@etsist.upm.es)> to: (.+) message-id: (.+) size:.*
 
 // Regex de inicio de palabra con digitos hasta el primer whitespace
 ^[^\s]+

@@ -4,7 +4,6 @@ import java.io.File;
 import java.io.FilenameFilter;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Set;
 import java.util.TreeMap;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ExecutorService;
@@ -166,7 +165,7 @@ public class EstadisticasLog {
 		Map <String, AtomicInteger> mapaOrdenado = new TreeMap<String ,AtomicInteger>(hmEstadisticasAgregadas);
 		String servidorAnterior="";
 		for (Map.Entry<String, AtomicInteger> entrada : mapaOrdenado.entrySet()) {
-			//TODO: La siguiente instrucción es correcta, pero se puede cambiar para que salga mejor formateada
+			// DONE: La siguiente instrucción es correcta, pero se puede cambiar para que salga mejor formateada
 			// 1) Separamos obtenemos el tipo de servidor y el estadístico
 			String arr[] = entrada.getKey().split(" ",2);
 			String typeServidor=arr[0];
