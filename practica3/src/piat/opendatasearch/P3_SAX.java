@@ -31,7 +31,7 @@ public class P3_SAX {
 		
 		// TODO
 		/* 
-		 * (DONE) Validar los argumentos recibidos en main()
+		 * (DONE & TESTED) Validar los argumentos recibidos en main()
 		 * Instanciar un objeto ManejadorXML pasando como parámetro el código de la categoría recibido en el segundo argumento de main()
 		 * Instanciar un objeto SAXParser e invocar a su método parse() pasando como parámetro un descriptor de fichero, cuyo nombre se recibió en el primer argumento de main(), y la instancia del objeto ManejadorXML 
 		 * Invocar al método getConcepts() del objeto ManejadorXML para obtener un List<String> con las uris de los elementos <concept> cuyo elemento <code> contiene el código de la categoría buscado

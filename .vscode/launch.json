@@ -13,12 +13,20 @@
         },
         {
             "type": "java",
-            "name": "Launch P3_SAX",
+            "name": "Launch practica3",
             "request": "launch",
             "mainClass": "piat.opendatasearch.P3_SAX",
             "projectName": "PracticasPIAT_34d99c9d",
             "console": "externalTerminal",
             "args": "practica3\\files\\catalogo.xml 0018-123 practica3\\files\\salida.xml"
-        }
+        },
+        {
+            "type": "java",
+            "name": "Launch practica2",
+            "request": "launch",
+            "mainClass": "",
+            "args": "pathEntrada",
+            "console": "externalTerminal"
+        },
     ]
 }
