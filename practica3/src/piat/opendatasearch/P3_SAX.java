@@ -1,11 +1,12 @@
 package piat.opendatasearch;
 
+import java.io.File;
 import java.util.Arrays;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
- * @author Ponga aquí su nombre, apellidos y DNI
+ * @author Salvador Fernández García-Morales 53823973V
  *
  */
 
@@ -30,7 +31,7 @@ public class P3_SAX {
 		
 		// TODO
 		/* 
-		 * Validar los argumentos recibidos en main()
+		 * (DONE) Validar los argumentos recibidos en main()
 		 * Instanciar un objeto ManejadorXML pasando como parámetro el código de la categoría recibido en el segundo argumento de main()
 		 * Instanciar un objeto SAXParser e invocar a su método parse() pasando como parámetro un descriptor de fichero, cuyo nombre se recibió en el primer argumento de main(), y la instancia del objeto ManejadorXML 
 		 * Invocar al método getConcepts() del objeto ManejadorXML para obtener un List<String> con las uris de los elementos <concept> cuyo elemento <code> contiene el código de la categoría buscado
@@ -41,25 +42,45 @@ public class P3_SAX {
 		 */
 		
 		// Validar los argumentos recibidos en main()
-		Pattern xmlPattern = Pattern.compile("catalogo\\.xml$");
-		// Regex pattern: ^[\d]{3,4}-?[-\w]{3,}
-		Pattern codePattern = Pattern.compile("[\\d]{3,4}-?[-\\w]{3,}");
+		
+		// TESTED
+		// Regex pattern: .*\.xml$
+		Pattern xmlPattern = Pattern.compile(".*\\.xml$",Pattern.MULTILINE);
+		// Regex pattern: ^[\d]{3,4}-[-0-9A-Z]{3,8}
+		Pattern codePattern1 = Pattern.compile("^[\\d]{3,4}-[-0-9A-Z]{3,8}",Pattern.MULTILINE);
+		// Regex pattern: ^[\d]{3,4}
+		Pattern codePattern2 = Pattern.compile("[\\d]{3,4}",Pattern.MULTILINE);
 
 		Matcher m0 = xmlPattern.matcher(args[0]);
-		Matcher m1 = codePattern.matcher(args[1]);
-		Matcher m2 = xmlPattern.matcher(args[2]);
+		Matcher m1 = codePattern1.matcher(args[1]);
+		Matcher m2 = codePattern2.matcher(args[1]);
+		Matcher m3 = xmlPattern.matcher(args[2]);
 		if (!m0.matches()){
-			mostrarUso("ERROR: el primer argumento debe ser una ruta a un archivo XML");
+			System.err.println("ERROR: el primer argumento debe ser una ruta a un archivo XML");
 			System.exit(1);
 		}
-		if (!m1.matches()){
-			mostrarUso("ERROR: el segundo argumento no es un código válido");
+		if (!m1.matches() && !m2.matches()){
+			System.err.println("ERROR: el segundo argumento no es un código válido");
 			System.exit(1);
 		}
-		if (!m2.matches()){
-			mostrarUso("ERROR: el tercer argumento debe ser una ruta a un archivo XML");
+		if (!m3.find()){
+			System.err.println("ERROR: el tercer argumento debe ser una ruta a un archivo XML");
 			System.exit(1);
 		}
+		// NOT TESTED
+		File filein = new File(args[0]);
+		File fileout = new File(args[2]);
+		if(!filein.canRead()){
+			System.err.println("ERROR: el archivo " + args[0] + " no tiene permisos de lectura");
+			System.exit(1);
+		}
+		if(!fileout.canWrite()){
+			System.err.println("ERROR: el archivo " + args[2] + " no tiene permisos de escritura");
+			System.exit(1);
+		}
+
+		
+		// Instanciar un objeto ManejadorXML pasando como parámetro el código de la categoría recibido en el segundo argumento de main()
 		
 
 		System.exit(0);

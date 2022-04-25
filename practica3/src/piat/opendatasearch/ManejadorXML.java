@@ -10,7 +10,7 @@ import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
 
 /**
- * @author Ponga aquí su nombre, apellidos y DNI
+ * @author Salvador Fernández García-Morales 53823973V
  *
  */
 
@@ -26,7 +26,7 @@ public class ManejadorXML extends DefaultHandler implements ParserCatalogo {
 	 */
 	public ManejadorXML (String sCodigoConcepto) throws SAXException, ParserConfigurationException {
 		// TODO
-	
+		
 		
 	}
 
