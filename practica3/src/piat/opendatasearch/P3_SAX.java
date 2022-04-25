@@ -1,9 +1,20 @@
 package piat.opendatasearch;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
+import javax.lang.model.util.ElementScanner14;
+import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.parsers.SAXParser;
+import javax.xml.parsers.SAXParserFactory;
+
+import org.xml.sax.SAXException;
 
 /**
  * @author Salvador Fernández García-Morales 53823973V
@@ -31,19 +42,18 @@ public class P3_SAX {
 		
 		// TODO
 		/* 
-		 * (DONE & TESTED) Validar los argumentos recibidos en main()
-		 * Instanciar un objeto ManejadorXML pasando como parámetro el código de la categoría recibido en el segundo argumento de main()
-		 * Instanciar un objeto SAXParser e invocar a su método parse() pasando como parámetro un descriptor de fichero, cuyo nombre se recibió en el primer argumento de main(), y la instancia del objeto ManejadorXML 
-		 * Invocar al método getConcepts() del objeto ManejadorXML para obtener un List<String> con las uris de los elementos <concept> cuyo elemento <code> contiene el código de la categoría buscado
-		 * Invocar al método getLabel() del objeto ManejadorXML para obtener el nombre de la categoría buscada
-		 * Invocar al método getDatasets() del objeto ManejadorXML para obtener un mapa con los datasets de la categoría buscada 
-		 * Crear el fichero de salida con el nombre recibido en el tercer argumento de main()
+		 * (DONE & TESTED)Validar los argumentos recibidos en main()
+		 * (DONE)Instanciar un objeto ManejadorXML pasando como parámetro el código de la categoría recibido en el segundo argumento de main()
+		 * (DONE)Instanciar un objeto SAXParser e invocar a su método parse() pasando como parámetro un descriptor de fichero, cuyo nombre se recibió en el primer argumento de main(), y la instancia del objeto ManejadorXML 
+		 * (DONE)Invocar al método getConcepts() del objeto ManejadorXML para obtener un List<String> con las uris de los elementos <concept> cuyo elemento <code> contiene el código de la categoría buscado
+		 * (DONE)Invocar al método getLabel() del objeto ManejadorXML para obtener el nombre de la categoría buscada
+		 * (DONE)Invocar al método getDatasets() del objeto ManejadorXML para obtener un mapa con los datasets de la categoría buscada 
+		 * (DONE)Crear el fichero de salida con el nombre recibido en el tercer argumento de main()
 		 * Volcar al fichero de salida los datos en el formato XML especificado por ResultadosBusquedaP3.xsd
 		 */
 		
-		// Validar los argumentos recibidos en main()
+		// 1) Validar los argumentos recibidos en main()
 		
-		// TESTED
 		// Regex pattern: .*\.xml$
 		Pattern xmlPattern = Pattern.compile(".*\\.xml$",Pattern.MULTILINE);
 		// Regex pattern: ^[\d]{3,4}-[-0-9A-Z]{3,8}
@@ -67,7 +77,7 @@ public class P3_SAX {
 			System.err.println("ERROR: el tercer argumento debe ser una ruta a un archivo XML");
 			System.exit(1);
 		}
-		// NOT TESTED
+
 		File filein = new File(args[0]);
 		File fileout = new File(args[2]);
 		if(!filein.canRead()){
@@ -78,10 +88,50 @@ public class P3_SAX {
 			System.err.println("ERROR: el archivo " + args[2] + " no tiene permisos de escritura");
 			System.exit(1);
 		}
+		
+		// 2) Instanciar un objeto ManejadorXML pasando como parámetro el código de la categoría recibido en el segundo argumento de main()
+		try {
+			ManejadorXML manejador = new ManejadorXML(args[1]);
+			
+			// 3) Instanciar un objeto SAXParser e invocar a su método parse() pasando como parámetro un descriptor de fichero, cuyo nombre se 
+			// recibió en el primer argumento de main(), y la instancia del objeto ManejadorXML 
+			SAXParserFactory fac = SAXParserFactory.newInstance();
+			SAXParser saxp = fac.newSAXParser();
+			saxp.parse(filein, manejador);
+			
+			// 4) Invocar al método getConcepts() del objeto ManejadorXML para obtener un List<String> con las uris de los elementos <concept>
+			// cuyo elemento <code> contiene el código de la categoría buscado
+			List<String> uris = manejador.getConcepts();
+			
+			// 5) Invocar al método getLabel() del objeto ManejadorXML para obtener el nombre de la categoría buscada
+			String nombreCategoria = manejador.getLabel();
 
-		
-		// Instanciar un objeto ManejadorXML pasando como parámetro el código de la categoría recibido en el segundo argumento de main()
-		
+			// 6) Invocar al método getDatasets() del objeto ManejadorXML para obtener un mapa con los datasets de la categoría buscada
+			Map<String, HashMap<String, String>> datasets = manejador.getDatasets();
+
+			// 7) Crear el fichero de salida con el nombre recibido en el tercer argumento de main()
+			if(fileout.createNewFile()){
+				System.out.println("El fichero se ha creado correctamente");	
+			} 
+			else{
+				if(!fileout.exists()){
+				System.out.println("No se ha podido crear el fichero");
+				System.exit(1);	
+				}
+			}
+
+			// 8) Volcar al fichero de salida los datos en el formato XML especificado por ResultadosBusquedaP3.xsd
+
+		} catch (SAXException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (ParserConfigurationException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 
 		System.exit(0);
 	}
