@@ -18,7 +18,7 @@
             "mainClass": "piat.opendatasearch.P3_SAX",
             "projectName": "PracticasPIAT_34d99c9d",
             "console": "externalTerminal",
-            "args": "practica3\\files\\catalogo.xml 0018-123 practica3\\files\\salida.xml"
+            "args": "practica3\\files\\catalogo.xml 018 practica3\\files\\salida.xml"
         },
         {
             "type": "java",

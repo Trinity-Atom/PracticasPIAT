@@ -9,7 +9,6 @@ import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import javax.lang.model.util.ElementScanner14;
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.parsers.SAXParser;
 import javax.xml.parsers.SAXParserFactory;
@@ -97,6 +96,7 @@ public class P3_SAX {
 			// recibió en el primer argumento de main(), y la instancia del objeto ManejadorXML 
 			SAXParserFactory fac = SAXParserFactory.newInstance();
 			SAXParser saxp = fac.newSAXParser();
+
 			saxp.parse(filein, manejador);
 			
 			// 4) Invocar al método getConcepts() del objeto ManejadorXML para obtener un List<String> con las uris de los elementos <concept>

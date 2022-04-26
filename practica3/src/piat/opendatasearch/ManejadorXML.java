@@ -1,6 +1,12 @@
 package piat.opendatasearch;
 
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.Enumeration;
 import java.util.HashMap;
+import java.util.Hashtable;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -18,7 +24,8 @@ public class ManejadorXML extends DefaultHandler implements ParserCatalogo {
 	private String sNombreCategoria;	// Nombre de la categoría
 	private List<String> lConcepts; 	// Lista con los uris de los elementos <concept> que pertenecen a la categoría
 	private Map <String, HashMap<String,String>> hDatasets;	// Mapa con información de los dataset que pertenecen a la categoría
-
+	private String sCodigoConcepto;
+	private int conceptCounter;
 
 	/**  
 	 * @param sCodigoConcepto código de la categoría a procesar
@@ -26,8 +33,11 @@ public class ManejadorXML extends DefaultHandler implements ParserCatalogo {
 	 */
 	public ManejadorXML (String sCodigoConcepto) throws SAXException, ParserConfigurationException {
 		// TODO
-		
-		
+		this.sCodigoConcepto = sCodigoConcepto; //Codigo 018
+		sNombreCategoria = "";
+		lConcepts = new ArrayList<String>();
+		conceptCounter = 0;
+		hDatasets = null;
 	}
 
 	 //===========================================================
@@ -44,9 +54,10 @@ public class ManejadorXML extends DefaultHandler implements ParserCatalogo {
 	@Override
 	public String getLabel() {
 		// TODO 	
-		
-		
-		return null;
+		if(sNombreCategoria.isEmpty())
+			return null;
+		else
+			return sNombreCategoria;
 	}
 
 	/**
@@ -66,9 +77,10 @@ public class ManejadorXML extends DefaultHandler implements ParserCatalogo {
 	@Override	
 	public List<String> getConcepts() {
 		// TODO 
-		
-		
-		return null;
+		if(lConcepts.isEmpty())
+			return null;
+		else
+			return lConcepts;
 	}
 
 	/**
@@ -88,9 +100,10 @@ public class ManejadorXML extends DefaultHandler implements ParserCatalogo {
 	@Override
 	public Map<String, HashMap<String, String>> getDatasets() {
 		// TODO 
-		
-		
-		return null;
+		if(hDatasets.isEmpty())
+			return null;
+		else
+			return hDatasets;
 	}
 	
 
@@ -102,7 +115,7 @@ public class ManejadorXML extends DefaultHandler implements ParserCatalogo {
 	public void startDocument() throws SAXException {
 		super.startDocument();
 		// TODO 
-		
+		System.out.println("Empieza el documento");
 		
 	}
 
@@ -111,7 +124,7 @@ public class ManejadorXML extends DefaultHandler implements ParserCatalogo {
 	public void endDocument() throws SAXException {
 		super.endDocument();
 		// TODO 
-		
+		System.out.println("Finaliza el documento");
 				
 	}
 
@@ -120,8 +133,24 @@ public class ManejadorXML extends DefaultHandler implements ParserCatalogo {
 	public void startElement(String uri, String localName, String qName, Attributes attributes) throws SAXException {
 		super.startElement(uri, localName, qName, attributes);
 		// TODO 
-		
-				
+
+		// 1) Detectar si es elemento concept
+		String attribName;
+		if (localName.equals("concept")){
+			// Si hay atributos 
+			if (attributes.getLength() > 0){
+				// Comprobar si contiene algún atributo cuyo nombre sea id
+				for (int i=1; i <= attributes.getLength(); i++){
+					attribName=attributes.getLocalName(i);
+					// Si contiene un atributo id guardar el valor del atributo en lConcepts 
+					if (attribName.equals("id")){
+						lConcepts.add(attributes.getValue(i));
+					}
+				}
+			}
+			// Anotar que hemos entrado en un concept incrementando conceptCounter
+			conceptCounter++;
+		}		
 	}
 
 	@Override
@@ -136,8 +165,8 @@ public class ManejadorXML extends DefaultHandler implements ParserCatalogo {
 	public void characters(char[] ch, int start, int length) throws SAXException {
 		super.characters(ch, start, length);
 		// TODO 
-		
-				
+		contenidoElemento.append(ch, start, length);
+		contenidoElemento.setLength(0);		
 	}
 
 }
