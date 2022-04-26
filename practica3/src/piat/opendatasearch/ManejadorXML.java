@@ -26,7 +26,7 @@ public class ManejadorXML extends DefaultHandler implements ParserCatalogo {
 	private Map <String, HashMap<String,String>> hDatasets;	// Mapa con información de los dataset que pertenecen a la categoría
 	private StringBuilder contenidoElemento;
 	private String sCodigoConcepto;
-	private int conceptCounter;
+	private int nivelConcept;
 	private String valorAtributoID;
 
 	/**  
@@ -38,7 +38,7 @@ public class ManejadorXML extends DefaultHandler implements ParserCatalogo {
 		this.sCodigoConcepto = sCodigoConcepto; //Codigo 018
 		sNombreCategoria = "";
 		lConcepts = new ArrayList<String>();
-		conceptCounter = 0;
+		nivelConcept = 0;
 		hDatasets = null;
 		valorAtributoID = "";
 		contenidoElemento= null;
@@ -146,14 +146,16 @@ public class ManejadorXML extends DefaultHandler implements ParserCatalogo {
 				// Comprobar si contiene algún atributo cuyo nombre sea id
 				for (int i=1; i <= attributes.getLength(); i++){
 					nombreAtributo=attributes.getLocalName(i);
-					// Si contiene un atributo id guardar el valor del atributo en lConcepts 
+					// Si contiene un atributo id guardar temporalmente el valor del atributo
 					if (nombreAtributo.equals("id")){
 						valorAtributoID=attributes.getValue(i);
+						// PASO 4) Almacenar valor de atributos id en lConcepts
+						lConcepts.add(valorAtributoID);
 					}
 				}
 			}
-			// Anotar que hemos entrado en un concept incrementando conceptCounter
-			conceptCounter++;
+			// PASO 4) incrementar una variable que indique el nivel
+			nivelConcept++;
 		}
 	}
 
@@ -161,26 +163,27 @@ public class ManejadorXML extends DefaultHandler implements ParserCatalogo {
 	public void endElement(String uri, String localName, String qName) throws SAXException {
 		super.endElement(uri, localName, qName);
 		// TODO
-		if (localName.equals("concept"))
-			conceptCounter--;
-
 		// PASO 2) EVENTO ELEMENT </code>
 		if(localName.equals("code")){
 			// TODO: Revisar como obtener el contenidoElemento
 			// Si se está dentro de un concept y el contenido del elemento Code es igual que el de sCodigoConcepto
-			if(conceptCounter>0 && sCodigoConcepto.equals(contenidoElemento.toString()))
+			if(nivelConcept>0 && sCodigoConcepto.equals(contenidoElemento.toString()))
 			// Almacenar el valor del atributo id guardado en el paso1 en lConcepts
 			lConcepts.add(valorAtributoID);
 		}
 		// PASO 3) EVENTO ELEMENT </label>
 		if(localName.equals("label")){
 			// Si se está dentro de un concept, se está en el primer nivel y se ha encontrado la categoría
-			if(conceptCounter==1 && getLabel()!=null){
+			if(nivelConcept==1 && getLabel()!=null){
 				// TODO: Revisar como obtener el contenidoElemento
 				// Almacenar el contenido del elemento en el atributo sNombreCategoria
 				 sNombreCategoria=contenidoElemento.toString();
 			}
-		}		
+		}
+		// PASO 4) Decrementar el nivel cuando se sale del concept
+		if (localName.equals("concept"))
+			nivelConcept--;
+		
 	}
 	
 	@Override
