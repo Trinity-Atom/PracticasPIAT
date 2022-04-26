@@ -24,8 +24,10 @@ public class ManejadorXML extends DefaultHandler implements ParserCatalogo {
 	private String sNombreCategoria;	// Nombre de la categoría
 	private List<String> lConcepts; 	// Lista con los uris de los elementos <concept> que pertenecen a la categoría
 	private Map <String, HashMap<String,String>> hDatasets;	// Mapa con información de los dataset que pertenecen a la categoría
+	private StringBuilder contenidoElemento;
 	private String sCodigoConcepto;
 	private int conceptCounter;
+	private String valorAtributoID;
 
 	/**  
 	 * @param sCodigoConcepto código de la categoría a procesar
@@ -38,6 +40,8 @@ public class ManejadorXML extends DefaultHandler implements ParserCatalogo {
 		lConcepts = new ArrayList<String>();
 		conceptCounter = 0;
 		hDatasets = null;
+		valorAtributoID = "";
+		contenidoElemento= null;
 	}
 
 	 //===========================================================
@@ -53,7 +57,7 @@ public class ManejadorXML extends DefaultHandler implements ParserCatalogo {
 	 */
 	@Override
 	public String getLabel() {
-		// TODO 	
+		// TODO
 		if(sNombreCategoria.isEmpty())
 			return null;
 		else
@@ -134,31 +138,49 @@ public class ManejadorXML extends DefaultHandler implements ParserCatalogo {
 		super.startElement(uri, localName, qName, attributes);
 		// TODO 
 
-		// 1) Detectar si es elemento concept
-		String attribName;
+		// PASO 1) Detectar si es elemento concept (DONE)
+		String nombreAtributo;
 		if (localName.equals("concept")){
 			// Si hay atributos 
 			if (attributes.getLength() > 0){
 				// Comprobar si contiene algún atributo cuyo nombre sea id
 				for (int i=1; i <= attributes.getLength(); i++){
-					attribName=attributes.getLocalName(i);
+					nombreAtributo=attributes.getLocalName(i);
 					// Si contiene un atributo id guardar el valor del atributo en lConcepts 
-					if (attribName.equals("id")){
-						lConcepts.add(attributes.getValue(i));
+					if (nombreAtributo.equals("id")){
+						valorAtributoID=attributes.getValue(i);
 					}
 				}
 			}
 			// Anotar que hemos entrado en un concept incrementando conceptCounter
 			conceptCounter++;
-		}		
+		}
 	}
 
 	@Override
 	public void endElement(String uri, String localName, String qName) throws SAXException {
 		super.endElement(uri, localName, qName);
-		// TODO 
-		
-				
+		// TODO
+		if (localName.equals("concept"))
+			conceptCounter--;
+
+		// PASO 2) EVENTO ELEMENT </code>
+		if(localName.equals("code")){
+			// TODO: Revisar como obtener el contenidoElemento
+			// Si se está dentro de un concept y el contenido del elemento Code es igual que el de sCodigoConcepto
+			if(conceptCounter>0 && sCodigoConcepto.equals(contenidoElemento.toString()))
+			// Almacenar el valor del atributo id guardado en el paso1 en lConcepts
+			lConcepts.add(valorAtributoID);
+		}
+		// PASO 3) EVENTO ELEMENT </label>
+		if(localName.equals("label")){
+			// Si se está dentro de un concept, se está en el primer nivel y se ha encontrado la categoría
+			if(conceptCounter==1 && getLabel()!=null){
+				// TODO: Revisar como obtener el contenidoElemento
+				// Almacenar el contenido del elemento en el atributo sNombreCategoria
+				 sNombreCategoria=contenidoElemento.toString();
+			}
+		}		
 	}
 	
 	@Override
