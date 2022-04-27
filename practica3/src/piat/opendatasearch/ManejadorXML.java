@@ -1,12 +1,7 @@
 package piat.opendatasearch;
 
 import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.Enumeration;
 import java.util.HashMap;
-import java.util.Hashtable;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -25,9 +20,17 @@ public class ManejadorXML extends DefaultHandler implements ParserCatalogo {
 	private List<String> lConcepts; 	// Lista con los uris de los elementos <concept> que pertenecen a la categoría
 	private Map <String, HashMap<String,String>> hDatasets;	// Mapa con información de los dataset que pertenecen a la categoría
 	private StringBuilder contenidoElemento;
+	private HashMap <String,String> mapaDataset;
 	private String sCodigoConcepto;
+	private String idConcept;
+	private String idDataset;
+	private int nivelConcepts;
 	private int nivelConcept;
-	private String valorAtributoID;
+	private int nivelDatasets;
+	private int nivelDataset;
+	private String valorTitle;
+	private String valorDescription;
+	private String valorTheme;
 
 	/**  
 	 * @param sCodigoConcepto código de la categoría a procesar
@@ -38,10 +41,14 @@ public class ManejadorXML extends DefaultHandler implements ParserCatalogo {
 		this.sCodigoConcepto = sCodigoConcepto; //Codigo 018
 		sNombreCategoria = "";
 		lConcepts = new ArrayList<String>();
-		nivelConcept = 0;
 		hDatasets = null;
-		valorAtributoID = "";
+		idConcept = "";
 		contenidoElemento= null;
+		mapaDataset = new HashMap<>();
+		nivelDatasets = 0;
+		nivelDataset = 0;
+		nivelConcepts = 0;
+		nivelConcept = 0;
 	}
 
 	 //===========================================================
@@ -148,15 +155,50 @@ public class ManejadorXML extends DefaultHandler implements ParserCatalogo {
 					nombreAtributo=attributes.getLocalName(i);
 					// Si contiene un atributo id guardar temporalmente el valor del atributo
 					if (nombreAtributo.equals("id")){
-						valorAtributoID=attributes.getValue(i);
+						idConcept=attributes.getValue(i);
 						// PASO 4) Almacenar valor de atributos id en lConcepts
-						lConcepts.add(valorAtributoID);
+						lConcepts.add(idConcept);
 					}
 				}
 			}
 			// PASO 4) incrementar una variable que indique el nivel
 			nivelConcept++;
 		}
+		// DATASETS
+		if(localName.equals("datasets")){
+			nivelDatasets++;
+		}
+		if(localName.equals("dataset")){
+			// Si dataset tiene atributos
+			if(attributes.getLength()>0){
+				// Comprobar si contiene algún atributo cuyo nombre sea id
+				for (int i=1; i <= attributes.getLength(); i++){
+					nombreAtributo=attributes.getLocalName(i);
+					if (nombreAtributo.equals("id")){
+						// Guardar el valor del atributo id en una variable temporal
+						idDataset=attributes.getValue(i);
+					}
+				}
+			}
+			
+			nivelDataset++;
+		}
+		if(localName.equals("concepts")){
+			nivelConcepts++;
+		}
+		if(localName.equals("title")){
+			valorTitle=contenidoElemento.toString();
+			mapaDataset.put("title", valorTitle);
+		}
+		if(localName.equals("description")){
+			valorDescription=contenidoElemento.toString();
+			mapaDataset.put("description", valorDescription);
+		}
+		if(localName.equals("theme")){
+			valorTheme=contenidoElemento.toString();
+			mapaDataset.put("theme", valorTheme);
+		}
+
 	}
 
 	@Override
@@ -169,7 +211,7 @@ public class ManejadorXML extends DefaultHandler implements ParserCatalogo {
 			// Si se está dentro de un concept y el contenido del elemento Code es igual que el de sCodigoConcepto
 			if(nivelConcept>0 && sCodigoConcepto.equals(contenidoElemento.toString()))
 			// Almacenar el valor del atributo id guardado en el paso1 en lConcepts
-			lConcepts.add(valorAtributoID);
+			lConcepts.add(idConcept);
 		}
 		// PASO 3) EVENTO ELEMENT </label>
 		if(localName.equals("label")){
@@ -183,7 +225,28 @@ public class ManejadorXML extends DefaultHandler implements ParserCatalogo {
 		// PASO 4) Decrementar el nivel cuando se sale del concept
 		if (localName.equals("concept"))
 			nivelConcept--;
-		
+		// END DATASETS
+		if(localName.equals("datasets")){
+			if(nivelConcept>0 && nivelConcepts>0 && nivelDataset>0 && nivelDatasets>0
+				&& nivelConcepts==nivelDataset && nivelConcepts==nivelDatasets)
+			hDatasets.put(idDataset,mapaDataset);
+			nivelDatasets--;
+		}
+		if(localName.equals("dataset")){
+			nivelDataset--;
+		}
+		if(localName.equals("concepts")){
+			nivelConcepts--;
+		}
+		if(localName.equals("title")){
+
+		}
+		if(localName.equals("description")){
+			
+		}
+		if(localName.equals("theme")){
+			
+		}
 	}
 	
 	@Override
