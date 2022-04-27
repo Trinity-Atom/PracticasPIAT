@@ -121,7 +121,7 @@ public class P3_SAX {
 			}
 
 			// 8) Volcar al fichero de salida los datos en el formato XML especificado por ResultadosBusquedaP3.xsd
-			String salida = new GenerarXML().conceptsToXML(lConcepts)
+			// String salida = new GenerarXML().conceptsToXML(lConcepts)
 			
 		} catch (SAXException e) {
 			// TODO Auto-generated catch block

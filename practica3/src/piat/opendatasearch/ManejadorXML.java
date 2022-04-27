@@ -28,9 +28,7 @@ public class ManejadorXML extends DefaultHandler implements ParserCatalogo {
 	private int nivelConcept;
 	private int nivelDatasets;
 	private int nivelDataset;
-	private String valorTitle;
-	private String valorDescription;
-	private String valorTheme;
+	private boolean esCategoria;
 
 	/**  
 	 * @param sCodigoConcepto código de la categoría a procesar
@@ -40,11 +38,11 @@ public class ManejadorXML extends DefaultHandler implements ParserCatalogo {
 		// TODO
 		this.sCodigoConcepto = sCodigoConcepto; //Codigo 018
 		sNombreCategoria = "";
-		lConcepts = new ArrayList<String>();
-		hDatasets = null;
 		idConcept = "";
-		contenidoElemento= null;
+		lConcepts = new ArrayList<String>();
+		hDatasets = new HashMap<>();
 		mapaDataset = new HashMap<>();
+		contenidoElemento = new StringBuilder();
 		nivelDatasets = 0;
 		nivelDataset = 0;
 		nivelConcepts = 0;
@@ -145,16 +143,14 @@ public class ManejadorXML extends DefaultHandler implements ParserCatalogo {
 		super.startElement(uri, localName, qName, attributes);
 		// TODO 
 
-		// PASO 1) Detectar si es elemento concept (DONE)
-		String nombreAtributo;
-		if (localName.equals("concept")){
+		// PASO 1) Detectar si es elemento concept (DONE & TESTED)
+		if (qName.equals("concept")){
 			// Si hay atributos 
 			if (attributes.getLength() > 0){
 				// Comprobar si contiene algún atributo cuyo nombre sea id
-				for (int i=1; i <= attributes.getLength(); i++){
-					nombreAtributo=attributes.getLocalName(i);
-					// Si contiene un atributo id guardar temporalmente el valor del atributo
-					if (nombreAtributo.equals("id")){
+				for (int i=0; i < attributes.getLength(); i++){
+					// Si contiene un atributo cuyo nombre es id, guardar temporalmente el valor del atributo
+					if (attributes.getQName(i).equals("id")){
 						idConcept=attributes.getValue(i);
 						// PASO 4) Almacenar valor de atributos id en lConcepts
 						lConcepts.add(idConcept);
@@ -163,89 +159,108 @@ public class ManejadorXML extends DefaultHandler implements ParserCatalogo {
 			}
 			// PASO 4) incrementar una variable que indique el nivel
 			nivelConcept++;
+			contenidoElemento.setLength(0);
+			if(nivelDatasets==nivelDataset && nivelDatasets==nivelConcepts && nivelDatasets==nivelConcept){
+				//Si el atributo id coincide con alguno de lConcepts
+				if(lConcepts.contains(idConcept))
+				for (int i=0; i < attributes.getLength(); i++){
+					if (attributes.getQName(i).equals("id"))
+						hDatasets.put(attributes.getValue(i), mapaDataset);
+				}
+			}
 		}
 		// DATASETS
-		if(localName.equals("datasets")){
+		if(qName.equals("datasets")){
 			nivelDatasets++;
 		}
-		if(localName.equals("dataset")){
+		if(qName.equals("dataset")){
 			// Si dataset tiene atributos
 			if(attributes.getLength()>0){
 				// Comprobar si contiene algún atributo cuyo nombre sea id
-				for (int i=1; i <= attributes.getLength(); i++){
-					nombreAtributo=attributes.getLocalName(i);
-					if (nombreAtributo.equals("id")){
+				for (int i=0; i < attributes.getLength(); i++){
+					if (attributes.getQName(i).equals("id")){
 						// Guardar el valor del atributo id en una variable temporal
 						idDataset=attributes.getValue(i);
 					}
 				}
 			}
-			
 			nivelDataset++;
 		}
-		if(localName.equals("concepts")){
+		if(qName.equals("concepts")){
 			nivelConcepts++;
 		}
-		if(localName.equals("title")){
-			valorTitle=contenidoElemento.toString();
-			mapaDataset.put("title", valorTitle);
+		if(qName.equals("title")){
+			contenidoElemento.setLength(0);
 		}
-		if(localName.equals("description")){
-			valorDescription=contenidoElemento.toString();
-			mapaDataset.put("description", valorDescription);
+		if(qName.equals("description")){
+			contenidoElemento.setLength(0);
 		}
-		if(localName.equals("theme")){
-			valorTheme=contenidoElemento.toString();
-			mapaDataset.put("theme", valorTheme);
+		if(qName.equals("theme")){
+			contenidoElemento.setLength(0);
 		}
-
+		if (qName.equals("code")){
+			contenidoElemento.setLength(0);
+		}
+		if(qName.equals("label")){
+			contenidoElemento.setLength(0);
+		}
 	}
 
 	@Override
 	public void endElement(String uri, String localName, String qName) throws SAXException {
 		super.endElement(uri, localName, qName);
 		// TODO
-		// PASO 2) EVENTO ELEMENT </code>
-		if(localName.equals("code")){
+		
+		// PASO 2)
+		if(qName.equals("code")){
 			// TODO: Revisar como obtener el contenidoElemento
 			// Si se está dentro de un concept y el contenido del elemento Code es igual que el de sCodigoConcepto
-			if(nivelConcept>0 && sCodigoConcepto.equals(contenidoElemento.toString()))
-			// Almacenar el valor del atributo id guardado en el paso1 en lConcepts
-			lConcepts.add(idConcept);
+			if(nivelConcept>0 && sCodigoConcepto.equals(contenidoElemento.toString())){
+				// Se ha encontrado la categoría
+				esCategoria=true;
+			}
+			contenidoElemento.setLength(0);
 		}
-		// PASO 3) EVENTO ELEMENT </label>
-		if(localName.equals("label")){
+
+		// PASO 3)
+		if(qName.equals("label")){
 			// Si se está dentro de un concept, se está en el primer nivel y se ha encontrado la categoría
-			if(nivelConcept==1 && getLabel()!=null){
-				// TODO: Revisar como obtener el contenidoElemento
-				// Almacenar el contenido del elemento en el atributo sNombreCategoria
+			if(nivelConcept==1 && esCategoria==true){
+				esCategoria=false;
+				// Almacenar el contenido del elemento en sNombreCategoria
 				 sNombreCategoria=contenidoElemento.toString();
 			}
+			contenidoElemento.setLength(0);
 		}
-		// PASO 4) Decrementar el nivel cuando se sale del concept
-		if (localName.equals("concept"))
-			nivelConcept--;
-		// END DATASETS
-		if(localName.equals("datasets")){
-			if(nivelConcept>0 && nivelConcepts>0 && nivelDataset>0 && nivelDatasets>0
-				&& nivelConcepts==nivelDataset && nivelConcepts==nivelDatasets)
-			hDatasets.put(idDataset,mapaDataset);
-			nivelDatasets--;
-		}
-		if(localName.equals("dataset")){
-			nivelDataset--;
-		}
-		if(localName.equals("concepts")){
-			nivelConcepts--;
-		}
-		if(localName.equals("title")){
 
+		// PASO 4)
+		if (qName.equals("concept")){				
+			nivelConcept--;
 		}
-		if(localName.equals("description")){
-			
+		// END DATASETS
+		if(qName.equals("datasets")){
+			nivelDatasets--;
+			contenidoElemento.setLength(0);
 		}
-		if(localName.equals("theme")){
-			
+		if(qName.equals("dataset")){
+			nivelDataset--;
+			contenidoElemento.setLength(0);
+		}
+		if(qName.equals("concepts")){
+			nivelConcepts--;
+			contenidoElemento.setLength(0);
+		}
+		if(qName.equals("title")){ // DONE
+			mapaDataset.put("title", contenidoElemento.toString());
+			contenidoElemento.setLength(0);
+		}
+		if(qName.equals("description")){ // DONE
+			mapaDataset.put("description", contenidoElemento.toString());
+			contenidoElemento.setLength(0);
+		}
+		if(qName.equals("theme")){ // DONE
+			mapaDataset.put("theme", contenidoElemento.toString());
+			contenidoElemento.setLength(0);
 		}
 	}
 	
@@ -253,8 +268,7 @@ public class ManejadorXML extends DefaultHandler implements ParserCatalogo {
 	public void characters(char[] ch, int start, int length) throws SAXException {
 		super.characters(ch, start, length);
 		// TODO 
-		contenidoElemento.append(ch, start, length);
-		contenidoElemento.setLength(0);		
+		contenidoElemento.append(ch, start, length);		
 	}
 
 }
