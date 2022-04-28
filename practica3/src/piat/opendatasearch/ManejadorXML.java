@@ -29,6 +29,7 @@ public class ManejadorXML extends DefaultHandler implements ParserCatalogo {
 	private int nivelDatasets;
 	private int nivelDataset;
 	private boolean esCategoria;
+	private boolean primerNivel;
 
 	/**  
 	 * @param sCodigoConcepto código de la categoría a procesar
@@ -47,6 +48,7 @@ public class ManejadorXML extends DefaultHandler implements ParserCatalogo {
 		nivelDataset = 0;
 		nivelConcepts = 0;
 		nivelConcept = 0;
+		primerNivel = false;
 	}
 
 	 //===========================================================
@@ -153,7 +155,9 @@ public class ManejadorXML extends DefaultHandler implements ParserCatalogo {
 					if (attributes.getQName(i).equals("id")){
 						idConcept=attributes.getValue(i);
 						// PASO 4) Almacenar valor de atributos id en lConcepts
-						lConcepts.add(idConcept);
+						// mientras esté abierto el concept correspondiente a la categoria buscada
+						if(primerNivel==true)
+							lConcepts.add(idConcept);
 					}
 				}
 			}
@@ -213,11 +217,13 @@ public class ManejadorXML extends DefaultHandler implements ParserCatalogo {
 		
 		// PASO 2)
 		if(qName.equals("code")){
-			// TODO: Revisar como obtener el contenidoElemento
 			// Si se está dentro de un concept y el contenido del elemento Code es igual que el de sCodigoConcepto
 			if(nivelConcept>0 && sCodigoConcepto.equals(contenidoElemento.toString())){
+				// Añadimos el id al lconcepts
+				lConcepts.add(idConcept);
 				// Se ha encontrado la categoría
 				esCategoria=true;
+				primerNivel=true;
 			}
 			contenidoElemento.setLength(0);
 		}
@@ -234,8 +240,11 @@ public class ManejadorXML extends DefaultHandler implements ParserCatalogo {
 		}
 
 		// PASO 4)
-		if (qName.equals("concept")){				
+		if (qName.equals("concept")){			
 			nivelConcept--;
+			if(nivelConcept==0 && primerNivel==true){
+				primerNivel=false;
+			}	
 		}
 		// END DATASETS
 		if(qName.equals("datasets")){
