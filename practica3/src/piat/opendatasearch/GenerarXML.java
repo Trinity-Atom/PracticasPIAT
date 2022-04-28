@@ -9,15 +9,19 @@ import java.util.Map.Entry;
 
 public class GenerarXML {
     private static final String conceptPattern = "\n\t\t\t<concept id=\"#ID#\"/>";
-
+    private Set <Entry<String, HashMap<String,String>>> setDatasets;
     /*
     *   Clase GenerarXML para volcar los datos en un archivo
     */
-    public GenerarXML (){}
+    public GenerarXML (){
+    }
     
     public String generateXML(List <String> lConcepts, String codigoCategoria,
         Map <String, HashMap<String,String>> datasets){
+        // InitVariables
         StringBuilder sbSalida = new StringBuilder();
+        setDatasets= datasets.entrySet();
+
         // XML INIT
         sbSalida.append("<?xml version=\"1.0\" encoding=\"UTF-8\"?>");
         sbSalida.append("\n<searchResults xmlns=\"http://www.piat.dte.upm.es/practica3\"");
@@ -27,7 +31,7 @@ public class GenerarXML {
         // SUMMARY
         sbSalida.append("\n\t<summary>\n\t\t<query>"+codigoCategoria+"</query>");
         sbSalida.append("\n\t\t<numConcepts>"+lConcepts.size()+"</numConcepts>");
-        sbSalida.append("\n\t\t<numDatasets>"+lConcepts.size()+"</numDatasets>\n\t</summary>");
+        sbSalida.append("\n\t\t<numDatasets>"+setDatasets.size()+"</numDatasets>\n\t</summary>");
 
         // CONCEPTS
         sbSalida.append("\n\t<results>\n\t\t<concepts>" );
@@ -38,7 +42,6 @@ public class GenerarXML {
         
         // DATASETS
         sbSalida.append("\n\t\t<datasets>");
-        Set <Entry<String, HashMap<String,String>>> setDatasets= datasets.entrySet();
         Iterator<Map.Entry<String, HashMap<String,String>>> itDatasets = setDatasets.iterator();
         while(itDatasets.hasNext()){
             sbSalida.append("\n\t\t\t<dataset id=\""+itDatasets.next().getKey()+"\"/>");
