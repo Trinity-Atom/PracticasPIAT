@@ -1,6 +1,7 @@
 package piat.opendatasearch;
 
 import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -116,7 +117,11 @@ public class P3_SAX {
 			// 8) Volcar al fichero de salida los datos en el formato XML especificado por ResultadosBusquedaP3.xsd
 			GenerarXML salida = new GenerarXML();
 			String output=salida.generateXML(uris,args[1],datasets);
-			System.out.println(output);
+			// System.out.println(output);
+			FileWriter writer =new FileWriter(fileout);
+			writer.write(output);
+			writer.close();
+			
 			
 		} catch (SAXException e) {
 			// TODO Auto-generated catch block
