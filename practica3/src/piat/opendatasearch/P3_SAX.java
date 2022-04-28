@@ -41,12 +41,12 @@ public class P3_SAX {
 		
 		// TODO
 		/* 
-		 * (DONE & TESTED)Validar los argumentos recibidos en main()
-		 * (DONE)Instanciar un objeto ManejadorXML pasando como parámetro el código de la categoría recibido en el segundo argumento de main()
-		 * (DONE)Instanciar un objeto SAXParser e invocar a su método parse() pasando como parámetro un descriptor de fichero, cuyo nombre se recibió en el primer argumento de main(), y la instancia del objeto ManejadorXML 
-		 * (DONE)Invocar al método getConcepts() del objeto ManejadorXML para obtener un List<String> con las uris de los elementos <concept> cuyo elemento <code> contiene el código de la categoría buscado
-		 * (DONE)Invocar al método getLabel() del objeto ManejadorXML para obtener el nombre de la categoría buscada
-		 * (DONE)Invocar al método getDatasets() del objeto ManejadorXML para obtener un mapa con los datasets de la categoría buscada 
+		 * (DONE & TESTED) Validar los argumentos recibidos en main()
+		 * (DONE & TESTED) Instanciar un objeto ManejadorXML pasando como parámetro el código de la categoría recibido en el segundo argumento de main()
+		 * (DONE & TESTED) Instanciar un objeto SAXParser e invocar a su método parse() pasando como parámetro un descriptor de fichero, cuyo nombre se recibió en el primer argumento de main(), y la instancia del objeto ManejadorXML 
+		 * (DONE & TESTED) Invocar al método getConcepts() del objeto ManejadorXML para obtener un List<String> con las uris de los elementos <concept> cuyo elemento <code> contiene el código de la categoría buscado
+		 * (DONE & TESTED) Invocar al método getLabel() del objeto ManejadorXML para obtener el nombre de la categoría buscada
+		 * (DONE & TESTED) Invocar al método getDatasets() del objeto ManejadorXML para obtener un mapa con los datasets de la categoría buscada 
 		 * (DONE)Crear el fichero de salida con el nombre recibido en el tercer argumento de main()
 		 * Volcar al fichero de salida los datos en el formato XML especificado por ResultadosBusquedaP3.xsd
 		 */
@@ -110,18 +110,13 @@ public class P3_SAX {
 			Map<String, HashMap<String, String>> datasets = manejador.getDatasets();
 
 			// 7) Crear el fichero de salida con el nombre recibido en el tercer argumento de main()
-			if(fileout.createNewFile()){
-				System.out.println("El fichero se ha creado correctamente");	
-			} 
-			else{
-				if(!fileout.exists()){
-				System.out.println("No se ha podido crear el fichero");
-				System.exit(1);	
-				}
-			}
+			// Realmente el fichero tiene que existir si se quieren comprobar los permisos
+			// de escritura, por lo que este paso es innecesario 
 
 			// 8) Volcar al fichero de salida los datos en el formato XML especificado por ResultadosBusquedaP3.xsd
-			// String salida = new GenerarXML().conceptsToXML(lConcepts)
+			GenerarXML salida = new GenerarXML();
+			String output=salida.generateXML(uris,args[1],datasets);
+			System.out.println(output);
 			
 		} catch (SAXException e) {
 			// TODO Auto-generated catch block
