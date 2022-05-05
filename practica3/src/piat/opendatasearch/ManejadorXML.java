@@ -29,7 +29,7 @@ public class ManejadorXML extends DefaultHandler implements ParserCatalogo {
 	private int nivelDatasets;
 	private int nivelDataset;
 	private boolean esCategoria;
-	private boolean primerNivel;
+	private int nivelInicioCategoria;
 
 	/**  
 	 * @param sCodigoConcepto código de la categoría a procesar
@@ -48,7 +48,7 @@ public class ManejadorXML extends DefaultHandler implements ParserCatalogo {
 		nivelDataset = 0;
 		nivelConcepts = 0;
 		nivelConcept = 0;
-		primerNivel = false;
+		nivelInicioCategoria = 0;
 	}
 
 	 //===========================================================
@@ -156,7 +156,7 @@ public class ManejadorXML extends DefaultHandler implements ParserCatalogo {
 						idConcept=attributes.getValue(i);
 						// PASO 4) Almacenar valor de atributos id en lConcepts
 						// mientras esté abierto el concept correspondiente a la categoria buscada
-						if(primerNivel==true)
+						if(nivelConcepts>=nivelInicioCategoria&&esCategoria==true)
 							lConcepts.add(idConcept);
 					}
 				}
@@ -223,7 +223,7 @@ public class ManejadorXML extends DefaultHandler implements ParserCatalogo {
 				lConcepts.add(idConcept);
 				// Se ha encontrado la categoría
 				esCategoria=true;
-				primerNivel=true;
+				nivelInicioCategoria=nivelConcept;
 			}
 			contenidoElemento.setLength(0);
 		}
@@ -231,8 +231,8 @@ public class ManejadorXML extends DefaultHandler implements ParserCatalogo {
 		// PASO 3)
 		if(qName.equals("label")){
 			// Si se está dentro de un concept, se está en el primer nivel y se ha encontrado la categoría
-			if(nivelConcept==1 && esCategoria==true){
-				esCategoria=false;
+			if(nivelConcept>0 && nivelInicioCategoria==nivelConcept && esCategoria==true){
+				
 				// Almacenar el contenido del elemento en sNombreCategoria
 				 sNombreCategoria=contenidoElemento.toString();
 			}
@@ -242,8 +242,9 @@ public class ManejadorXML extends DefaultHandler implements ParserCatalogo {
 		// PASO 4)
 		if (qName.equals("concept")){			
 			nivelConcept--;
-			if(nivelConcept==0 && primerNivel==true){
-				primerNivel=false;
+			if(nivelConcept==nivelInicioCategoria && esCategoria==true){
+				nivelInicioCategoria=-1;
+				esCategoria=false;
 			}	
 		}
 		// END DATASETS
