@@ -13,6 +13,15 @@
         },
         {
             "type": "java",
+            "name": "Launch practica4",
+            "request": "launch",
+            "mainClass": "piat.opendatasearch.P4_SAX",
+            "projectName": "PracticasPIAT_34d99c9d",
+            "console": "externalTerminal",
+            "args": "practica4\\files\\catalogo.xml 0018 practica3\\files\\salida.xml"
+        },
+        {
+            "type": "java",
             "name": "Launch practica3",
             "request": "launch",
             "mainClass": "piat.opendatasearch.P3_SAX",

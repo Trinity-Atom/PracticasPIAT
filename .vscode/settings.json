@@ -1,0 +1,15 @@
+{
+    "java.project.referencedLibraries": {
+        "include": [
+            "lib/**/*.jar",
+            "practica4/lib/gson-2.9.0.jar",
+            "practica4/lib/gson-2.9.0-javadoc.jar"
+        ],
+        "exclude": [
+            "c:\\Users\\Salvador Fdez\\Downloads\\gson-2.9.0-javadoc.jar"
+        ]
+    },
+    "java.project.sourcePaths": [
+        "practica4\\src"
+    ]
+}
