@@ -43,9 +43,11 @@ public class GenerarXML {
         // DATASETS
         sbSalida.append("\n\t\t<datasets>");
         Iterator<Map.Entry<String, HashMap<String,String>>> itDatasets = setDatasets.iterator();
+
         while(itDatasets.hasNext()){
-            sbSalida.append("\n\t\t\t<dataset id=\""+itDatasets.next().getKey()+"\">");
-            HashMap<String,String> mapaContenidoDataset = itDatasets.next().getValue();
+            Map.Entry<String,HashMap<String,String>> next = itDatasets.next();
+            sbSalida.append("\n\t\t\t<dataset id=\""+next.getKey()+"\">");
+            HashMap<String,String> mapaContenidoDataset = next.getValue();
             sbSalida.append("\n\t\t\t\t<title>"+mapaContenidoDataset.get("title")+"</title>");
             sbSalida.append("\n\t\t\t\t<description>"+mapaContenidoDataset.get("description")+"</description>");
             sbSalida.append("\n\t\t\t\t<theme>"+mapaContenidoDataset.get("theme")+"</theme>\n\t\t\t</dataset>");

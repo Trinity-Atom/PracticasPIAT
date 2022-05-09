@@ -156,7 +156,7 @@ public class ManejadorXML extends DefaultHandler implements ParserCatalogo {
 						idConcept=attributes.getValue(i);
 						// PASO 4) Almacenar valor de atributos id en lConcepts
 						// mientras esté abierto el concept correspondiente a la categoria buscada
-						if(nivelConcepts>=nivelInicioCategoria&&esCategoria==true)
+						if(nivelConcept>=nivelInicioCategoria&&esCategoria==true)
 							lConcepts.add(idConcept);
 					}
 				}
@@ -241,11 +241,11 @@ public class ManejadorXML extends DefaultHandler implements ParserCatalogo {
 
 		// PASO 4)
 		if (qName.equals("concept")){			
-			nivelConcept--;
 			if(nivelConcept==nivelInicioCategoria && esCategoria==true){
 				nivelInicioCategoria=-1;
 				esCategoria=false;
-			}	
+			}
+			nivelConcept--;
 		}
 		// END DATASETS
 		if(qName.equals("datasets")){
