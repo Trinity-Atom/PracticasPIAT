@@ -18,8 +18,11 @@ public class GenerarXML {
     
     public String generateXML(List <String> lConcepts, String codigoCategoria,
         Map <String, HashMap<String,String>> datasets){
-        // InitVariables
+        
         StringBuilder sbSalida = new StringBuilder();
+        try {
+        // InitVariables
+        
         setDatasets= datasets.entrySet();
 
         // XML INIT
@@ -47,12 +50,18 @@ public class GenerarXML {
         while(itDatasets.hasNext()){
             Map.Entry<String,HashMap<String,String>> next = itDatasets.next();
             sbSalida.append("\n\t\t\t<dataset id=\""+next.getKey()+"\">");
-            HashMap<String,String> mapaContenidoDataset = next.getValue();
-            sbSalida.append("\n\t\t\t\t<title>"+mapaContenidoDataset.get("title")+"</title>");
-            sbSalida.append("\n\t\t\t\t<description>"+mapaContenidoDataset.get("description")+"</description>");
-            sbSalida.append("\n\t\t\t\t<theme>"+mapaContenidoDataset.get("theme")+"</theme>\n\t\t\t</dataset>");
+            
+                HashMap<String,String> mapaContenidoDataset = next.getValue();
+                sbSalida.append("\n\t\t\t\t<title>"+mapaContenidoDataset.get("title")+"</title>");
+                sbSalida.append("\n\t\t\t\t<description>"+mapaContenidoDataset.get("description")+"</description>");
+                sbSalida.append("\n\t\t\t\t<theme>"+mapaContenidoDataset.get("theme")+"</theme>\n\t\t\t</dataset>");
+            
         }
         sbSalida.append("\n\t\t</datasets>\n\t</results>\n</searchResults>");
-        return sbSalida.toString();
+        } catch (Exception e) {
+            System.err.println("ERROR WHILE PARSING");
+            e.printStackTrace();
         }
+        return sbSalida.toString();
+    }
 }

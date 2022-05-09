@@ -1,8 +1,11 @@
 package piat.opendatasearch;
 
+import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.OutputStreamWriter;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
@@ -40,15 +43,14 @@ public class P3_SAX {
 			System.exit(1);
 		}		
 		
-		// TODO
 		/* 
-		 * (DONE & TESTED) Validar los argumentos recibidos en main()
-		 * (DONE & TESTED) Instanciar un objeto ManejadorXML pasando como parámetro el código de la categoría recibido en el segundo argumento de main()
-		 * (DONE & TESTED) Instanciar un objeto SAXParser e invocar a su método parse() pasando como parámetro un descriptor de fichero, cuyo nombre se recibió en el primer argumento de main(), y la instancia del objeto ManejadorXML 
-		 * (DONE & TESTED) Invocar al método getConcepts() del objeto ManejadorXML para obtener un List<String> con las uris de los elementos <concept> cuyo elemento <code> contiene el código de la categoría buscado
-		 * (DONE & TESTED) Invocar al método getLabel() del objeto ManejadorXML para obtener el nombre de la categoría buscada
-		 * (DONE & TESTED) Invocar al método getDatasets() del objeto ManejadorXML para obtener un mapa con los datasets de la categoría buscada 
-		 * (DONE)Crear el fichero de salida con el nombre recibido en el tercer argumento de main()
+		 * Validar los argumentos recibidos en main()
+		 * Instanciar un objeto ManejadorXML pasando como parámetro el código de la categoría recibido en el segundo argumento de main()
+		 * Instanciar un objeto SAXParser e invocar a su método parse() pasando como parámetro un descriptor de fichero, cuyo nombre se recibió en el primer argumento de main(), y la instancia del objeto ManejadorXML 
+		 * Invocar al método getConcepts() del objeto ManejadorXML para obtener un List<String> con las uris de los elementos <concept> cuyo elemento <code> contiene el código de la categoría buscado
+		 * Invocar al método getLabel() del objeto ManejadorXML para obtener el nombre de la categoría buscada
+		 * Invocar al método getDatasets() del objeto ManejadorXML para obtener un mapa con los datasets de la categoría buscada 
+		 * Crear el fichero de salida con el nombre recibido en el tercer argumento de main()
 		 * Volcar al fichero de salida los datos en el formato XML especificado por ResultadosBusquedaP3.xsd
 		 */
 		
@@ -118,7 +120,7 @@ public class P3_SAX {
 			GenerarXML salida = new GenerarXML();
 			String output=salida.generateXML(uris,args[1],datasets);
 			// System.out.println(output);
-			FileWriter writer =new FileWriter(fileout);
+			BufferedWriter writer =new BufferedWriter(new OutputStreamWriter(new FileOutputStream(fileout), "utf-8"));
 			writer.write(output);
 			writer.close();
 			
