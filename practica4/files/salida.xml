@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<searchResults xmlns="http://www.piat.dte.upm.es/practica4"
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+xsi:schemaLocation="http://www.piat.dte.upm.es/practica4 ResultadosBusquedaP4.xsd">
+	<summary>
+		<query>018</query>
+		<numConcepts>96</numConcepts>
+		<numDatasets>44</numDatasets>
+	</summary>
+	<results>
+		<concepts>
+			<concept id="https://datos.madrid.es/egob/kos/actividades"/>
+		</concepts>
+		<datasets>
+			<dataset id="https://datos.madrid.es/egob/kos/actividades/RecitalesPresentacionesActosLiterarios">
+				<title>Unidades Integrales de Distrito de Policía Municipal</title>
+				<description>Relación de las Oficinas de Atención al Ciudadano de Policía Municipal ( OACs ). Se ubican en las 22 Unidades Integrales de Distrito, y en ellas se atienden comunicaciones o demandas de servicios no urgentes. Además de las oficinas fijas relacionadas, Policía Municipal dispone de oficinas móviles de atención al ciudadano que se ubican en lugares de alta concentración de personas.</description>
+				<theme>http://datos.gob.es/kos/sector-publico/sector/seguridad</theme>
+			</dataset>
+		</datasets>
+	</results>
+</searchResults>
