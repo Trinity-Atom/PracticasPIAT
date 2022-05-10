@@ -1,7 +1,11 @@
 package piat.opendatasearch;
 
+import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileOutputStream;
+import java.io.FileWriter;
 import java.io.IOException;
+import java.io.OutputStreamWriter;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
@@ -9,7 +13,6 @@ import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import javax.lang.model.util.ElementScanner14;
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.parsers.SAXParser;
 import javax.xml.parsers.SAXParserFactory;
@@ -115,21 +118,26 @@ public class P4_SAX {
 			} 
 			else{
 				if(!fileout.exists()){
-				System.out.println("No se ha podido crear el fichero");
-				System.exit(1);	
+					System.err.println("No se ha podido crear el fichero");
+					System.exit(1);	
 				}
 			}
 
 			// 8) Volcar al fichero de salida los datos en el formato XML especificado por ResultadosBusquedaP3.xsd
-
+			GenerarXML salida = new GenerarXML();
+			String output=salida.generateXML(uris,args[1],datasets);
+			// System.out.println(output);
+			BufferedWriter writer =new BufferedWriter(new OutputStreamWriter(new FileOutputStream(fileout), "utf-8"));
+			writer.write(output);
+			writer.close();
 		} catch (SAXException e) {
-			// TODO Auto-generated catch block
+			System.err.println("No se ha podido crear el fichero");
 			e.printStackTrace();
 		} catch (ParserConfigurationException e) {
-			// TODO Auto-generated catch block
+			System.err.println("No se ha podido crear el fichero");
 			e.printStackTrace();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
+			System.err.println("No se ha podido crear el fichero");
 			e.printStackTrace();
 		}
 
