@@ -1,11 +1,15 @@
 package piat.opendatasearch;
 
+import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
+import java.net.URL;
+import java.net.URLConnection;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
@@ -112,7 +116,11 @@ public class P4_SAX {
 			// 6) Invocar al método getDatasets() del objeto ManejadorXML para obtener un mapa con los datasets de la categoría buscada
 			Map<String, HashMap<String, String>> datasets = manejador.getDatasets();
 
-			// 7) Crear el fichero de salida con el nombre recibido en el tercer argumento de main()
+			// 7) Invocar al método getDatasetConcepts() de P4_JSON que utiliza la clase JSONDatasetParser para obtener un mapa con los concepts de los datasets
+			String archivoJSON = getUrlContents("https://datos.madrid.es/egob/catalogo/201747-0-bibliobuses-bibliotecas.json");
+			JSONDatasetParser jsonParser = new JSONDatasetParser(archivoJSON, uris, datasets);
+
+			// 8) Crear el fichero de salida con el nombre recibido en el tercer argumento de main()
 			if(fileout.createNewFile()){
 				System.out.println("El fichero se ha creado correctamente");	
 			} 
@@ -123,7 +131,7 @@ public class P4_SAX {
 				}
 			}
 
-			// 8) Volcar al fichero de salida los datos en el formato XML especificado por ResultadosBusquedaP3.xsd
+			// 9) Volcar al fichero de salida los datos en el formato XML especificado por ResultadosBusquedaP4.xsd
 			GenerarXML salida = new GenerarXML();
 			String output=salida.generateXML(uris,args[1],datasets);
 			// System.out.println(output);
@@ -166,4 +174,31 @@ public class P4_SAX {
 				);				
 	}		
 
-}
+	private static String getUrlContents(String theUrl)  
+	{  
+		StringBuilder content = new StringBuilder();  
+		// Use try and catch to avoid the exceptions  
+		try  
+		{  
+			URL url = new URL(theUrl); // creating a url object  
+			URLConnection urlConnection = url.openConnection(); // creating a urlconnection object  
+		
+			// wrapping the urlconnection in a bufferedreader  
+			BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(urlConnection.getInputStream()));  
+			String line;  
+			// reading from the urlconnection using the bufferedreader  
+			while ((line = bufferedReader.readLine()) != null)  
+			{  
+			content.append(line + "\n");  
+			}  
+			bufferedReader.close();  
+		}  
+		catch(Exception e)  
+		{
+			System.err.println("NO SE PUEDE OBTENER LA URL");
+			e.printStackTrace();
+			System.exit(1);
+		}  
+		return content.toString();  
+	}  
+}  
