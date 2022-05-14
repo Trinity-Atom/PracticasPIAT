@@ -86,7 +86,4 @@ public class JSONDatasetParser implements Runnable {
 		//	- Una vez procesadas todas las propiedades, ver si la clave @type tiene un valor igual a alguno de los concept de la lista lConcepts. Si es así
 		//	  guardar en un mapa Map<String,String> todos los valores de las variables temporales recogidas en el paso anterior y añadir este mapa al mapa graphs
 	}
-
-	
-	
 }

@@ -22,8 +22,8 @@ public class GenerarXML {
         StringBuilder sbSalida = new StringBuilder();
         try {
         // InitVariables
-        
-        setDatasets= datasets.entrySet();
+        setDatasets = datasets.entrySet();
+        HashMap<String,String> mapaContenidoDataset;
 
         // XML INIT
         sbSalida.append("<?xml version=\"1.0\" encoding=\"UTF-8\"?>");
@@ -45,19 +45,30 @@ public class GenerarXML {
         
         // DATASETS
         sbSalida.append("\n\t\t<datasets>");
-        Iterator<Map.Entry<String, HashMap<String,String>>> itDatasets = setDatasets.iterator();
+
+        for (Map.Entry<String,HashMap<String,String>> theDataset : setDatasets) {
+            // Añadir el idDataset
+            sbSalida.append("\n\t\t\t<dataset id=\""+theDataset.getKey()+"\">");
+            // Coger el hashMap de los contenidos del dataset
+            mapaContenidoDataset = theDataset.getValue();
+            sbSalida.append("\n\t\t\t\t<title>"+mapaContenidoDataset.get("title")+"</title>");
+            sbSalida.append("\n\t\t\t\t<description>"+mapaContenidoDataset.get("description")+"</description>");
+            sbSalida.append("\n\t\t\t\t<theme>"+mapaContenidoDataset.get("theme")+"</theme>\n\t\t\t</dataset>");
+        }
+/*        Iterator<Map.Entry<String, HashMap<String,String>>> itDatasets = setDatasets.iterator();
 
         while(itDatasets.hasNext()){
             Map.Entry<String,HashMap<String,String>> next = itDatasets.next();
-            sbSalida.append("\n\t\t\t<dataset id=\""+next.getKey()+"\">");
-            
-                HashMap<String,String> mapaContenidoDataset = next.getValue();
-                sbSalida.append("\n\t\t\t\t<title>"+mapaContenidoDataset.get("title")+"</title>");
-                sbSalida.append("\n\t\t\t\t<description>"+mapaContenidoDataset.get("description")+"</description>");
-                sbSalida.append("\n\t\t\t\t<theme>"+mapaContenidoDataset.get("theme")+"</theme>\n\t\t\t</dataset>");
+            sbSalida.append("\n\t\t\t<dataset id=\""+next.getKey()+"\">"); 
+            HashMap<String,String> mapaContenidoDataset = next.getValue();
+            sbSalida.append("\n\t\t\t\t<title>"+mapaContenidoDataset.get("title")+"</title>");
+            //testing
+            System.out.println(next.getValue().get("description"));
+            sbSalida.append("\n\t\t\t\t<description>"+mapaContenidoDataset.get("description")+"</description>");
+            sbSalida.append("\n\t\t\t\t<theme>"+mapaContenidoDataset.get("theme")+"</theme>\n\t\t\t</dataset>");
             
         }
-        sbSalida.append("\n\t\t</datasets>\n\t</results>\n</searchResults>");
+*/        sbSalida.append("\n\t\t</datasets>\n\t</results>\n</searchResults>");
         } catch (Exception e) {
             System.err.println("ERROR WHILE PARSING");
             e.printStackTrace();

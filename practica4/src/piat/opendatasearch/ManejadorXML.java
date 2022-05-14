@@ -24,6 +24,9 @@ public class ManejadorXML extends DefaultHandler implements ParserCatalogo {
 	private String sCodigoConcepto;
 	private String idConcept;
 	private String idDataset;
+	private String titulo;
+	private String descripcion;
+	private String tema;
 	private int nivelConcepts;
 	private int nivelConcept;
 	private int nivelDatasets;
@@ -167,8 +170,15 @@ public class ManejadorXML extends DefaultHandler implements ParserCatalogo {
 				//Si el atributo id coincide con alguno de lConcepts
 				if(lConcepts.contains(idConcept))
 				for (int i=0; i < attributes.getLength(); i++){
-					if (attributes.getQName(i).equals("id"))
-						hDatasets.put(attributes.getValue(i), mapaDataset);
+					if (attributes.getQName(i).equals("id")){
+						if(!hDatasets.containsKey(idDataset))
+							// se almacenará en hDatasets el id del dataset y los elementos <title>, <descrition> y <theme>.
+							mapaDataset= new HashMap<>();
+							mapaDataset.put("title", titulo);
+							mapaDataset.put("description", descripcion);
+							mapaDataset.put("theme", tema);
+							hDatasets.put(idDataset, mapaDataset);
+					}		
 				}
 			}
 		}
@@ -186,7 +196,7 @@ public class ManejadorXML extends DefaultHandler implements ParserCatalogo {
 						idDataset=attributes.getValue(i);
 					}
 				}
-			}
+			} 
 			nivelDataset++;
 		}
 		if(qName.equals("concepts")){
@@ -260,15 +270,15 @@ public class ManejadorXML extends DefaultHandler implements ParserCatalogo {
 			contenidoElemento.setLength(0);
 		}
 		if(qName.equals("title")){ // DONE
-			mapaDataset.put("title", contenidoElemento.toString());
+			titulo = contenidoElemento.toString();
 			contenidoElemento.setLength(0);
 		}
 		if(qName.equals("description")){ // DONE
-			mapaDataset.put("description", contenidoElemento.toString());
+			descripcion = contenidoElemento.toString();
 			contenidoElemento.setLength(0);
 		}
 		if(qName.equals("theme")){ // DONE
-			mapaDataset.put("theme", contenidoElemento.toString());
+			tema = contenidoElemento.toString();
 			contenidoElemento.setLength(0);
 		}
 	}

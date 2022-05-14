@@ -114,11 +114,9 @@ public class P4_SAX {
 			String nombreCategoria = manejador.getLabel();
 
 			// 6) Invocar al método getDatasets() del objeto ManejadorXML para obtener un mapa con los datasets de la categoría buscada
-			Map<String, HashMap<String, String>> datasets = manejador.getDatasets();
-
+			Map<String,HashMap<String,String>> datasets = manejador.getDatasets();
+			
 			// 7) Invocar al método getDatasetConcepts() de P4_JSON que utiliza la clase JSONDatasetParser para obtener un mapa con los concepts de los datasets
-			String archivoJSON = getUrlContents("https://datos.madrid.es/egob/catalogo/201747-0-bibliobuses-bibliotecas.json");
-			JSONDatasetParser jsonParser = new JSONDatasetParser(archivoJSON, uris, datasets);
 
 			// 8) Crear el fichero de salida con el nombre recibido en el tercer argumento de main()
 			if(fileout.createNewFile()){
@@ -200,5 +198,12 @@ public class P4_SAX {
 			System.exit(1);
 		}  
 		return content.toString();  
-	}  
+	}
+/*
+	private List<String> getDatasetConcepts(List<String> lConcepts, Map<String,List<Map<String,String>>> mDatasets) {
+		String archivoJSON = getUrlContents("https://datos.madrid.es/egob/catalogo/201747-0-bibliobuses-bibliotecas.json");
+
+		JSONDatasetParser jsonParser = new JSONDatasetParser(archivoJSON, lConcepts, mDatasets);
+		return archivoJSON;
+	}*/
 }  
