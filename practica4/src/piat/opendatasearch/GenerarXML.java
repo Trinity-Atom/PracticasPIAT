@@ -1,7 +1,6 @@
 package piat.opendatasearch;
 
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -10,6 +9,7 @@ import java.util.Map.Entry;
 public class GenerarXML {
     private static final String conceptPattern = "\n\t\t\t<concept id=\"#ID#\"/>";
     private Set <Entry<String, HashMap<String,String>>> setDatasets;
+    private Set<Entry<String, List<Map<String, String>>>> setMapaDatasets;
     /*
     *   Clase GenerarXML para volcar los datos en un archivo
     */
@@ -17,12 +17,14 @@ public class GenerarXML {
     }
     
     public String generateXML(List <String> lConcepts, String codigoCategoria,
-        Map <String, HashMap<String,String>> datasets){
+        Map <String, HashMap<String,String>> datasets,
+        Map<String, List<Map<String,String>>> mDatasetConcepts){
         
         StringBuilder sbSalida = new StringBuilder();
         try {
         // InitVariables
         setDatasets = datasets.entrySet();
+        setMapaDatasets = mDatasetConcepts.entrySet();
         HashMap<String,String> mapaContenidoDataset;
 
         // XML INIT
@@ -45,7 +47,6 @@ public class GenerarXML {
         
         // DATASETS
         sbSalida.append("\n\t\t<datasets>");
-
         for (Map.Entry<String,HashMap<String,String>> theDataset : setDatasets) {
             // Añadir el idDataset
             sbSalida.append("\n\t\t\t<dataset id=\""+theDataset.getKey()+"\">");
@@ -55,20 +56,15 @@ public class GenerarXML {
             sbSalida.append("\n\t\t\t\t<description>"+mapaContenidoDataset.get("description")+"</description>");
             sbSalida.append("\n\t\t\t\t<theme>"+mapaContenidoDataset.get("theme")+"</theme>\n\t\t\t</dataset>");
         }
-/*        Iterator<Map.Entry<String, HashMap<String,String>>> itDatasets = setDatasets.iterator();
-
-        while(itDatasets.hasNext()){
-            Map.Entry<String,HashMap<String,String>> next = itDatasets.next();
-            sbSalida.append("\n\t\t\t<dataset id=\""+next.getKey()+"\">"); 
-            HashMap<String,String> mapaContenidoDataset = next.getValue();
-            sbSalida.append("\n\t\t\t\t<title>"+mapaContenidoDataset.get("title")+"</title>");
-            //testing
-            System.out.println(next.getValue().get("description"));
-            sbSalida.append("\n\t\t\t\t<description>"+mapaContenidoDataset.get("description")+"</description>");
-            sbSalida.append("\n\t\t\t\t<theme>"+mapaContenidoDataset.get("theme")+"</theme>\n\t\t\t</dataset>");
-            
+        sbSalida.append("\n\t\t</datasets>\n\t</results>");
+        
+        // MAPA DATASETS
+        sbSalida.append("\n\t<resources>");
+        for (Entry<String, List<Map<String, String>>> mapajson : setMapaDatasets) {
+            sbSalida.append("<resource id=\""+mapajson.getKey()+"\">");  
+            //sbSalida.append("<concept id=\""++"\"/>"); 
         }
-*/        sbSalida.append("\n\t\t</datasets>\n\t</results>\n</searchResults>");
+        sbSalida.append("\n\t</resources>\n</searchResults>");
         } catch (Exception e) {
             System.err.println("ERROR WHILE PARSING");
             e.printStackTrace();

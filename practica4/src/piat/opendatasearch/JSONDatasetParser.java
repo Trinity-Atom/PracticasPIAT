@@ -139,47 +139,99 @@ public class JSONDatasetParser implements Runnable {
 		//	  guardar en un mapa Map<String,String> todos los valores de las variables temporales recogidas en el paso anterior y añadir este mapa al mapa graphs
 	
 		//	1) Procesar todas las propiedades de un objeto del array @graph, guardándolas en variables temporales
-		String arrobaid="";
-		String type="";
+		// SIMPLE PROPERTIES
 		String id="";
+		String type="";
+		String link="";
 		String title="";
-		String relation="";
-		String address="";
-		String organization="";
+		String description="";
+
+		// MULTIPLE PROPERTIES
+		// Location 
+		String eventLocation="";
+		String area="";
+		String start="";
+		String end="";
+		String latitude="";
+		String longitude="";
+		
+		// Organization
+		String organizationName="";
+		String accesibility="";
+
+
 		Map<String,String> mapjson = new HashMap<String,String>();
 		while (jsonReader.hasNext()) {
 			String nombre = jsonReader.nextName();
 			if(nombre.equals("@id")){
-				arrobaid=jsonReader.nextString();
+				id=jsonReader.nextString();
 			} else if(nombre.equals("@type")){
 				type=jsonReader.nextString();
-			} else if(nombre.equals("id")){
-				id=jsonReader.nextString();
+			} else if(nombre.equals("link")){
+				link=jsonReader.nextString();
 			} else if(nombre.equals("title")){
 				title=jsonReader.nextString();
-			} else if(nombre.equals("relation")){
-				relation=jsonReader.nextString();
-			} else if(nombre.equals("address")){
-				address=jsonReader.nextString();
+			} else if(nombre.equals("dtstart")){
+				start = jsonReader.nextString();
+			} else if(nombre.equals("dtend")){
+				end = jsonReader.nextString();
+			} else if(nombre.equals("event-location")){
+				eventLocation = jsonReader.nextString();
+			} else if(nombre.equals("area")){
+				jsonReader.beginObject();
+				while (jsonReader.hasNext()) {
+					if(jsonReader.nextName().equals("id")){
+						area = jsonReader.nextString();
+					}
+				}
+				jsonReader.endObject();
+			} else if(nombre.equals("location")){
+				jsonReader.beginObject();
+				String locationName;
+				while (jsonReader.hasNext()) {
+					locationName=jsonReader.nextName();
+					if(locationName.equals("latitude")){
+						latitude = jsonReader.nextString();
+					} else if(locationName.equals("longitude")){
+						longitude = jsonReader.nextString();
+					}
+				}
+				jsonReader.endObject();
 			} else if(nombre.equals("organization")){
-				organization=jsonReader.nextString();
+				jsonReader.beginObject();
+				String organizationNombre;
+				while (jsonReader.hasNext()) {
+					organizationNombre=jsonReader.nextName();
+					if (organizationNombre.equals("organization-name")) {
+						organizationName=jsonReader.nextString();
+					} else if (organizationNombre.equals("accesibility")) {
+						accesibility=jsonReader.nextString();
+					}
+				}
+				jsonReader.endObject();
+			} else if(nombre.equals("description")){
+				description=jsonReader.nextString();
+			}
+
+			//	2) Una vez procesadas todas las propiedades, ver si la clave @type tiene un valor igual a alguno de los concept de la lista lConcepts. Si es así
+			//	  guardar en un mapa Map<String,String> todos los valores de las variables temporales recogidas en el paso anterior y añadir este mapa al mapa graphs
+			if(lConcepts.contains(type)){
+				mapjson.put("@id", id);
+				mapjson.put("@type", type);
+				mapjson.put("link", link);
+				mapjson.put("title", title);
+				mapjson.put("eventLocation", eventLocation);
+				mapjson.put("area", area);
+				mapjson.put("start", start);
+				mapjson.put("end", end);
+				mapjson.put("latitude", latitude);
+				mapjson.put("longitude", longitude);
+				mapjson.put("accesibility", accesibility);
+				mapjson.put("organizationName", organizationName);
+				mapjson.put("description", description);
+				graphs.set(procesarCount, mapjson);
+				procesarCount++;
 			}
 		}
-		//	2) Una vez procesadas todas las propiedades, ver si la clave @type tiene un valor igual a alguno de los concept de la lista lConcepts. Si es así
-		//	  guardar en un mapa Map<String,String> todos los valores de las variables temporales recogidas en el paso anterior y añadir este mapa al mapa graphs
-		if(lConcepts.contains(type)){
-			mapjson.put("@id",arrobaid);
-			mapjson.put("@type",type);
-			mapjson.put("id",id);
-			mapjson.put("title",title);
-			mapjson.put("relation",relation);
-			mapjson.put("address", address);
-			mapjson.put("organization", organization);
-			graphs.set(procesarCount, mapjson);
-			procesarCount++;
-		}
-	}
-	public Map<String,List<Map<String,String>>> getmDatasetConcepts() {
-		return mDatasetConcepts;
 	}
 }
