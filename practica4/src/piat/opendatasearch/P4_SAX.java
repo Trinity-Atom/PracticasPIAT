@@ -117,6 +117,7 @@ public class P4_SAX {
 			Map<String,HashMap<String,String>> datasets = manejador.getDatasets();
 			
 			// 7) Invocar al método getDatasetConcepts() de P4_JSON que utiliza la clase JSONDatasetParser para obtener un mapa con los concepts de los datasets
+			Map<String, List<Map<String,String>>> mDatasetConcepts = getDatasetConcepts(uris,datasets);
 
 			// 8) Crear el fichero de salida con el nombre recibido en el tercer argumento de main()
 			if(fileout.createNewFile()){
@@ -131,7 +132,7 @@ public class P4_SAX {
 
 			// 9) Volcar al fichero de salida los datos en el formato XML especificado por ResultadosBusquedaP4.xsd
 			GenerarXML salida = new GenerarXML();
-			String output=salida.generateXML(uris,args[1],datasets);
+			String output=salida.generateXML(uris,args[1],datasets,mDatasetConcepts);
 			// System.out.println(output);
 			BufferedWriter writer =new BufferedWriter(new OutputStreamWriter(new FileOutputStream(fileout), "utf-8"));
 			writer.write(output);
@@ -199,11 +200,12 @@ public class P4_SAX {
 		}  
 		return content.toString();  
 	}
-/*
-	private List<String> getDatasetConcepts(List<String> lConcepts, Map<String,List<Map<String,String>>> mDatasets) {
-		String archivoJSON = getUrlContents("https://datos.madrid.es/egob/catalogo/201747-0-bibliobuses-bibliotecas.json");
 
-		JSONDatasetParser jsonParser = new JSONDatasetParser(archivoJSON, lConcepts, mDatasets);
-		return archivoJSON;
-	}*/
+	private static Map<String, List<Map<String,String>>> getDatasetConcepts(List<String> lConcepts, Map<String,HashMap<String,String>> mDatasets) {
+		String archivoJSON = getUrlContents("https://datos.madrid.es/egob/catalogo/201747-0-bibliobuses-bibliotecas.json");
+		Map<String, List<Map<String,String>>> mDatasetConcepts = new HashMap<String, List<Map<String,String>>>();
+		JSONDatasetParser jsonParser = new JSONDatasetParser(archivoJSON, lConcepts, mDatasetConcepts);
+		jsonParser.run();
+		return jsonParser.getmDatasetConcepts();
+	}
 }  
