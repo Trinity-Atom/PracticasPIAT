@@ -194,18 +194,34 @@ public class P4_SAX {
 		}  
 		catch(Exception e)  
 		{
-			System.err.println("NO SE PUEDE OBTENER LA URL");
-			e.printStackTrace();
-			System.exit(1);
+			System.err.println("NO SE OBTUVO RESPUESTA DE: "+theUrl);
+			return null;
 		}  
 		return content.toString();  
 	}
 
+
+	
+	/** 
+	 * Ordena el procesamiento de los archivos json y devuelve al menos 5 resources de cada dataset
+	 * @param lConcepts Lista que contiene los id de los concepts
+	 * @param mDatasets	Contiene como máximo 5 concept de el dataset id
+	 * @return Retorna un mapa con todos los json procesados .Es null si no se procesa ningún dataset.
+	 */
 	private static Map<String, List<Map<String,String>>> getDatasetConcepts(List<String> lConcepts, Map<String,HashMap<String,String>> mDatasets) {
-		String archivoJSON = getUrlContents("https://datos.madrid.es/egob/catalogo/201747-0-bibliobuses-bibliotecas.json");
-		Map<String, List<Map<String,String>>> mDatasetConcepts = new HashMap<String, List<Map<String,String>>>();
-		JSONDatasetParser jsonParser = new JSONDatasetParser(archivoJSON, lConcepts, mDatasetConcepts);
-		jsonParser.run();
-		return jsonParser.getmDatasetConcepts();
+		int contador=0; // Numero de archivos json parseados
+		Map<String, List<Map<String, String>>> mapaDatasets = null;
+		for (Map.Entry<String,HashMap<String,String>> theDataset: mDatasets.entrySet()){
+			String archivoJSON = getUrlContents(theDataset.getKey());
+			if(archivoJSON!=null){
+				while(contador<=5){
+					Map<String, List<Map<String,String>>> mDatasetConcepts = new HashMap<String, List<Map<String,String>>>();
+					JSONDatasetParser jsonParser = new JSONDatasetParser(archivoJSON, lConcepts, mDatasetConcepts);
+					jsonParser.run();
+				}
+			}
+			
+		}
+		return mapaDatasets;
 	}
 }  
