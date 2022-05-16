@@ -1,6 +1,7 @@
 
 package piat.opendatasearch;
 
+import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -9,7 +10,10 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
+import com.google.gson.reflect.TypeToken;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonToken;
 
@@ -28,7 +32,7 @@ public class JSONDatasetParser implements Runnable {
 		this.fichero=fichero;
 		this.lConcepts=lConcepts;
 		this.mDatasetConcepts=mDatasetConcepts;
-		procesarCount=0;
+		procesarCount=1;
 	}
 
 	
@@ -37,11 +41,18 @@ public class JSONDatasetParser implements Runnable {
 		List<Map<String,String>> graphs=new ArrayList<Map<String,String>>();	// Aquí se almacenarán todos los graphs de un dataset cuyo objeto de nombre @type se corresponda con uno de los valores pasados en el la lista lConcepts
 		boolean finProcesar=false;	// Para detener el parser si se han agregado a la lista graphs 5 graph
 	
+		final int numDeNucleos = Runtime.getRuntime().availableProcessors();
 		Thread.currentThread().setName("JSON " + fichero);
 		nombreHilo="["+Thread.currentThread().getName()+"] ";
+		System.out.print ("\nLanzando hilos en los " + numDeNucleos + " núcleos disponibles de este ordenador ");
+		// Crear un pool donde ejecutar los hilos. El pool tendrá un tamaño del nº de núcleos del ordenador
+		// por lo que nunca podrá haber más hilos que ese número en ejecución simultánea.
+		// Si se quiere hacer pruebas con un solo trabajador en ejecución, poner como argumento un 1. Irá mucho más lenta
+		final ExecutorService ejecutor = Executors.newFixedThreadPool(numDeNucleos);
+
 	    System.out.println(nombreHilo+"Empezar a descargar de internet el JSON");
 	    try {
-	    	InputStreamReader inputStream = new InputStreamReader(new URL(fichero).openStream(), "UTF-8"); 
+	    	InputStreamReader inputStream = new InputStreamReader(new URL(fichero).openStream(), "UTF-8");
 			//TODO:
 			//	- Crear objeto JsonReader a partir de inputStream
 			//  - Consumir el primer "{" del fichero
@@ -118,7 +129,7 @@ public class JSONDatasetParser implements Runnable {
 			//  - Consumir el último "}" del objeto
 			jsonReader.endObject();
 			// 	- Ver si se han añadido 5 graph a la lista, para en ese caso poner la variable finProcesar a true
-			if(procesarCount==5)
+			if(procesarCount==6)
 				finProcesar=true;
 		}
 		//	3) Si se ha llegado al fin del array, consumir el último "]" del array
@@ -140,7 +151,6 @@ public class JSONDatasetParser implements Runnable {
 	
 		//	1) Procesar todas las propiedades de un objeto del array @graph, guardándolas en variables temporales
 		// SIMPLE PROPERTIES
-		String id="";
 		String type="";
 		String link="";
 		String title="";
@@ -161,11 +171,10 @@ public class JSONDatasetParser implements Runnable {
 
 
 		Map<String,String> mapjson = new HashMap<String,String>();
-		while (jsonReader.hasNext()) {
-			String nombre = jsonReader.nextName();
-			if(nombre.equals("@id")){
-				id=jsonReader.nextString();
-			} else if(nombre.equals("@type")){
+		String nombre;
+		while (jsonReader.hasNext()&&procesarCount<=6) {
+			nombre = jsonReader.nextName();
+			if(nombre.equals("@type")){
 				type=jsonReader.nextString();
 			} else if(nombre.equals("link")){
 				link=jsonReader.nextString();
@@ -211,12 +220,13 @@ public class JSONDatasetParser implements Runnable {
 				jsonReader.endObject();
 			} else if(nombre.equals("description")){
 				description=jsonReader.nextString();
-			}
+			} else{
+				jsonReader.skipValue();	
+			}	
 
 			//	2) Una vez procesadas todas las propiedades, ver si la clave @type tiene un valor igual a alguno de los concept de la lista lConcepts. Si es así
 			//	  guardar en un mapa Map<String,String> todos los valores de las variables temporales recogidas en el paso anterior y añadir este mapa al mapa graphs
 			if(lConcepts.contains(type)){
-				mapjson.put("@id", id);
 				mapjson.put("@type", type);
 				mapjson.put("link", link);
 				mapjson.put("title", title);
@@ -229,7 +239,7 @@ public class JSONDatasetParser implements Runnable {
 				mapjson.put("accesibility", accesibility);
 				mapjson.put("organizationName", organizationName);
 				mapjson.put("description", description);
-				graphs.set(procesarCount, mapjson);
+				graphs.add(mapjson);
 				procesarCount++;
 			}
 		}

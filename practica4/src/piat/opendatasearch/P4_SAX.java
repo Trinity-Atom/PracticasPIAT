@@ -27,9 +27,9 @@ import org.xml.sax.SAXException;
  * @author Salvador Fernández García-Morales 53823973V
  *
  */
-
 public class P4_SAX {
 
+	
 	/**
 	 * Clase principal de la aplicación de extracción de información del 
 	 * Portal de Datos Abiertos del Ayuntamiento de Madrid
@@ -172,35 +172,6 @@ public class P4_SAX {
 				"\t ficheroSalida:\t\t nombre del fichero XML de salida\n"	
 				);				
 	}		
-
-	private static String getUrlContents(String theUrl)  
-	{  
-		StringBuilder content = new StringBuilder();  
-		// Use try and catch to avoid the exceptions  
-		try  
-		{  
-			URL url = new URL(theUrl); // creating a url object  
-			URLConnection urlConnection = url.openConnection(); // creating a urlconnection object  
-		
-			// wrapping the urlconnection in a bufferedreader  
-			BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(urlConnection.getInputStream()));  
-			String line;  
-			// reading from the urlconnection using the bufferedreader  
-			while ((line = bufferedReader.readLine()) != null)  
-			{  
-			content.append(line + "\n");  
-			}  
-			bufferedReader.close();  
-		}  
-		catch(Exception e)  
-		{
-			System.err.println("NO SE OBTUVO RESPUESTA DE: "+theUrl);
-			return null;
-		}  
-		return content.toString();  
-	}
-
-
 	
 	/** 
 	 * Ordena el procesamiento de los archivos json y devuelve al menos 5 resources de cada dataset
@@ -209,19 +180,12 @@ public class P4_SAX {
 	 * @return Retorna un mapa con todos los json procesados .Es null si no se procesa ningún dataset.
 	 */
 	private static Map<String, List<Map<String,String>>> getDatasetConcepts(List<String> lConcepts, Map<String,HashMap<String,String>> mDatasets) {
-		int contador=0; // Numero de archivos json parseados
-		Map<String, List<Map<String, String>>> mapaDatasets = null;
+		Map<String, List<Map<String, String>>> mDatasetConcepts=new HashMap<String, List<Map<String,String>>>();
 		for (Map.Entry<String,HashMap<String,String>> theDataset: mDatasets.entrySet()){
-			String archivoJSON = getUrlContents(theDataset.getKey());
-			if(archivoJSON!=null){
-				while(contador<=5){
-					Map<String, List<Map<String,String>>> mDatasetConcepts = new HashMap<String, List<Map<String,String>>>();
-					JSONDatasetParser jsonParser = new JSONDatasetParser(archivoJSON, lConcepts, mDatasetConcepts);
-					jsonParser.run();
-				}
-			}
-			
+			// Procesar y guardar los resources en el mDatasetConcepts
+			JSONDatasetParser jsonParser = new JSONDatasetParser(theDataset.getKey(), lConcepts, mDatasetConcepts);
+			jsonParser.run();
 		}
-		return mapaDatasets;
+		return mDatasetConcepts;
 	}
 }  

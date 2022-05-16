@@ -61,8 +61,30 @@ public class GenerarXML {
         // MAPA DATASETS
         sbSalida.append("\n\t<resources>");
         for (Entry<String, List<Map<String, String>>> mapajson : setMapaDatasets) {
-            sbSalida.append("<resource id=\""+mapajson.getKey()+"\">");  
-            //sbSalida.append("<concept id=\""++"\"/>"); 
+            sbSalida.append("\n\t\t<resource id=\""+mapajson.getKey()+"\">");
+            for (Map<String, String> mapjson : mapajson.getValue()) {
+                //type
+                sbSalida.append("\n\t\t\t<concept id=\""+mapjson.get("@type")+"\"/>");
+                sbSalida.append("\n\t\t\t<link id=\""+mapjson.get("link")+"\"/>");
+                sbSalida.append("\n\t\t\t<title>"+mapjson.get("title")+"</title>");
+                //LOCATION
+                sbSalida.append("\n\t\t\t<location>");
+                sbSalida.append("\n\t\t\t\t<eventLocation>"+mapjson.get("eventLocation")+"</eventLocation>");
+                sbSalida.append("\n\t\t\t\t<area>"+mapjson.get("area")+"</area>");
+                sbSalida.append("\n\t\t\t\t<timetable>");
+                sbSalida.append("\n\t\t\t\t\t<start>"+mapjson.get("start")+"</start>");
+                sbSalida.append("\n\t\t\t\t\t<end>"+mapjson.get("end")+"</end>");
+                sbSalida.append("\n\t\t\t\t</timetable>");
+                sbSalida.append("\n\t\t\t\t<geoReference>"+mapjson.get("latitude")+mapjson.get("longitude")+"</geoReference>");
+                sbSalida.append("\n\t\t\t</location>");
+                //ORGANIZATION
+                sbSalida.append("\n\t\t\t<organization>");
+                sbSalida.append("\n\t\t\t\t<accesibility>"+mapjson.get("accesibility")+"</accesibility>");
+                sbSalida.append("\n\t\t\t\t<organizationName>"+mapjson.get("organizationName")+"</organizationName>");
+                sbSalida.append("\n\t\t\t</organization>");
+                sbSalida.append("\n\t\t\t<description>"+mapjson.get("description")+"</description>"); 
+            }  
+            sbSalida.append("\n\t\t</resource>"); 
         }
         sbSalida.append("\n\t</resources>\n</searchResults>");
         } catch (Exception e) {
