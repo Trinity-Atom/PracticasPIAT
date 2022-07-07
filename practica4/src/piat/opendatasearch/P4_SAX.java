@@ -1,19 +1,18 @@
 package piat.opendatasearch;
 
-import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileOutputStream;
-import java.io.FileWriter;
 import java.io.IOException;
-import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
-import java.net.URL;
-import java.net.URLConnection;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.atomic.AtomicInteger;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -36,7 +35,7 @@ public class P4_SAX {
 	 *
 	 */
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws InterruptedException {
 		
 		// Verificar nº de argumentos correcto
 		if (args.length!=3){
@@ -46,8 +45,7 @@ public class P4_SAX {
 			mostrarUso(mensaje);
 			System.exit(1);
 		}		
-		
-		// TODO
+		// DONE
 		/* 
 		 * Validar los argumentos recibidos en main()
 		 * Instanciar un objeto ManejadorXML pasando como parámetro el código de la categoría recibido en el segundo argumento de main()
@@ -111,6 +109,7 @@ public class P4_SAX {
 			List<String> uris = manejador.getConcepts();
 			
 			// 5) Invocar al método getLabel() del objeto ManejadorXML para obtener el nombre de la categoría buscada
+			@SuppressWarnings("unused")
 			String nombreCategoria = manejador.getLabel();
 
 			// 6) Invocar al método getDatasets() del objeto ManejadorXML para obtener un mapa con los datasets de la categoría buscada
@@ -179,13 +178,24 @@ public class P4_SAX {
 	 * @param mDatasets	Contiene como máximo 5 concept de el dataset id
 	 * @return Retorna un mapa con todos los json procesados .Es null si no se procesa ningún dataset.
 	 */
-	private static Map<String, List<Map<String,String>>> getDatasetConcepts(List<String> lConcepts, Map<String,HashMap<String,String>> mDatasets) {
+	private static Map<String, List<Map<String,String>>> getDatasetConcepts(List<String> lConcepts, Map<String,HashMap<String,String>> mDatasets) throws InterruptedException {
+		
+		final int numDeNucleos = Runtime.getRuntime().availableProcessors();
+		final AtomicInteger numFicherosProcesados = new AtomicInteger(0);
+		final ExecutorService ejecutor = Executors.newFixedThreadPool(numDeNucleos);
 		Map<String, List<Map<String, String>>> mDatasetConcepts=new HashMap<String, List<Map<String,String>>>();
-		for (Map.Entry<String,HashMap<String,String>> theDataset: mDatasets.entrySet()){
+		int numFicheros = mDatasetConcepts.size();
+		for (Map.Entry<String,HashMap<String,String>> theDataset: mDatasets.entrySet()){		
 			// Procesar y guardar los resources en el mDatasetConcepts
-			JSONDatasetParser jsonParser = new JSONDatasetParser(theDataset.getKey(), lConcepts, mDatasetConcepts);
-			jsonParser.run();
+			ejecutor.execute(new JSONDatasetParser(theDataset.getKey(), lConcepts, mDatasetConcepts));	
 		}
+		// Cerrar el ejecutor cuando se termine de procesar el último JSON
+		ejecutor.shutdown();
+			// Cada 10 segundos mostrar cuantos ficheros se han ejecutado y los que quedan
+			while (!ejecutor.awaitTermination(10, TimeUnit.SECONDS)) {
+				final int terminados=numFicherosProcesados.get();
+				System.out.print("\nYa han terminado "+terminados+". Esperando a los "+(numFicheros-terminados)+" que quedan ");
+			}
 		return mDatasetConcepts;
 	}
 }  

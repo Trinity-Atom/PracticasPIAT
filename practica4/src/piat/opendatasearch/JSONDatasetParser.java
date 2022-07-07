@@ -1,22 +1,17 @@
 
 package piat.opendatasearch;
 
-import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Hashtable;
 import java.util.List;
 import java.util.Map;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 
-import com.google.gson.reflect.TypeToken;
 import com.google.gson.stream.JsonReader;
-import com.google.gson.stream.JsonToken;
-
 
 /* En esta clase se comportará como un hilo */
 
@@ -34,23 +29,17 @@ public class JSONDatasetParser implements Runnable {
 		this.lConcepts=lConcepts;
 		this.mDatasetConcepts=mDatasetConcepts;
 		procesarCount=1;
-		finProcesar=false;
+		//finProcesar=false;
 	}
 
 	
 	@Override
 	public void run (){
 		List<Map<String,String>> graphs=new ArrayList<Map<String,String>>();	// Aquí se almacenarán todos los graphs de un dataset cuyo objeto de nombre @type se corresponda con uno de los valores pasados en el la lista lConcepts
-	
-		final int numDeNucleos = Runtime.getRuntime().availableProcessors();
+		boolean finProcesar=false;	// Para detener el parser si se han agregado a la lista graphs 5 graph
+		
 		Thread.currentThread().setName("JSON " + fichero);
 		nombreHilo="["+Thread.currentThread().getName()+"] ";
-		System.out.print ("\nLanzando hilos en los " + numDeNucleos + " núcleos disponibles de este ordenador ");
-		// Crear un pool donde ejecutar los hilos. El pool tendrá un tamaño del nº de núcleos del ordenador
-		// por lo que nunca podrá haber más hilos que ese número en ejecución simultánea.
-		// Si se quiere hacer pruebas con un solo trabajador en ejecución, poner como argumento un 1. Irá mucho más lenta
-		final ExecutorService ejecutor = Executors.newFixedThreadPool(numDeNucleos);
-
 	    System.out.println(nombreHilo+"Empezar a descargar de internet el JSON");
 	    try {
 	    	InputStreamReader inputStream = new InputStreamReader(new URL(fichero).openStream(), "UTF-8");
@@ -80,8 +69,9 @@ public class JSONDatasetParser implements Runnable {
 						jsonReader.skipValue();
 						break;
 					case "@graph":
-						procesar_graph(jsonReader, graphs, lConcepts);
-						//jsonReader.skipValue();
+						finProcesar=procesar_graph(jsonReader, graphs, lConcepts);
+						if (finProcesar==false)
+							System.out.println("Error: No se ha podido procesar el fichero \""+fichero+"\"");
 						break;
 					default:
 						jsonReader.skipValue();
@@ -158,49 +148,29 @@ public class JSONDatasetParser implements Runnable {
 		//	  guardar en un mapa Map<String,String> todos los valores de las variables temporales recogidas en el paso anterior y añadir este mapa al mapa graphs
 	
 		//	1) Procesar todas las propiedades de un objeto del array @graph, guardándolas en variables temporales
-		// SIMPLE PROPERTIES
-		String type="";
-		String link="";
-		String title="";
-		String description="";
-
-		// MULTIPLE PROPERTIES
-		// Location 
-		String eventLocation="";
-		String area="";
-		String start="";
-		String end="";
-		String latitude="";
-		String longitude="";
-		
-		// Organization
-		String organizationName="";
-		String accesibility="";
-
-		boolean propiedadesRellenas=false;
-
+		Hashtable<String, String> properties = new Hashtable<String, String>();
 		Map<String,String> mapjson = new HashMap<String,String>();
 		String nombre;
 		while (jsonReader.hasNext()) {
 			if(procesarCount<6){
 				nombre = jsonReader.nextName();
 				if(nombre.equals("@type")){
-					type=jsonReader.nextString();
+					properties.put("type", jsonReader.nextString());
 				} else if(nombre.equals("link")){
-					link=jsonReader.nextString();
+					properties.put("link", jsonReader.nextString());
 				} else if(nombre.equals("title")){
-					title=jsonReader.nextString();
+					properties.put("title", jsonReader.nextString());
 				} else if(nombre.equals("dtstart")){
-					start = jsonReader.nextString();
+					properties.put("start", jsonReader.nextString());
 				} else if(nombre.equals("dtend")){
-					end = jsonReader.nextString();
+					properties.put("end", jsonReader.nextString());
 				} else if(nombre.equals("event-location")){
-					eventLocation = jsonReader.nextString();
+					properties.put("eventLocation", jsonReader.nextString());
 				} else if(nombre.equals("area")){
 					jsonReader.beginObject();
 					while (jsonReader.hasNext()) {
 						if(jsonReader.nextName().equals("id")){
-							area = jsonReader.nextString();
+							properties.put("area", jsonReader.nextString());
 						}
 					}
 					jsonReader.endObject();
@@ -210,9 +180,9 @@ public class JSONDatasetParser implements Runnable {
 					while (jsonReader.hasNext()) {
 						locationName=jsonReader.nextName();
 						if(locationName.equals("latitude")){
-							latitude = jsonReader.nextString();
+							properties.put("latitude", jsonReader.nextString());
 						} else if(locationName.equals("longitude")){
-							longitude = jsonReader.nextString();
+							properties.put("longitude", jsonReader.nextString());
 						}
 					}
 					jsonReader.endObject();
@@ -223,37 +193,39 @@ public class JSONDatasetParser implements Runnable {
 						System.out.println();
 						organizationNombre=jsonReader.nextName();
 						if (organizationNombre.equals("organization-name")) {
-							organizationName=jsonReader.nextString();
+							properties.put("organizationName", jsonReader.nextString());
 						} else if (organizationNombre.equals("accesibility")) {
-							accesibility=jsonReader.nextString();
+							properties.put("accesibility", jsonReader.nextString());
 						}
 					}
 					jsonReader.endObject();
 				} else if(nombre.equals("description")){
-					description=jsonReader.nextString();
+					properties.put("description", jsonReader.nextString());
 				} else{
 					jsonReader.skipValue();	
 				}	
 
 				//	2) Una vez procesadas todas las propiedades, ver si la clave @type tiene un valor igual a alguno de los concept de la lista lConcepts. Si es así
 				//	  guardar en un mapa Map<String,String> todos los valores de las variables temporales recogidas en el paso anterior y añadir este mapa al mapa graphs
-				if(lConcepts.contains(type)&&!accesibility.isEmpty()){
-					mapjson.put("@type", type);
-					mapjson.put("link", link);
-					mapjson.put("title", title);
-					mapjson.put("eventLocation", eventLocation);
-					mapjson.put("area", area);
-					mapjson.put("start", start);
-					mapjson.put("end", end);
-					mapjson.put("latitude", latitude);
-					mapjson.put("longitude", longitude);
-					mapjson.put("accesibility", accesibility);
-					mapjson.put("organizationName", organizationName);
-					mapjson.put("description", description);
+				if (properties.get("type")!=null && properties.get("accesibility")!=null){
+					if(lConcepts.contains(properties.get("type"))&&!properties.get("accesibility").equals("")){
+					mapjson.put("@type", properties.get("type"));
+					mapjson.put("link", properties.get("link"));
+					mapjson.put("title", properties.get("title"));
+					mapjson.put("eventLocation", properties.get("eventLocation"));
+					mapjson.put("area", properties.get("area"));
+					mapjson.put("start", properties.get("start"));
+					mapjson.put("end", properties.get("end"));
+					mapjson.put("latitude", properties.get("latitude"));
+					mapjson.put("longitude", properties.get("longitude"));
+					mapjson.put("accesibility", properties.get("accesibility"));
+					mapjson.put("organizationName", properties.get("organizationName"));
+					mapjson.put("description", properties.get("description"));
 					graphs.add(mapjson);
-					type="";
+					properties.put("accesibility", "");
 					procesarCount++;
-				}
+					}
+				}		
 			} else {
 				jsonReader.skipValue();
 			}

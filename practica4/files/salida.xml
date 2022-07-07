@@ -35,7 +35,7 @@ xsi:schemaLocation="http://www.piat.dte.upm.es/practica4 ResultadosBusquedaP4.xs
 				<title>Con las manos en la masa: Helados</title>
 				<location>
 					<eventLocation>Centro Juvenil Carabanchel Alto</eventLocation>
-					<area></area>
+					<area>null</area>
 					<timetable>
 						<start>2022-07-07 18:00:00.0</start>
 						<end>2022-07-07 23:59:00.0</end>
@@ -54,7 +54,7 @@ xsi:schemaLocation="http://www.piat.dte.upm.es/practica4 ResultadosBusquedaP4.xs
 				<title>Dystopie</title>
 				<location>
 					<eventLocation>Naves Español en Matadero</eventLocation>
-					<area></area>
+					<area>null</area>
 					<timetable>
 						<start>2022-06-24 19:00:00.0</start>
 						<end>2022-07-10 23:59:00.0</end>
@@ -73,7 +73,7 @@ xsi:schemaLocation="http://www.piat.dte.upm.es/practica4 ResultadosBusquedaP4.xs
 				<title>Eins Zwei Drei</title>
 				<location>
 					<eventLocation>Teatro Español</eventLocation>
-					<area></area>
+					<area>null</area>
 					<timetable>
 						<start>2022-07-15 20:00:00.0</start>
 						<end>2022-07-15 23:59:00.0</end>
@@ -92,7 +92,7 @@ xsi:schemaLocation="http://www.piat.dte.upm.es/practica4 ResultadosBusquedaP4.xs
 				<title>Eins Zwei Drei</title>
 				<location>
 					<eventLocation>Teatro Español</eventLocation>
-					<area></area>
+					<area>null</area>
 					<timetable>
 						<start>2022-07-16 19:00:00.0</start>
 						<end>2022-07-16 23:59:00.0</end>
@@ -111,7 +111,7 @@ xsi:schemaLocation="http://www.piat.dte.upm.es/practica4 ResultadosBusquedaP4.xs
 				<title>Festival 4 estaciones</title>
 				<location>
 					<eventLocation>Plaza de Daoíz y Velarde</eventLocation>
-					<area></area>
+					<area>null</area>
 					<timetable>
 						<start>2022-07-13 21:00:00.0</start>
 						<end>2022-07-13 23:59:00.0</end>
@@ -130,7 +130,7 @@ xsi:schemaLocation="http://www.piat.dte.upm.es/practica4 ResultadosBusquedaP4.xs
 				<title>Carnación</title>
 				<location>
 					<eventLocation>Teatro Español</eventLocation>
-					<area></area>
+					<area>null</area>
 					<timetable>
 						<start>2022-12-01 00:00:00.0</start>
 						<end>2022-12-11 23:59:00.0</end>
@@ -149,7 +149,7 @@ xsi:schemaLocation="http://www.piat.dte.upm.es/practica4 ResultadosBusquedaP4.xs
 				<title>Cirque du Soleil vuelve al Escenario Puerta del Ángel</title>
 				<location>
 					<eventLocation>Empresa Municipal Madrid Destino Cultura Turismo y Negocio, S.A</eventLocation>
-					<area></area>
+					<area>null</area>
 					<timetable>
 						<start>2022-11-05 00:00:00.0</start>
 						<end>2022-11-27 23:59:00.0</end>
@@ -168,7 +168,7 @@ xsi:schemaLocation="http://www.piat.dte.upm.es/practica4 ResultadosBusquedaP4.xs
 				<title>Con las manos en la masa: Helados</title>
 				<location>
 					<eventLocation>Centro Juvenil Carabanchel Alto</eventLocation>
-					<area></area>
+					<area>null</area>
 					<timetable>
 						<start>2022-07-07 18:00:00.0</start>
 						<end>2022-07-07 23:59:00.0</end>
@@ -187,7 +187,7 @@ xsi:schemaLocation="http://www.piat.dte.upm.es/practica4 ResultadosBusquedaP4.xs
 				<title>Dystopie</title>
 				<location>
 					<eventLocation>Naves Español en Matadero</eventLocation>
-					<area></area>
+					<area>null</area>
 					<timetable>
 						<start>2022-06-24 19:00:00.0</start>
 						<end>2022-07-10 23:59:00.0</end>
@@ -206,7 +206,7 @@ xsi:schemaLocation="http://www.piat.dte.upm.es/practica4 ResultadosBusquedaP4.xs
 				<title>Eins Zwei Drei</title>
 				<location>
 					<eventLocation>Teatro Español</eventLocation>
-					<area></area>
+					<area>null</area>
 					<timetable>
 						<start>2022-07-15 20:00:00.0</start>
 						<end>2022-07-15 23:59:00.0</end>
