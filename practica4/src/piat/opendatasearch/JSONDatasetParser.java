@@ -43,7 +43,7 @@ public class JSONDatasetParser implements Runnable {
 	    System.out.println(nombreHilo+"Empezar a descargar de internet el JSON");
 	    try {
 	    	InputStreamReader inputStream = new InputStreamReader(new URL(fichero).openStream(), "UTF-8");
-			//TODO:
+			//TODO this thask is done
 			//	- Crear objeto JsonReader a partir de inputStream
 			//  - Consumir el primer "{" del fichero
 			//  - Procesar los elementos del fichero JSON, hasta el final de fichero o hasta que finProcesar=true
@@ -99,7 +99,7 @@ public class JSONDatasetParser implements Runnable {
 	 */
 	private boolean procesar_graph(JsonReader jsonReader, List<Map<String, String>> graphs, List<String> lConcepts) throws IOException {
 		finProcesar=false;
-		// TODO:
+		// TODO this task is done
 		//	- Consumir el primer "[" del array @graph
 		//  - Procesar todos los objetos del array, hasta el final de fichero o hasta que finProcesar=true
 		//  	- Consumir el primer "{" del objeto
@@ -142,7 +142,7 @@ public class JSONDatasetParser implements Runnable {
 	 */
 	
 	private void procesar_un_graph(JsonReader jsonReader, List<Map<String, String>> graphs, List<String> lConcepts) throws IOException {
-		// TODO:
+		// TODO this task is done
 		//	- Procesar todas las propiedades de un objeto del array @graph, guardándolas en variables temporales
 		//	- Una vez procesadas todas las propiedades, ver si la clave @type tiene un valor igual a alguno de los concept de la lista lConcepts. Si es así
 		//	  guardar en un mapa Map<String,String> todos los valores de las variables temporales recogidas en el paso anterior y añadir este mapa al mapa graphs
