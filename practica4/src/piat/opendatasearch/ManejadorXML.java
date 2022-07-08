@@ -39,7 +39,7 @@ public class ManejadorXML extends DefaultHandler implements ParserCatalogo {
 	 * @throws ParserConfigurationException 
 	 */
 	public ManejadorXML (String sCodigoConcepto) throws SAXException, ParserConfigurationException {
-		// TODO
+		// TODO this task is done
 		this.sCodigoConcepto = sCodigoConcepto; //Codigo 018
 		sNombreCategoria = "";
 		idConcept = "";
@@ -67,7 +67,7 @@ public class ManejadorXML extends DefaultHandler implements ParserCatalogo {
 	 */
 	@Override
 	public String getLabel() {
-		// TODO
+		// TODO this task is done
 		if(sNombreCategoria.isEmpty())
 			return null;
 		else
@@ -90,7 +90,7 @@ public class ManejadorXML extends DefaultHandler implements ParserCatalogo {
 	 */
 	@Override	
 	public List<String> getConcepts() {
-		// TODO 
+		// TODO this task is done
 		if(lConcepts.isEmpty())
 			return null;
 		else
@@ -112,7 +112,7 @@ public class ManejadorXML extends DefaultHandler implements ParserCatalogo {
 	 */	
 	@Override
 	public Map<String, HashMap<String, String>> getDatasets() {
-		// TODO 
+		// TODO this task is done
 		if(hDatasets.isEmpty())
 			return null;
 		else
@@ -127,7 +127,7 @@ public class ManejadorXML extends DefaultHandler implements ParserCatalogo {
 	@Override
 	public void startDocument() throws SAXException {
 		super.startDocument();
-		// TODO 
+		// TODO this task is done
 		System.out.println("Empieza el documento");
 		
 	}
@@ -136,7 +136,7 @@ public class ManejadorXML extends DefaultHandler implements ParserCatalogo {
 	@Override
 	public void endDocument() throws SAXException {
 		super.endDocument();
-		// TODO 
+		// TODO this task is done
 		System.out.println("Finaliza el documento");
 				
 	}
@@ -145,7 +145,7 @@ public class ManejadorXML extends DefaultHandler implements ParserCatalogo {
 	@Override
 	public void startElement(String uri, String localName, String qName, Attributes attributes) throws SAXException {
 		super.startElement(uri, localName, qName, attributes);
-		// TODO 
+		// TODO this task is done
 
 		// PASO 1) Detectar si es elemento concept (DONE & TESTED)
 		if (qName.equals("concept")){
@@ -222,7 +222,7 @@ public class ManejadorXML extends DefaultHandler implements ParserCatalogo {
 	@Override
 	public void endElement(String uri, String localName, String qName) throws SAXException {
 		super.endElement(uri, localName, qName);
-		// TODO
+		// TODO this task is done
 		
 		// PASO 2)
 		if(qName.equals("code")){
@@ -286,7 +286,7 @@ public class ManejadorXML extends DefaultHandler implements ParserCatalogo {
 	@Override
 	public void characters(char[] ch, int start, int length) throws SAXException {
 		super.characters(ch, start, length);
-		// TODO 
+		// TODO this task is done
 		contenidoElemento.append(ch, start, length);		
 	}
 

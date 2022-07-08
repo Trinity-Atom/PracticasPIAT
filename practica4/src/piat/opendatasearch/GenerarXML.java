@@ -29,9 +29,9 @@ public class GenerarXML {
 
         // XML INIT
         sbSalida.append("<?xml version=\"1.0\" encoding=\"UTF-8\"?>");
-        sbSalida.append("\n<searchResults xmlns=\"http://www.piat.dte.upm.es/practica3\"");
+        sbSalida.append("\n<searchResults xmlns=\"http://www.piat.dte.upm.es/practica4\"");
         sbSalida.append("\nxmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"");
-        sbSalida.append("\nxsi:schemaLocation=\"http://www.piat.dte.upm.es/practica3 ResultadosBusquedaP3.xsd\">");
+        sbSalida.append("\nxsi:schemaLocation=\"http://www.piat.dte.upm.es/practica4 ResultadosBusquedaP4.xsd\">");
         
         // SUMMARY
         sbSalida.append("\n\t<summary>\n\t\t<query>"+codigoCategoria+"</query>");
@@ -46,47 +46,50 @@ public class GenerarXML {
         sbSalida.append("\n\t\t</concepts>");
         
         // DATASETS
-        sbSalida.append("\n\t\t<datasets>");
+        sbSalida.append("\n\t\t\t<datasets>");
         for (Map.Entry<String,HashMap<String,String>> theDataset : setDatasets) {
             // Añadir el idDataset
-            sbSalida.append("\n\t\t\t<dataset id=\""+theDataset.getKey()+"\">");
+            sbSalida.append("\n\t\t\t\t<dataset id=\""+theDataset.getKey()+"\">");
             // Coger el hashMap de los contenidos del dataset
             mapaContenidoDataset = theDataset.getValue();
-            sbSalida.append("\n\t\t\t\t<title>"+mapaContenidoDataset.get("title")+"</title>");
-            sbSalida.append("\n\t\t\t\t<description>"+mapaContenidoDataset.get("description")+"</description>");
-            sbSalida.append("\n\t\t\t\t<theme>"+mapaContenidoDataset.get("theme")+"</theme>\n\t\t\t</dataset>");
+            sbSalida.append("\n\t\t\t\t\t<title>"+mapaContenidoDataset.get("title")+"</title>");
+            sbSalida.append("\n\t\t\t\t\t<description>"+mapaContenidoDataset.get("description")+"</description>");
+            sbSalida.append("\n\t\t\t\t\t<theme>"+mapaContenidoDataset.get("theme")+"</theme>\n\t\t\t</dataset>");
         }
-        sbSalida.append("\n\t\t</datasets>\n\t</results>");
+        sbSalida.append("\n\t\t\t</datasets>");
         
         // MAPA DATASETS
-        sbSalida.append("\n\t<resources>");
+        sbSalida.append("\n\t\t<resources>");
         for (Entry<String, List<Map<String, String>>> mapajson : setMapaDatasets) {
-            sbSalida.append("\n\t\t<resource id=\""+mapajson.getKey()+"\">");
+            
             for (Map<String, String> mapjson : mapajson.getValue()) {
+                sbSalida.append("\n\t\t\t<resource id=\""+mapajson.getKey()+"\">");
                 //type
-                sbSalida.append("\n\t\t\t<concept id=\""+mapjson.get("@type")+"\"/>");
-                sbSalida.append("\n\t\t\t<link id=\""+mapjson.get("link")+"\"/>");
-                sbSalida.append("\n\t\t\t<title>"+mapjson.get("title")+"</title>");
+                sbSalida.append("\n\t\t\t\t<concept id=\""+mapjson.get("@type")+"\"/>");
+                // TODO link debe mostrar otra cosa
+                sbSalida.append("\n\t\t\t\t<link><![CDATA["+mapjson.get("link")+"]]></link>");
+                sbSalida.append("\n\t\t\t\t<title>"+mapjson.get("title")+"</title>");
                 //LOCATION
-                sbSalida.append("\n\t\t\t<location>");
-                sbSalida.append("\n\t\t\t\t<eventLocation>"+mapjson.get("eventLocation")+"</eventLocation>");
-                sbSalida.append("\n\t\t\t\t<area>"+mapjson.get("area")+"</area>");
-                sbSalida.append("\n\t\t\t\t<timetable>");
-                sbSalida.append("\n\t\t\t\t\t<start>"+mapjson.get("start")+"</start>");
-                sbSalida.append("\n\t\t\t\t\t<end>"+mapjson.get("end")+"</end>");
-                sbSalida.append("\n\t\t\t\t</timetable>");
-                sbSalida.append("\n\t\t\t\t<geoReference>"+mapjson.get("latitude")+mapjson.get("longitude")+"</geoReference>");
-                sbSalida.append("\n\t\t\t</location>");
+                sbSalida.append("\n\t\t\t\t<location>");
+                sbSalida.append("\n\t\t\t\t\t<eventLocation>"+mapjson.get("eventLocation")+"</eventLocation>");
+                sbSalida.append("\n\t\t\t\t\t<area>"+mapjson.get("area")+"</area>");
+                sbSalida.append("\n\t\t\t\t\t<timetable>");
+                sbSalida.append("\n\t\t\t\t\t\t<start>"+mapjson.get("start")+"</start>");
+                sbSalida.append("\n\t\t\t\t\t\t<end>"+mapjson.get("end")+"</end>");
+                sbSalida.append("\n\t\t\t\t\t</timetable>");
+                sbSalida.append("\n\t\t\t\t\t<georeference>"+mapjson.get("latitude")+" "+mapjson.get("longitude")+"</georeference>");
+                sbSalida.append("\n\t\t\t\t</location>");
                 //ORGANIZATION
-                sbSalida.append("\n\t\t\t<organization>");
-                sbSalida.append("\n\t\t\t\t<accesibility>"+mapjson.get("accesibility")+"</accesibility>");
-                sbSalida.append("\n\t\t\t\t<organizationName>"+mapjson.get("organizationName")+"</organizationName>");
-                sbSalida.append("\n\t\t\t</organization>");
-                sbSalida.append("\n\t\t\t<description>"+mapjson.get("description")+"</description>"); 
-            }  
-            sbSalida.append("\n\t\t</resource>"); 
+                sbSalida.append("\n\t\t\t\t<organization>");
+                sbSalida.append("\n\t\t\t\t\t<accesibility>"+mapjson.get("accesibility")+"</accesibility>");
+                sbSalida.append("\n\t\t\t\t\t<organizationName>"+mapjson.get("organizationName")+"</organizationName>");
+                sbSalida.append("\n\t\t\t\t</organization>");
+                sbSalida.append("\n\t\t\t\t<description>"+mapjson.get("description")+"</description>"); 
+                sbSalida.append("\n\t\t\t</resource>");
+        }  
+             
         }
-        sbSalida.append("\n\t</resources>\n</searchResults>");
+        sbSalida.append("\n\t\t</resources>\n\t</results>\n</searchResults>");
         } catch (Exception e) {
             System.err.println("ERROR WHILE PARSING");
             e.printStackTrace();
