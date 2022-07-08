@@ -30,31 +30,12 @@ xsi:schemaLocation="http://www.piat.dte.upm.es/practica4 ResultadosBusquedaP4.xs
 			</datasets>
 		<resources>
 			<resource id="https://datos.madrid.es/egob/catalogo/206974-0-agenda-eventos-culturales-100.json">
-				<concept id="https://datos.madrid.es/egob/kos/actividades/DanzaBaile/FolcloreEtnica"/>
-				<link><![CDATA[http://www.madrid.es/sites/v/index.jsp?vgnextchannel=ca9671ee4a9eb410VgnVCM100000171f5a0aRCRD&vgnextoid=3df0127e77a60810VgnVCM2000001f4a900aRCRD]]></link>
-				<title>Con las manos en la masa: Helados</title>
-				<location>
-					<eventLocation>Centro Juvenil Carabanchel Alto</eventLocation>
-					<area>null</area>
-					<timetable>
-						<start>2022-07-07 18:00:00.0</start>
-						<end>2022-07-07 23:59:00.0</end>
-					</timetable>
-					<georeference>40.366822704148795 -3.755451103709316</georeference>
-				</location>
-				<organization>
-					<accesibility>1</accesibility>
-					<organizationName>Centro Juvenil Carabanchel Alto</organizationName>
-				</organization>
-				<description>En estas tardes calurosas de julio lo mejor para refrescarte es un buen helado artesano. Ven con nosotros al Centro Juvenil de Carabanchel y mezcla los sabores como más te guste.   Celebración: Jueves 7 de julio de 2022 de 18:00h a 19:00h  Inscripciones: Hasta completar plazas. Inscripciones en www.bit.ly/inscripcioncj    Plazas: 15</description>
-			</resource>
-			<resource id="https://datos.madrid.es/egob/catalogo/206974-0-agenda-eventos-culturales-100.json">
 				<concept id="https://datos.madrid.es/egob/kos/actividades/DanzaBaile"/>
 				<link><![CDATA[http://www.madrid.es/sites/v/index.jsp?vgnextchannel=ca9671ee4a9eb410VgnVCM100000171f5a0aRCRD&vgnextoid=82293acad95f9710VgnVCM1000001d4a900aRCRD]]></link>
 				<title>Dystopie</title>
 				<location>
 					<eventLocation>Naves Español en Matadero</eventLocation>
-					<area>null</area>
+					<area>https://datos.madrid.es/egob/kos/Provincia/Madrid/Municipio/Madrid/Distrito/Arganzuela/Barrio/Chopera</area>
 					<timetable>
 						<start>2022-06-24 19:00:00.0</start>
 						<end>2022-07-10 23:59:00.0</end>
@@ -73,7 +54,7 @@ xsi:schemaLocation="http://www.piat.dte.upm.es/practica4 ResultadosBusquedaP4.xs
 				<title>Eins Zwei Drei</title>
 				<location>
 					<eventLocation>Teatro Español</eventLocation>
-					<area>null</area>
+					<area>https://datos.madrid.es/egob/kos/Provincia/Madrid/Municipio/Madrid/Distrito/Centro/Barrio/Cortes</area>
 					<timetable>
 						<start>2022-07-15 20:00:00.0</start>
 						<end>2022-07-15 23:59:00.0</end>
@@ -92,7 +73,7 @@ xsi:schemaLocation="http://www.piat.dte.upm.es/practica4 ResultadosBusquedaP4.xs
 				<title>Eins Zwei Drei</title>
 				<location>
 					<eventLocation>Teatro Español</eventLocation>
-					<area>null</area>
+					<area>https://datos.madrid.es/egob/kos/Provincia/Madrid/Municipio/Madrid/Distrito/Centro/Barrio/Cortes</area>
 					<timetable>
 						<start>2022-07-16 19:00:00.0</start>
 						<end>2022-07-16 23:59:00.0</end>
@@ -111,7 +92,7 @@ xsi:schemaLocation="http://www.piat.dte.upm.es/practica4 ResultadosBusquedaP4.xs
 				<title>Festival 4 estaciones</title>
 				<location>
 					<eventLocation>Plaza de Daoíz y Velarde</eventLocation>
-					<area>null</area>
+					<area>https://datos.madrid.es/egob/kos/Provincia/Madrid/Municipio/Madrid/Distrito/Retiro/Barrio/Pacifico</area>
 					<timetable>
 						<start>2022-07-13 21:00:00.0</start>
 						<end>2022-07-13 23:59:00.0</end>
@@ -124,13 +105,32 @@ xsi:schemaLocation="http://www.piat.dte.upm.es/practica4 ResultadosBusquedaP4.xs
 				</organization>
 				<description></description>
 			</resource>
+			<resource id="https://datos.madrid.es/egob/catalogo/206974-0-agenda-eventos-culturales-100.json">
+				<concept id="https://datos.madrid.es/egob/kos/actividades/DanzaBaile/FolcloreEtnica"/>
+				<link><![CDATA[http://www.madrid.es/sites/v/index.jsp?vgnextchannel=ca9671ee4a9eb410VgnVCM100000171f5a0aRCRD&vgnextoid=0861fc9b4fb0f710VgnVCM1000001d4a900aRCRD]]></link>
+				<title>Horticulturízate</title>
+				<location>
+					<eventLocation>Centro Juvenil Carabanchel Alto</eventLocation>
+					<area>https://datos.madrid.es/egob/kos/Provincia/Madrid/Municipio/Madrid/Distrito/Carabanchel/Barrio/Buenavista</area>
+					<timetable>
+						<start>2022-07-13 10:00:00.0</start>
+						<end>2022-07-13 23:59:00.0</end>
+					</timetable>
+					<georeference>40.366822704148795 -3.755451103709316</georeference>
+				</location>
+				<organization>
+					<accesibility>1</accesibility>
+					<organizationName>Centro Juvenil Carabanchel Alto</organizationName>
+				</organization>
+				<description>En nuestra jornada de huerto aprende a diferenciar las frutas y verduras, ponte a regar y plantar tu mismo y disfruta de todo lo que el campo puede ofrecerte.   Fecha y hora de celebración: Miércoles 13 de julio de 10h a 14h  Periodo de inscripción: Hasta completar aforo. Inscripciones en www.bit.ly/inscripcioncj    Plazas: Aforo</description>
+			</resource>
 			<resource id="https://datos.madrid.es/egob/catalogo/300107-0-agenda-actividades-eventos.json">
 				<concept id="https://datos.madrid.es/egob/kos/actividades/DanzaBaile"/>
 				<link><![CDATA[http://www.madrid.es/sites/v/index.jsp?vgnextchannel=ca9671ee4a9eb410VgnVCM100000171f5a0aRCRD&vgnextoid=594fd11e4daf0810VgnVCM1000001d4a900aRCRD]]></link>
 				<title>Carnación</title>
 				<location>
 					<eventLocation>Teatro Español</eventLocation>
-					<area>null</area>
+					<area>https://datos.madrid.es/egob/kos/Provincia/Madrid/Municipio/Madrid/Distrito/Centro/Barrio/Cortes</area>
 					<timetable>
 						<start>2022-12-01 00:00:00.0</start>
 						<end>2022-12-11 23:59:00.0</end>
@@ -149,7 +149,7 @@ xsi:schemaLocation="http://www.piat.dte.upm.es/practica4 ResultadosBusquedaP4.xs
 				<title>Cirque du Soleil vuelve al Escenario Puerta del Ángel</title>
 				<location>
 					<eventLocation>Empresa Municipal Madrid Destino Cultura Turismo y Negocio, S.A</eventLocation>
-					<area>null</area>
+					<area>https://datos.madrid.es/egob/kos/Provincia/Madrid/Municipio/Madrid/Distrito/Centro/Barrio/Universidad</area>
 					<timetable>
 						<start>2022-11-05 00:00:00.0</start>
 						<end>2022-11-27 23:59:00.0</end>
@@ -168,7 +168,7 @@ xsi:schemaLocation="http://www.piat.dte.upm.es/practica4 ResultadosBusquedaP4.xs
 				<title>Con las manos en la masa: Helados</title>
 				<location>
 					<eventLocation>Centro Juvenil Carabanchel Alto</eventLocation>
-					<area>null</area>
+					<area>https://datos.madrid.es/egob/kos/Provincia/Madrid/Municipio/Madrid/Distrito/Carabanchel/Barrio/Buenavista</area>
 					<timetable>
 						<start>2022-07-07 18:00:00.0</start>
 						<end>2022-07-07 23:59:00.0</end>
@@ -183,11 +183,30 @@ xsi:schemaLocation="http://www.piat.dte.upm.es/practica4 ResultadosBusquedaP4.xs
 			</resource>
 			<resource id="https://datos.madrid.es/egob/catalogo/300107-0-agenda-actividades-eventos.json">
 				<concept id="https://datos.madrid.es/egob/kos/actividades/DanzaBaile"/>
+				<link><![CDATA[http://www.madrid.es/sites/v/index.jsp?vgnextchannel=ca9671ee4a9eb410VgnVCM100000171f5a0aRCRD&vgnextoid=82fac706c62d1810VgnVCM1000001d4a900aRCRD]]></link>
+				<title>Danza y expresión corporal</title>
+				<location>
+					<eventLocation>Espacio de Igualdad Clara Campoamor. Villaverde</eventLocation>
+					<area>https://datos.madrid.es/egob/kos/Provincia/Madrid/Municipio/Madrid/Distrito/Villaverde/Barrio/LosRosales</area>
+					<timetable>
+						<start>2022-07-07 17:30:00.0</start>
+						<end>2022-07-21 23:59:00.0</end>
+					</timetable>
+					<georeference>40.35087114162283 -3.691508909255186</georeference>
+				</location>
+				<organization>
+					<accesibility>1</accesibility>
+					<organizationName>Espacio de Igualdad Clara Campoamor. Villaverde</organizationName>
+				</organization>
+				<description></description>
+			</resource>
+			<resource id="https://datos.madrid.es/egob/catalogo/300107-0-agenda-actividades-eventos.json">
+				<concept id="https://datos.madrid.es/egob/kos/actividades/DanzaBaile"/>
 				<link><![CDATA[http://www.madrid.es/sites/v/index.jsp?vgnextchannel=ca9671ee4a9eb410VgnVCM100000171f5a0aRCRD&vgnextoid=82293acad95f9710VgnVCM1000001d4a900aRCRD]]></link>
 				<title>Dystopie</title>
 				<location>
 					<eventLocation>Naves Español en Matadero</eventLocation>
-					<area>null</area>
+					<area>https://datos.madrid.es/egob/kos/Provincia/Madrid/Municipio/Madrid/Distrito/Arganzuela/Barrio/Chopera</area>
 					<timetable>
 						<start>2022-06-24 19:00:00.0</start>
 						<end>2022-07-10 23:59:00.0</end>
@@ -197,25 +216,6 @@ xsi:schemaLocation="http://www.piat.dte.upm.es/practica4 ResultadosBusquedaP4.xs
 				<organization>
 					<accesibility>1,6</accesibility>
 					<organizationName>Naves Español en Matadero</organizationName>
-				</organization>
-				<description></description>
-			</resource>
-			<resource id="https://datos.madrid.es/egob/catalogo/300107-0-agenda-actividades-eventos.json">
-				<concept id="https://datos.madrid.es/egob/kos/actividades/DanzaBaile"/>
-				<link><![CDATA[http://www.madrid.es/sites/v/index.jsp?vgnextchannel=ca9671ee4a9eb410VgnVCM100000171f5a0aRCRD&vgnextoid=c4acab6c9a171810VgnVCM1000001d4a900aRCRD]]></link>
-				<title>Eins Zwei Drei</title>
-				<location>
-					<eventLocation>Teatro Español</eventLocation>
-					<area>null</area>
-					<timetable>
-						<start>2022-07-15 20:00:00.0</start>
-						<end>2022-07-15 23:59:00.0</end>
-					</timetable>
-					<georeference>40.41482868269558 -3.7001663599562105</georeference>
-				</location>
-				<organization>
-					<accesibility>1,6</accesibility>
-					<organizationName>Teatro Español</organizationName>
 				</organization>
 				<description></description>
 			</resource>

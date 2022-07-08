@@ -154,27 +154,60 @@ public class JSONDatasetParser implements Runnable {
 		while (jsonReader.hasNext()) {
 			if(procesarCount<6){
 				nombre = jsonReader.nextName();
+				
+				//************** PROCESAR PROPIEDADES **************/
+				
+				// propiedad @type
 				if(nombre.equals("@type")){
 					properties.put("type", jsonReader.nextString());
-				} else if(nombre.equals("link")){
+				}
+				// propiedad link
+				else if(nombre.equals("link")){
 					properties.put("link", jsonReader.nextString());
-				} else if(nombre.equals("title")){
+				}
+				// propiedad title
+				else if(nombre.equals("title")){
 					properties.put("title", jsonReader.nextString());
-				} else if(nombre.equals("dtstart")){
+				}
+				// propiedad dtstart
+				else if(nombre.equals("dtstart")){
 					properties.put("start", jsonReader.nextString());
-				} else if(nombre.equals("dtend")){
+				}
+				// propiedad dtend
+				else if(nombre.equals("dtend")){
 					properties.put("end", jsonReader.nextString());
-				} else if(nombre.equals("event-location")){
+				}
+				// propiedad event-location
+				else if(nombre.equals("event-location")){
 					properties.put("eventLocation", jsonReader.nextString());
-				} else if(nombre.equals("area")){
+				}
+				// propiedad address -> area
+				else if(nombre.equals("address")){
 					jsonReader.beginObject();
+					String addressName;
 					while (jsonReader.hasNext()) {
-						if(jsonReader.nextName().equals("id")){
-							properties.put("area", jsonReader.nextString());
+						addressName=jsonReader.nextName();
+						if(addressName.equals("area")){
+							jsonReader.beginObject();
+							String areaName;
+							while (jsonReader.hasNext()) {
+								areaName=jsonReader.nextName();
+								if(areaName.equals("@id")){
+									properties.put("area", jsonReader.nextString());
+								} else{
+									jsonReader.skipValue();
+								}
+							}
+							
+							jsonReader.endObject();
+						} else{
+							jsonReader.skipValue();
 						}
 					}
 					jsonReader.endObject();
-				} else if(nombre.equals("location")){
+				}
+				// propiedad location
+				else if(nombre.equals("location")){
 					jsonReader.beginObject();
 					String locationName;
 					while (jsonReader.hasNext()) {
@@ -183,14 +216,17 @@ public class JSONDatasetParser implements Runnable {
 							properties.put("latitude", jsonReader.nextString());
 						} else if(locationName.equals("longitude")){
 							properties.put("longitude", jsonReader.nextString());
+						} else {
+							jsonReader.skipValue();
 						}
 					}
 					jsonReader.endObject();
-				} else if(nombre.equals("organization")){
+				}
+				// propiedad organization
+				else if(nombre.equals("organization")){
 					jsonReader.beginObject();
 					String organizationNombre;
 					while (jsonReader.hasNext()) {
-						System.out.println();
 						organizationNombre=jsonReader.nextName();
 						if (organizationNombre.equals("organization-name")) {
 							properties.put("organizationName", jsonReader.nextString());
@@ -199,11 +235,34 @@ public class JSONDatasetParser implements Runnable {
 						}
 					}
 					jsonReader.endObject();
-				} else if(nombre.equals("description")){
+				}
+				// propiedad description
+				else if(nombre.equals("description")){
 					properties.put("description", jsonReader.nextString());
-				} else{
+				}
+				// propiedad relation
+				else if(nombre.equals("relation")){
+					jsonReader.beginObject();
+					String relationNombre;
+					while (jsonReader.hasNext()) {
+						relationNombre=jsonReader.nextName();
+						if (relationNombre.equals("@id")) {
+							//coger la propiedad "relation -> @id" cuando no hay "link"	
+							if(properties.get("link")==null) {
+								properties.put("link", jsonReader.nextString());
+							} else {
+								jsonReader.skipValue();
+							}
+						}
+					}
+					jsonReader.endObject();
+				} 
+				// resto de propiedades
+				else{
 					jsonReader.skipValue();	
 				}	
+
+				//************** GUARDAR PROPIEDADES **************/
 
 				//	2) Una vez procesadas todas las propiedades, ver si la clave @type tiene un valor igual a alguno de los concept de la lista lConcepts. Si es así
 				//	  guardar en un mapa Map<String,String> todos los valores de las variables temporales recogidas en el paso anterior y añadir este mapa al mapa graphs
@@ -222,7 +281,11 @@ public class JSONDatasetParser implements Runnable {
 					mapjson.put("organizationName", properties.get("organizationName"));
 					mapjson.put("description", properties.get("description"));
 					graphs.add(mapjson);
+
+					System.out.println(properties.get("area"));
+					//eliminar la propiedad mas baja para evitar que vuelva a entrar
 					properties.put("accesibility", "");
+					//incrementar el contador de las propiedades procesadas
 					procesarCount++;
 					}
 				}		
