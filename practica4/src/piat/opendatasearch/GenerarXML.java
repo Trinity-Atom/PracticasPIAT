@@ -66,7 +66,6 @@ public class GenerarXML {
                 sbSalida.append("\n\t\t\t<resource id=\""+mapajson.getKey()+"\">");
                 //type
                 sbSalida.append("\n\t\t\t\t<concept id=\""+mapjson.get("@type")+"\"/>");
-                // TODO link debe mostrar otra cosa
                 sbSalida.append("\n\t\t\t\t<link><![CDATA["+mapjson.get("link")+"]]></link>");
                 sbSalida.append("\n\t\t\t\t<title>"+mapjson.get("title")+"</title>");
                 //LOCATION
