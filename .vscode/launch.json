@@ -4,12 +4,22 @@
     // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
     "version": "0.2.0",
     "configurations": [
+
         {
             "type": "java",
             "name": "Launch Current File",
             "request": "launch",
             "mainClass": "${file}",
             "console": "externalTerminal"
+        },
+        {
+            "type": "java",
+            "name": "Launch practica5",
+            "request": "launch",
+            "mainClass": "piat.opendatasearch.P5_XPATH",
+            "projectName": "PracticasPIAT_34d99c9d",
+            "console": "externalTerminal",
+            "args": "practica4\\files\\catalogo.xml 0016-018 practica4\\files\\salida.xml"
         },
         {
             "type": "java",
