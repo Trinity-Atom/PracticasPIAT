@@ -23,6 +23,8 @@ import javax.xml.xpath.XPathExpressionException;
 
 import org.xml.sax.SAXException;
 
+import piat.opendatasearch.XPathProcess.Propiedad;
+
 /**
  * @author Salvador Fernández García-Morales 53823973V
  *
@@ -106,8 +108,7 @@ public class P5_XPATH {
 		// Instanciar un objeto ManejadorXML pasando como parámetro el código de la categoría recibido en el segundo argumento de main()
 		try {
 			ManejadorXML manejador = new ManejadorXML(args[1]);
-			// BORRAR LUEGO
-			XPathProcess.evaluar (args[2]);
+
 			// Instanciar un objeto SAXParser e invocar a su método parse() pasando como parámetro un descriptor de fichero, cuyo nombre se 
 			// recibió en el primer argumento de main(), y la instancia del objeto ManejadorXML 
 			SAXParserFactory fac = SAXParserFactory.newInstance();
@@ -149,7 +150,7 @@ public class P5_XPATH {
 			
 			// TODO busqueda de información
 			// 3) Búsqueda de información y generación del documento de resultados
-			
+			List<Propiedad> lpropiedades = XPathProcess.evaluar (args[2]);
 
 		} catch (SAXException e) {
 			System.err.println("No se ha podido crear el fichero");
