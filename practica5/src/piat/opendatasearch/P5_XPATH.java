@@ -151,7 +151,8 @@ public class P5_XPATH {
 			// TODO busqueda de información
 			// 3) Búsqueda de información y generación del documento de resultados
 			List<Propiedad> lpropiedades = XPathProcess.evaluar (args[2]);
-
+			GenerarJSON salidaJson = new GenerarJSON(lpropiedades,filejson);
+			salidaJson.generarJson();
 		} catch (SAXException e) {
 			System.err.println("No se ha podido crear el fichero");
 			e.printStackTrace();
