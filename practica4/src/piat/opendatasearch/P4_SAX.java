@@ -36,9 +36,9 @@ public class P4_SAX {
 	 */
 
 	public static void main(String[] args) throws InterruptedException {
-		
+		final int numArgumentos=4;
 		// Verificar nº de argumentos correcto
-		if (args.length!=3){
+		if (args.length!=numArgumentos){
 			String mensaje="ERROR: Argumentos incorrectos.";
 			if (args.length>0)
 				mensaje+=" He recibido estos argumentos: "+ Arrays.asList(args).toString()+"\n";

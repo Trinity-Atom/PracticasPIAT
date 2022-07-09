@@ -46,17 +46,17 @@ public class GenerarXML {
         sbSalida.append("\n\t\t</concepts>");
         
         // DATASETS
-        sbSalida.append("\n\t\t\t<datasets>");
+        sbSalida.append("\n\t\t<datasets>");
         for (Map.Entry<String,HashMap<String,String>> theDataset : setDatasets) {
             // Añadir el idDataset
-            sbSalida.append("\n\t\t\t\t<dataset id=\""+theDataset.getKey()+"\">");
+            sbSalida.append("\n\t\t\t<dataset id=\""+theDataset.getKey()+"\">");
             // Coger el hashMap de los contenidos del dataset
             mapaContenidoDataset = theDataset.getValue();
-            sbSalida.append("\n\t\t\t\t\t<title>"+mapaContenidoDataset.get("title")+"</title>");
-            sbSalida.append("\n\t\t\t\t\t<description>"+mapaContenidoDataset.get("description")+"</description>");
-            sbSalida.append("\n\t\t\t\t\t<theme>"+mapaContenidoDataset.get("theme")+"</theme>\n\t\t\t</dataset>");
+            sbSalida.append("\n\t\t\t\t<title>"+mapaContenidoDataset.get("title")+"</title>");
+            sbSalida.append("\n\t\t\t\t<description>"+mapaContenidoDataset.get("description")+"</description>");
+            sbSalida.append("\n\t\t\t\t<theme>"+mapaContenidoDataset.get("theme")+"</theme>\n\t\t\t</dataset>");
         }
-        sbSalida.append("\n\t\t\t</datasets>");
+        sbSalida.append("\n\t\t</datasets>");
         
         // MAPA DATASETS
         sbSalida.append("\n\t\t<resources>");
