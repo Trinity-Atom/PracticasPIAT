@@ -121,7 +121,12 @@ public class XPathProcess{
 			this.nombre=nombre;
 			this.valor=valor;		
 		}
-
+		public String getNombre() {
+			return nombre;
+		}
+		public String getValor() {
+			return valor;
+		}
 		@Override
 		public String toString() {
 			return this.nombre+": "+this.valor;
