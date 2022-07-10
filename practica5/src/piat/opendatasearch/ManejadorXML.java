@@ -128,7 +128,7 @@ public class ManejadorXML extends DefaultHandler implements ParserCatalogo {
 	public void startDocument() throws SAXException {
 		super.startDocument();
 		// TODO this task is done
-		System.out.println("Empieza el documento");
+		System.out.println("SAX_PARSER_MESSAGE: Empieza el documento\nSAX_PARSER_MESSAGE: Procesando...");
 		
 	}
 
@@ -137,7 +137,7 @@ public class ManejadorXML extends DefaultHandler implements ParserCatalogo {
 	public void endDocument() throws SAXException {
 		super.endDocument();
 		// TODO this task is done
-		System.out.println("Finaliza el documento");
+		System.out.println("SAX_PARSER_MESSAGE: Finaliza el documento\n");
 				
 	}
 

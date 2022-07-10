@@ -39,8 +39,8 @@ public class JSONDatasetParser implements Runnable {
 		boolean finProcesar=false;	// Para detener el parser si se han agregado a la lista graphs 5 graph
 		
 		Thread.currentThread().setName("JSON " + fichero);
-		nombreHilo="["+Thread.currentThread().getName()+"] ";
-	    System.out.println(nombreHilo+"Empezar a descargar de internet el JSON");
+		nombreHilo="["+Thread.currentThread().getName()+"] \n";
+	    System.out.println(nombreHilo+"Empezar a descargar de internet el JSON\n");
 	    try {
 	    	InputStreamReader inputStream = new InputStreamReader(new URL(fichero).openStream(), "UTF-8");
 			//TODO this thask is done
@@ -282,7 +282,6 @@ public class JSONDatasetParser implements Runnable {
 					mapjson.put("description", properties.get("description"));
 					graphs.add(mapjson);
 
-					System.out.println(properties.get("area"));
 					//eliminar la propiedad mas baja para evitar que vuelva a entrar
 					properties.put("accesibility", "");
 					//incrementar el contador de las propiedades procesadas
