@@ -128,6 +128,8 @@ public class P5_XPATH {
 			
 			// Invocar al método getDatasetConcepts() de P4_JSON que utiliza la clase JSONDatasetParser para obtener un mapa con los concepts de los datasets
 			Map<String, List<Map<String,String>>> mDatasetConcepts = getDatasetConcepts(uris,datasets);
+			System.out.println("JSON_PARSER_MESSAGE: Procesamiento de información completado con éxito");
+			System.out.println("JSON_PARSER_MESSAGE: Creando fichero de salida en: "+args[2]);
 
 			// Crear el fichero de salida con el nombre recibido en el tercer argumento de main()
 			if(fileout.createNewFile()){
@@ -143,16 +145,22 @@ public class P5_XPATH {
 			// Volcar al fichero de salida los datos en el formato XML especificado por ResultadosBusquedaP4.xsd
 			GenerarXML salida = new GenerarXML();
 			String output=salida.generateXML(uris,args[1],datasets,mDatasetConcepts);
-			// System.out.println(output);
 			BufferedWriter writer =new BufferedWriter(new OutputStreamWriter(new FileOutputStream(fileout), "utf-8"));
 			writer.write(output);
 			writer.close();
+			System.out.println("JSON_PARSER_MESSAGE: El fichero \""+fileout.getName()+"\"ha sido generado correctamente");
+			System.out.println("JSON_PARSER_MESSAGE: Leyendo y procesando el fichero...");
+
+
 			
-			// TODO busqueda de información
+			// TODO this task is done
 			// 3) Búsqueda de información y generación del documento de resultados
 			List<Propiedad> lpropiedades = XPathProcess.evaluar (args[2]);
+			System.out.println("JSON_PARSER_MESSAGE: Generando fichero de salida en: "+args[3]);
 			GenerarJSON salidaJson = new GenerarJSON(lpropiedades,filejson);
 			salidaJson.generarJson();
+			System.out.println("JSON_PARSER_MESSAGE: El archivo ha sido generado correctamente");
+
 		} catch (SAXException e) {
 			System.err.println("No se ha podido crear el fichero");
 			e.printStackTrace();
@@ -206,6 +214,7 @@ public class P5_XPATH {
 		final ExecutorService ejecutor = Executors.newFixedThreadPool(numDeNucleos);
 		Map<String, List<Map<String, String>>> mDatasetConcepts=new HashMap<String, List<Map<String,String>>>();
 		int numFicheros = mDatasetConcepts.size();
+		System.out.println("JSON_PARSER_MESSAGE: Leyendo y procesando ficheros json\n");
 		for (Map.Entry<String,HashMap<String,String>> theDataset: mDatasets.entrySet()){		
 			// Procesar y guardar los resources en el mDatasetConcepts
 			ejecutor.execute(new JSONDatasetParser(theDataset.getKey(), lConcepts, mDatasetConcepts));	

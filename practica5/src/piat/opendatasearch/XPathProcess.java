@@ -2,11 +2,8 @@ package piat.opendatasearch;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
-import javax.xml.XMLConstants;
-import javax.xml.namespace.NamespaceContext;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.xpath.XPath;
@@ -40,20 +37,16 @@ public class XPathProcess{
 		// Una consulta puede devolver una propiedad o varias
 		List<Propiedad> lPropiedades = new ArrayList<Propiedad>();
 		try {
-			//File fichSource = new File(ficheroXML);
 			
 			// Get DOM
 			DocumentBuilderFactory domFactory = DocumentBuilderFactory.newInstance();
 			//domFactory.setNamespaceAware(true);
 			//domFactory.setIgnoringElementContentWhitespace(true);
 			DocumentBuilder builder = domFactory.newDocumentBuilder();
-			//System.out.println(fichSource.getCanonicalPath());
 			Document doc = builder.parse(ficheroXML);
 			
 			// Get XPATH
 			XPath xpath = XPathFactory.newInstance().newXPath();
-			//xpath.setNamespaceContext(new NamespaceResolver(doc));
-			//XPathExpression expr = xpath.compile("/xmlns:searchResults/xmlns:summary/xmlns:query");
 
 			// a) Contenido textual del elemento <query>
 			String propiedad1 = (String) xpath.compile("//query").evaluate(doc, XPathConstants.STRING);
@@ -63,14 +56,6 @@ public class XPathProcess{
 			Double propiedad2 = (Double) xpath.evaluate("count(/searchResults/results/datasets/dataset)",doc,XPathConstants.NUMBER);
 			lPropiedades.add(new Propiedad("numDataset",String.valueOf(propiedad2)));
 
-			// c) Contenido de cada uno de los elementos <title>, hijos de <resource>
-			NodeList nlResource= (NodeList) xpath.evaluate("/searchResults/results/resources/resource", doc, XPathConstants.NODESET);
-			System.out.println("\tList Resource length: " + nlResource.getLength() + "\n");
-			for(int i=0;i< nlResource.getLength(); i++) {
-				Element resource=(Element)nlResource.item(i);
-				String propiedad3 = (String) xpath.evaluate("./title", resource, XPathConstants.STRING);
-				lPropiedades.add(new Propiedad("title",propiedad3));
-			}
 			// d) Por cada elemento <dataset>, hijo de <datasets>, número de elementos <resource> cuyo atributo id es igual al atributo id del elemento <dataset>
 			int cuenta;
 			//obtenemos el nodelist de <dataset>
@@ -88,7 +73,8 @@ public class XPathProcess{
 				String valueAttDataset=attDataset.getNodeValue();
 				//añadimos a la lista de propiedades el valor del atributo id de <dataset> que estamos evaluando
 				lPropiedades.add(new Propiedad(nameAttDataset,valueAttDataset));
-				//recorremos el nlResource que hemos obtenido en c)
+				//recorremos el nlResource que hemos obtenido
+				NodeList nlResource= (NodeList) xpath.evaluate("/searchResults/results/resources/resource", doc, XPathConstants.NODESET);
 				for (int j = 0; j < nlResource.getLength(); j++) {
 					//y sacamos la lista de atributos del elemento <resource>
 					NamedNodeMap attListResource=nlResource.item(j).getAttributes();
@@ -103,6 +89,14 @@ public class XPathProcess{
 				//una vez recorridos todos los resources guardamos la propiedad cuenta y lo añadimos a la lista de propiedades
 				String propiedad4=String.valueOf(cuenta);
 				lPropiedades.add(new Propiedad("num",propiedad4));
+				
+				// c) Contenido de cada uno de los elementos <title>, hijos de <resource>
+				//recorremos el nlResource que hemos obtenido en c)
+				for(int l=0;l< nlResource.getLength(); l++) {
+					Element resource=(Element)nlResource.item(l);
+					String propiedad3 = (String) xpath.evaluate("./title", resource, XPathConstants.STRING);
+					lPropiedades.add(new Propiedad("title",propiedad3));
+				}
 			}
 		}catch (Exception e) {
 			System.err.println ("Se ha producido una excepción: " + e.getMessage());
