@@ -25,7 +25,7 @@ schemaLocation=".//sistemaTransmision.xsd"/>
         <xs:element name="orbita" type="tns:typeOrbita"/>
         <xs:element name="descripcionFuncionalidades" type="tns:typedescripcionFuncionalidades"/>
         <xs:element name="modulos" type="tns:typeModulos"/>
-        <xs:element name="sistemaEsp" type="tns:typeSistemaEspecifico"/>
+        <xs:element name="sistemaEsp" type="tns:typeSistemaEsp"/>
         <xs:element name="SistemaTF" type="stf:typeSistemaTF"/>
         <xs:element name="SistemaTx" type="stx:typeSistemaTX"/>
     </xs:sequence>
@@ -36,6 +36,9 @@ schemaLocation=".//sistemaTransmision.xsd"/>
 
     <!-- ELEMENTO ORBITA -->
     <xs:simpleType name="typeOrbita">
+        <xs:annotation>
+            <xs:documentation>Altura en kilómetros en la que orbita el satélite</xs:documentation>
+        </xs:annotation>
         <xs:restriction base="xs:float">
             <xs:minInclusive value="200"/>
             <xs:maxInclusive value="36000"/>
@@ -55,24 +58,24 @@ schemaLocation=".//sistemaTransmision.xsd"/>
     <xs:complexType name="typeModulos">
         <xs:sequence>
             <xs:element name="modulo" type="mod:typeModulo" maxOccurs="unbounded">
-                <xs:keyref name="keyModuloSatelite" refer="mod:keyIdModulo">
-
-                </xs:keyref>
             </xs:element>
         </xs:sequence>
     </xs:complexType>
     <!-- ELEMENTO MODULOS -->
 
     <!-- ELEMENTO SISTEMAESP -->
-    <xs:complexType name="typeSistemaEspecifico">
+    <xs:complexType name="typeSistemaEsp">
         <xs:sequence>
             <xs:element name="sistemaEspecifico" type="ses:typeSistemaEspecifico" maxOccurs="unbounded">
-                <xs:keyref name="keySistemaEspSatelite" refer="ses:keySistemaEsp">
-
-                </xs:keyref>
+                <xs:unique name="uniqueIdSistemaEspecifico">
+                    <xs:selector xpath=".//tns:sistemaEspecifico"/>
+                    <xs:field xpath="@idSistemaEspecifico"/>
+                </xs:unique>
             </xs:element>
         </xs:sequence>
     </xs:complexType>
     <!-- ELEMENTO SISTEMAESP -->
+    
+    <!-- END ELEMENTO SISTEMAESPECIFICO -->
 
 </xs:schema>

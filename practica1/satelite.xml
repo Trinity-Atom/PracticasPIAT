@@ -154,7 +154,7 @@
         </sat:sistemaEspecifico>
 
         <!-- Sistema 2 -->        
-        <sat:sistemaEspecifico idSistemaEspecifico="Sist-02">
+        <sat:sistemaEspecifico idSistemaEspecifico="Sist-01">
             <ses:descripcionSistemaEsp>
                 Descripcion del sistema 2   
             </ses:descripcionSistemaEsp>
